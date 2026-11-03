@@ -1,0 +1,14 @@
+/*
+ * Tokens del proyecto en 3 niveles (se llenan en la fase 2 desde el diseño de Stitch):
+ *   1. Primitivos en :root
+ *   2. Semánticos en @theme inline
+ *   3. De componente, cuando aplique
+ */
+
+:root {
+  /* 1. Primitivos */
+}
+
+@theme inline {
+  /* 2. Semánticos */
+}
