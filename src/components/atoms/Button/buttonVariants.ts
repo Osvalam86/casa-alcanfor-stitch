@@ -3,8 +3,9 @@ import { cva, type VariantProps } from 'class-variance-authority'
 /** Variantes compartidas por Button (<button>) y ButtonLink (<a>). */
 export const buttonVariants = cva(
   [
-    'inline-flex items-center justify-center gap-2 rounded-sm text-center font-sans font-semibold tracking-wide',
-    'transition-colors duration-200 select-none',
+    // relative: contiene el texto sr-only (absoluto) dentro de contenedores con scroll
+    'relative inline-flex items-center justify-center gap-2 rounded-sm text-center font-sans font-semibold tracking-wide',
+    'transition-surface duration-200 select-none',
     'disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-text-muted disabled:shadow-none',
     'aria-disabled:cursor-not-allowed',
   ],

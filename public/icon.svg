@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Monograma de Casa Alcanfor: arco de hacienda dorado con "CA" (D8). Fuente de pnpm icons. -->
+  <rect width="512" height="512" rx="112" fill="#2f3e36"/>
+  <path d="M136 412V236a120 120 0 0 1 240 0v176" fill="none" stroke="#e7c08b" stroke-width="18" stroke-linecap="round"/>
+  <text x="256" y="356" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="150" font-style="italic" fill="#fef9f1">CA</text>
+</svg>

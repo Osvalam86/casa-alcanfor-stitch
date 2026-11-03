@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/cn'
 
 const iconButtonVariants = cva(
-  'inline-flex shrink-0 items-center justify-center rounded-full transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60',
+  'inline-flex shrink-0 items-center justify-center rounded-full transition-surface duration-200 disabled:cursor-not-allowed disabled:opacity-60',
   {
     variants: {
       variant: {

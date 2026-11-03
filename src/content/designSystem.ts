@@ -3,9 +3,9 @@
  * Textos tomados de la pantalla "Sistema de Diseño · Warm Hacienda Editorial" de Stitch
  * y, para los ejemplos de componentes, de la pantalla desktop.
  */
-import eventWeddings from '@/assets/images/event-weddings.jpg'
-import galleryGardenNight from '@/assets/images/gallery-garden-night.jpg'
-import heroWedding from '@/assets/images/hero-wedding.jpg'
+import eventWeddings from '@/assets/images/event-weddings.webp'
+import galleryGardenNight from '@/assets/images/gallery-garden-night.webp'
+import heroWedding from '@/assets/images/hero-wedding.webp'
 
 export const designSystem = {
   meta: {

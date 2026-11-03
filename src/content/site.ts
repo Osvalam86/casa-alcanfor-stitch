@@ -19,8 +19,47 @@ export const contact = {
   phoneHref: 'tel:+523300000000',
   whatsappDisplay: '+52 33 0000 0000',
   whatsappHref: 'https://wa.me/523300000000',
+  whatsappLabel: 'WhatsApp',
+  mapsHref: 'https://maps.google.com/?q=Zapopan,+Jalisco',
   visitHours: 'Lunes a Sábado: 10:00 a 19:00 hrs',
   visitHoursNote: '(Previa cita para atención personalizada con café de la casa)',
+} as const
+
+/**
+ * Datos estructurados para el JSON-LD (se genera en el build, sección 8).
+ * DEMO: mismos datos del bloque de contacto. Sin reseñas ni calificaciones (D3).
+ */
+export const business = {
+  type: 'EventVenue',
+  name: 'Casa Alcanfor',
+  description:
+    'Hacienda contemporánea de hospitalidad artesanal y jardines centenarios en el corazón de Zapopan, Jalisco.',
+  telephone: '+52 33 0000 0000',
+  address: {
+    streetAddress: '',
+    addressLocality: 'Zapopan',
+    addressRegion: 'Jalisco',
+    postalCode: '',
+    addressCountry: 'MX',
+  },
+  // Horario de visitas guiadas
+  openingHours: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '19:00' },
+  maximumAttendeeCapacity: 450,
+} as const
+
+/** Metadatos de la página (sección 8). */
+export const seo = {
+  title: 'Casa Alcanfor · Jardín & Salón de Eventos en Zapopan',
+  description:
+    'Bodas, XV años, bautizos y eventos corporativos que se viven sin preocupaciones. Espacios de ensueño, un coordinador contigo de principio a fin y precio cerrado desde el primer día.',
+  locale: 'es_MX',
+  themeColor: '#2f3e36',
+  ogImage: {
+    path: '/og-image.jpg',
+    width: 1200,
+    height: 630,
+    alt: 'Casa Alcanfor, jardín y salón de eventos en Zapopan: banquete nocturno bajo arcos de cantera.',
+  },
 } as const
 
 /** Textos de interfaz que no son contenido editorial (accesibilidad y estados). */

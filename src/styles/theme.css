@@ -64,6 +64,15 @@
 
   /* Altura del header: la mide useHeaderHeight (ResizeObserver) */
   --header-height: 5rem;
+
+  /* Espacio que ocupan los elementos fijos inferiores (barra móvil o botón de WhatsApp) */
+  --floating-offset: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --floating-offset: 6rem;
+  }
 }
 
 /* Superficie oscura: el foco dorado oscuro no contrasta (1.74:1), se usa el claro (6.61:1) */
@@ -203,6 +212,7 @@
 
   /* Medidas de layout */
   --spacing-header: var(--header-height);
+  --spacing-floating: var(--floating-offset);
   --spacing-carousel-card: 17.5rem;
   --spacing-panel-media: 34.375rem;
   --spacing-glow-lg: 34.375rem;

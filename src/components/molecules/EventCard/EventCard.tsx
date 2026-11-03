@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react'
 import { Badge } from '@/components/atoms/Badge'
 import { Heading } from '@/components/atoms/Heading'
 import { Icon } from '@/components/atoms/Icon'
@@ -10,14 +11,27 @@ export type EventCardProps = {
   title: string
   description: string
   badge: string
-  image: { src: string; alt: string }
+  image: { src: string; alt: string; width?: number; height?: number }
   link: { label: string; href: string }
+  /** Contexto oculto del enlace; por defecto, el título */
+  linkContext?: string
+  onLinkClick?: (event: MouseEvent<HTMLAnchorElement>) => void
   headingLevel?: 'h3' | 'h4'
   className?: string
 }
 
-/** Tarjeta de tipo de evento. El texto del enlace se repite: el título va como contexto oculto. */
-export function EventCard({ title, description, badge, image, link, headingLevel = 'h3', className }: EventCardProps) {
+/** Tarjeta de tipo de evento. El texto del enlace se repite: lleva contexto oculto. */
+export function EventCard({
+  title,
+  description,
+  badge,
+  image,
+  link,
+  linkContext,
+  onLinkClick,
+  headingLevel = 'h3',
+  className,
+}: EventCardProps) {
   return (
     <article
       className={cn(
@@ -29,6 +43,8 @@ export function EventCard({ title, description, badge, image, link, headingLevel
         <Image
           src={image.src}
           alt={image.alt}
+          width={image.width}
+          height={image.height}
           className="motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105"
         />
         <Badge variant="sage" className="absolute top-4 right-4">
@@ -44,7 +60,11 @@ export function EventCard({ title, description, badge, image, link, headingLevel
             {description}
           </Text>
         </div>
-        <TextLink href={link.href} srContext={title} iconEnd={<Icon name="arrow-forward" size="sm" />}>
+        <TextLink
+          href={link.href}
+          srContext={linkContext ?? title}
+          onClick={onLinkClick}
+          iconEnd={<Icon name="arrow-forward" size="sm" />}>
           {link.label}
         </TextLink>
       </div>

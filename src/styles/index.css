@@ -3,11 +3,33 @@
 @import './fonts.css';
 @import './theme.css';
 
+/*
+ * Transición de color SIN outline-color: el anillo de foco aparece al instante.
+ * Sustituye a transition-colors en todo el proyecto.
+ */
+@utility transition-surface {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: var(--default-transition-timing-function);
+  transition-duration: var(--default-transition-duration);
+}
+
+/* Relleno inferior de la barra móvil fija: respeta el área segura del dispositivo */
+@utility pb-safe-bar {
+  padding-bottom: max(0.625rem, env(safe-area-inset-bottom));
+}
+
 @layer base {
   html {
     /* Las anclas quedan justo debajo del header fijo (altura medida) */
     scroll-padding-top: var(--header-height);
+    /* Lo fijo de abajo (barra móvil / botón de WhatsApp) no tapa el foco (2.4.11) */
+    scroll-padding-bottom: var(--floating-offset);
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Con un <dialog> modal abierto, la página de fondo no se desplaza */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -35,6 +57,12 @@
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
+  }
+
+  /* Contenedores grandes que reciben foco por script (destino de salto): sin contorno */
+  main[tabindex='-1']:focus,
+  section[tabindex='-1']:focus {
+    outline: none;
   }
 
   /* El atributo hidden siempre gana sobre display de utilidades */

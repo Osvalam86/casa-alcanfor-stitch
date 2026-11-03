@@ -13,7 +13,7 @@ export function FilterChip({ pressed, className, children, ...props }: FilterChi
       type="button"
       aria-pressed={pressed}
       className={cn(
-        'inline-flex min-h-control-sm items-center rounded-full px-4 py-2 font-sans text-label-md whitespace-nowrap transition-colors duration-200',
+        'inline-flex min-h-control-sm items-center rounded-full px-4 py-2 font-sans text-label-md whitespace-nowrap transition-surface duration-200',
         pressed
           ? 'bg-action font-semibold text-on-action'
           : 'bg-surface-strong text-text-muted hover:bg-surface-stronger hover:text-text-strong',

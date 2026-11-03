@@ -3,7 +3,8 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/cn'
 
 const textLinkVariants = cva(
-  'group/link inline-flex min-h-6 items-center gap-1 rounded-xs font-sans transition-colors duration-200',
+  // relative: contiene el texto sr-only (absoluto) dentro de contenedores con scroll
+  'group/link relative inline-flex min-h-6 items-center gap-1 rounded-xs font-sans transition-surface duration-200',
   {
     variants: {
       variant: {

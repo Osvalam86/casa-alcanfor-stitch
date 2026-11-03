@@ -83,6 +83,7 @@ const twMerge = extendTailwindMerge({
         'margin',
         'margin-mobile',
         'header',
+        'floating',
         'carousel-card',
         'panel-media',
         'glow-lg',

@@ -44,7 +44,7 @@ export function IconFeature({
   return (
     <div
       className={cn(
-        'rounded-2xl bg-surface-sunken transition-colors duration-300 hover:bg-surface-muted',
+        'rounded-2xl bg-surface-sunken transition-surface duration-300 hover:bg-surface-muted',
         inline ? 'flex items-start gap-3.5 p-4' : 'flex flex-col gap-4 p-8',
         className,
       )}

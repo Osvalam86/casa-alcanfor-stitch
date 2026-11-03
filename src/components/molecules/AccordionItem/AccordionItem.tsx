@@ -28,7 +28,7 @@ export function AccordionItem({ question, children, open, onToggle, headingLevel
           aria-expanded={open}
           aria-controls={panelId}
           onClick={onToggle}
-          className="flex w-full items-center justify-between gap-4 rounded-2xl p-4 text-start transition-colors duration-200 hover:text-accent md:p-6"
+          className="flex w-full items-center justify-between gap-4 rounded-2xl p-4 text-start transition-surface duration-200 hover:text-accent md:p-6"
         >
           <span>{question}</span>
           <Icon

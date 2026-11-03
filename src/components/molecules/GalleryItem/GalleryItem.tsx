@@ -2,7 +2,7 @@ import { Image } from '@/components/atoms/Image'
 import { cn } from '@/lib/cn'
 
 export type GalleryItemProps = {
-  image: { src: string; alt: string }
+  image: { src: string; alt: string; width?: number; height?: number }
   caption: string
   /** Proporción del mosaico desktop */
   aspect?: 'portrait' | 'square'
@@ -25,12 +25,14 @@ export function GalleryItem({ image, caption, aspect = 'portrait', className }: 
       <Image
         src={image.src}
         alt={image.alt}
+        width={image.width}
+        height={image.height}
         className="motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105"
       />
       <figcaption
         className={cn(
-          'absolute inset-x-0 bottom-0 bg-surface-inverse-strong/70 p-4 font-serif text-headline-xs text-text-on-inverse',
-          'md:inset-0 md:flex md:items-end md:bg-transparent md:bg-linear-to-t md:from-surface-inverse-strong/80 md:via-surface-inverse-strong/20 md:to-transparent md:p-6 md:text-headline-sm md:opacity-0 md:transition-opacity md:group-hover:opacity-100',
+          'absolute inset-x-0 bottom-0 bg-surface-inverse-strong/75 px-3 py-2 font-sans text-label-md text-text-on-inverse',
+          'md:inset-0 md:flex md:items-end md:font-serif md:bg-transparent md:bg-linear-to-t md:from-surface-inverse-strong/80 md:via-surface-inverse-strong/20 md:to-transparent md:p-6 md:text-headline-sm md:opacity-0 md:transition-opacity md:group-hover:opacity-100',
         )}
       >
         {caption}
