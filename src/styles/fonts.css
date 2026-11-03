@@ -1,1 +1,16 @@
-/* Fuentes del diseño vía @fontsource (se agregan en la fase 2) */
+/*
+ * Fuentes del diseño, autohospedadas con @fontsource.
+ * Solo el subconjunto latin (U+0000–00FF), que cubre el español (á, ñ, ¿, ¡…).
+ * Los pesos son solo los que usa el diseño.
+ */
+
+/* EB Garamond: títulos (400, 500) e itálica editorial (400) */
+@import '@fontsource/eb-garamond/latin-400.css';
+@import '@fontsource/eb-garamond/latin-400-italic.css';
+@import '@fontsource/eb-garamond/latin-500.css';
+
+/* Manrope: texto, etiquetas y controles */
+@import '@fontsource/manrope/latin-400.css';
+@import '@fontsource/manrope/latin-500.css';
+@import '@fontsource/manrope/latin-600.css';
+@import '@fontsource/manrope/latin-700.css';

@@ -1,10 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@/styles/index.css'
-import App from '@/App.tsx'
+import { DesignSystemPage } from '@/pages/DesignSystemPage'
+import { LandingPage } from '@/pages/LandingPage'
+
+// Ruteo mínimo por pathname (D16): sin router, solo dos páginas
+const path = window.location.pathname.replace(/\/+$/, '')
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+  <StrictMode>{path === '/design-system' ? <DesignSystemPage /> : <LandingPage />}</StrictMode>,
 )
