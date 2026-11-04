@@ -124,7 +124,7 @@ export const designSystem = {
     imagesTitle: 'Imagen y arco de hacienda',
     image: {
       src: heroWedding,
-      alt: 'Banquete nocturno de boda en un patio de hacienda con arcos de cantera, mesas imperiales de madera y luces cálidas.',
+      alt: 'Novios riendo con sus invitados en un banquete nocturno en el patio empedrado de una hacienda, con arcos de cantera, mesas largas de madera con flores blancas y series de luces colgantes.',
     },
     dividersTitle: 'Separadores y carga',
     spinnerLabel: 'Cargando',
@@ -178,11 +178,11 @@ export const designSystem = {
     eventCard: {
       title: 'Bodas de Ensueño',
       description:
-        'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistro.',
+        'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
       badge: 'Banquete & Civil',
       image: {
         src: eventWeddings,
-        alt: 'Ceremonia de boda en el jardín con arco floral blanco, sillas de madera y faroles entre la vegetación.',
+        alt: 'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       },
       link: { label: 'Ver detalles y fotos', href: '/?galeria=bodas#galeria' },
     },
@@ -225,14 +225,14 @@ export const designSystem = {
         number: '04',
         title: 'Celebra',
         description:
-          'Relájate. Nuestro equipo de coordinación, logística y banquete se encarga de cada detalle para que tú sólo disfrutes con tus invitados.',
+          'Relájate. Nuestro equipo de coordinación, logística y banquete se encarga de cada detalle para que tú solo disfrutes con tus invitados.',
         tag: 'Tu gran día',
       },
     ],
     gallery: {
       image: {
         src: galleryGardenNight,
-        alt: 'Jardín de noche con luces cálidas entre grandes árboles de alcanfor e invitados cenando.',
+        alt: 'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
       },
       caption: 'Jardín Bajo las Estrellas',
     },
@@ -240,7 +240,7 @@ export const designSystem = {
       quote:
         '“Nuestra boda en Casa Alcanfor superó todo lo que soñamos. Mariana, nuestra coordinadora, no nos dejó un solo minuto con dudas. La comida fue elogiada por todos los invitados de Guadalajara y CDMX.”',
       author: 'Sofía & Alejandro',
-      meta: 'Boda Octubre 2024 · 220 Invitados',
+      meta: 'Boda, octubre de 2024 · 220 invitados',
       ratingLabel: 'Calificación: 5 de 5',
     },
     accordion: [

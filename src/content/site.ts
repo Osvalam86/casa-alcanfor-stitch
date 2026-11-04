@@ -14,7 +14,7 @@ export const brand = {
 // DEMO: dirección, teléfono y horario del bloque "Ven a conocernos" (desktop)
 export const contact = {
   address: 'Zapopan, Jalisco',
-  addressNote: '(A sólo 12 min de Periférico Norte y Valle Real)',
+  addressNote: '(A solo 12 min de Periférico Norte y Valle Real)',
   phoneDisplay: '33 0000 0000',
   phoneHref: 'tel:+523300000000',
   whatsappDisplay: '+52 33 0000 0000',
@@ -69,5 +69,5 @@ export const ui = {
   requiredText: 'Requerido',
   optionalText: 'Opcional', // NUEVO: indicador de campo opcional, mismo estilo que "Requerido"
   // Del estado loading del sistema de diseño de Stitch
-  loading: 'Procesando...',
+  loading: 'Procesando…',
 } as const

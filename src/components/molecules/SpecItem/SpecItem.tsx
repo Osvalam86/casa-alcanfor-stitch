@@ -9,12 +9,17 @@ export type SpecItemProps = {
   className?: string
 }
 
-/** Ficha técnica de un espacio (Capacidad → Hasta 450 pax). Debe vivir dentro de un <dl>. */
+/**
+ * Ficha técnica de un espacio (Capacidad → Hasta 450 pax). Debe vivir dentro de un <dl>.
+ * El <div> agrupa solo <dt> y <dd>; el ícono decorativo va dentro del <dt>.
+ */
 export function SpecItem({ icon, label, value, className }: SpecItemProps) {
   return (
     <div className={cn('flex flex-col gap-1', className)}>
-      <Icon name={icon} size="xl" className="text-accent" />
-      <dt className="font-sans text-label-caps uppercase text-accent">{label}</dt>
+      <dt className="flex flex-col gap-1 font-sans text-label-caps uppercase text-accent">
+        <Icon name={icon} size="xl" className="text-accent" />
+        {label}
+      </dt>
       <dd className="font-sans text-body-sm font-semibold text-text-strong">{value}</dd>
     </div>
   )

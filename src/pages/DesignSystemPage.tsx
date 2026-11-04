@@ -256,7 +256,8 @@ export function DesignSystemPage() {
               {typeScale.map((type) => (
                 <li key={type.token} className="flex flex-col gap-1 py-3">
                   <code className="font-sans text-caption text-text-muted">text-{type.token}</code>
-                  <span className={cn('text-text-strong', type.className)}>{ds.tokens.typographySample}</span>
+                  {/* Las muestras de escritorio no caben a 320 px: se permite cortar la palabra (sin scroll horizontal) */}
+                  <span className={cn('wrap-break-word text-text-strong', type.className)}>{ds.tokens.typographySample}</span>
                 </li>
               ))}
               {bodyScale.map((type) => (

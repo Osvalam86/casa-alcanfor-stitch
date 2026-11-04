@@ -42,6 +42,8 @@ import {
   trustBar,
 } from '@/content/landing'
 import { brand, contact, ui } from '@/content/site'
+import { useFocusNotObscured } from '@/lib/hooks/useFocusNotObscured'
+import { useInitialHashScroll } from '@/lib/hooks/useInitialHashScroll'
 import { useQuoteForm } from '@/lib/hooks/useQuoteForm'
 import { updateUrl, useSearchParamState } from '@/lib/hooks/useSearchParamState'
 
@@ -62,6 +64,8 @@ const spaceIds = spaces.items.map((item) => item.id)
 /** Contenedor de la landing: lee content/, guarda el estado compartido y la URL. */
 export function LandingPage() {
   const quote = useQuoteForm()
+  useInitialHashScroll()
+  useFocusNotObscured()
   const [galleryFilter, setGalleryFilter] = useSearchParamState('galeria', galleryFilterIds, 'todos')
   const [spaceId, setSpaceId] = useSearchParamState('espacio', spaceIds, 'salon')
   const [quoteAnnouncement, setQuoteAnnouncement] = useState('')

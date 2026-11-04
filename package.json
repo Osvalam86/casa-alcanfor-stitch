@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -b",
     "preview": "vite preview",
+    "test:e2e": "pnpm build && playwright test",
     "icons": "node scripts/generate-icons.ts"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/vite": "^4.3.3",

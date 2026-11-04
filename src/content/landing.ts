@@ -3,7 +3,8 @@
  * Cambios aprobados: "temporada 2025/2026" → 2027 (D2), sin datos de ejemplo
  * precargados en formularios (D6) y textos nuevos de accesibilidad y validación,
  * marcados con "NUEVO" para revisión.
- * Los alt de las imágenes son NUEVOS (redactados a partir del data-alt de Stitch, D8).
+ * Los alt de las imágenes son NUEVOS (redactados a partir del data-alt de Stitch, D8) y se
+ * revisaron en QA mirando cada foto: describen lo que se ve, sin repetir el texto que las rodea.
  */
 import eventBaptisms from '@/assets/images/event-baptisms.webp'
 import eventBirthdays from '@/assets/images/event-birthdays.webp'
@@ -40,7 +41,7 @@ const CONTACT_HREF = '#contacto'
 
 export const header = {
   navLabel: 'Principal', // NUEVO: nombre del landmark <nav>
-  homeLabel: 'Casa Alcanfor, inicio', // NUEVO: nombre del enlace de la marca
+  homeLabel: ', ir al inicio', // NUEVO: complemento oculto del nombre del enlace de la marca (2.5.3)
   nav: [
     { label: 'Eventos', href: '#eventos' },
     { label: 'Espacios', href: '#espacios' },
@@ -69,7 +70,7 @@ export const hero = {
   ],
   image: {
     src: heroWedding,
-    alt: 'Banquete nocturno de boda en un patio de hacienda con arcos de cantera, mesas imperiales de madera y luces cálidas colgantes.',
+    alt: 'Novios riendo con sus invitados en un banquete nocturno en el patio empedrado de una hacienda, con arcos de cantera, mesas largas de madera con flores blancas y series de luces colgantes.',
     width: 1200,
     height: 655,
   },
@@ -92,7 +93,7 @@ export const availabilityChecker = {
   },
   date: { label: 'Fecha tentativa' },
   guests: {
-    label: 'No. de Invitados',
+    label: 'Núm. de invitados',
     defaultValue: '101 a 250 invitados',
     options: [
       { value: '50 a 100 invitados', label: '50 a 100 invitados' },
@@ -135,10 +136,10 @@ export const events = {
       title: 'Bodas de Ensueño',
       badge: 'Banquete & Civil',
       description:
-        'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistro.',
+        'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
       image: eventImage(
         eventWeddings,
-        'Ceremonia de boda en el jardín de la hacienda con arco floral blanco, sillas de madera y faroles entre la vegetación.',
+        'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       ),
       galleryFilter: 'bodas',
       linkContext: 'de Bodas de Ensueño',
@@ -148,7 +149,10 @@ export const events = {
       badge: 'Producción VIP',
       description:
         'Diseño escénico vanguardista, cabina de DJ con robótica de concierto, pistas interactivas y menú juvenil de autor.',
-      image: eventImage(eventXv, 'Salón decorado para XV años con centros de mesa florales altos, luces de hada y pista de parquet.'),
+      image: eventImage(
+        eventXv,
+        'Salón iluminado en tonos rosa y lila con letras luminosas «XV» al fondo, invitados bailando en la pista de parquet y mesas redondas con centros florales altos.',
+      ),
       galleryFilter: 'xv',
       linkContext: 'de XV Años',
     },
@@ -159,7 +163,7 @@ export const events = {
         'Mañanas y tardes de jardín, ambiente familiar íntimo, juegos seguros para niños y carrusel de postres artesanales.',
       image: eventImage(
         eventBaptisms,
-        'Banquete familiar de día bajo una veranda con mantelería en tonos pastel, hojas de olivo y jarrones de cerámica.',
+        'Comida familiar de día en una mesa larga bajo los arcos de una veranda; al centro, una pareja sostiene a un bebé con ropón blanco entre flores blancas y guías de olivo.',
         447,
       ),
       galleryFilter: 'todos',
@@ -170,7 +174,10 @@ export const events = {
       badge: 'Coctelería de Autor',
       description:
         'Cenas maridaje, barras de mixología con tequila y mezcal jalisciense, ambiente acústico o saxofón en vivo al atardecer.',
-      image: eventImage(eventBirthdays, 'Terraza de noche con mesas iluminadas por velas y cócteles artesanales de mezcal.'),
+      image: eventImage(
+        eventBirthdays,
+        'Amigos brindando con margaritas en una cena nocturna en el patio, entre velas y un pastel de cumpleaños, con un trío de cuerdas tocando al fondo.',
+      ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
     },
@@ -179,7 +186,10 @@ export const events = {
       badge: 'Brunch & Jardín',
       description:
         'Espacios frescos y versátiles con decoración botánica personalizada, estaciones de mimosa y servicio de brunch artesanal.',
-      image: eventImage(eventShowers, 'Brunch de día en un patio de piedra con guirnaldas florales, estación de mimosas y vista al jardín.'),
+      image: eventImage(
+        eventShowers,
+        'Graduados con toga y birrete brindan con su familia en una mesa larga bajo una pérgola con flores, junto a una barra de mimosas y jugos.',
+      ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
     },
@@ -190,7 +200,7 @@ export const events = {
         'Audio profesional de microfonía, pantallas LED de alta definición, fibra óptica simétrica y servicio de meseros de etiqueta.',
       image: eventImage(
         eventCorporate,
-        'Gala corporativa en el salón de techos altos de madera y muros de piedra, con pantallas de proyección y mesas de banquete.',
+        'Ceremonia de premiación en el salón de vigas de madera y muros de piedra: invitados en mesas redondas miran un escenario con pantalla y oradores en el podio.',
       ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
@@ -251,7 +261,7 @@ export const spaces = {
       imageBadge: 'Salón Techado Principal',
       image: spaceImage(
         spaceSalon,
-        'Gran salón con techo de vigas de madera, candiles de hierro forjado, arcos de cantera y mesas de banquete sobre piso de parquet.',
+        'Salón vacío montado para banquete: mesas redondas con flores blancas rodean una pista de parquet bajo candiles de hierro forjado, entre arcos de cantera y ventanales al jardín.',
       ),
       chips: { capacity: 'Capacidad: 450 pax', area: '620 m²' },
       title: 'Salón Gran Alcanfor',
@@ -270,7 +280,7 @@ export const spaces = {
       imageBadge: 'Jardín & Naturaleza',
       image: spaceImage(
         spaceGarden,
-        'Jardín botánico de la hacienda al atardecer, con árboles maduros, pasto verde, pérgola y luces de hada.',
+        'Jardín de noche con césped, sendero de piedra iluminado, árboles cubiertos de series de luces y un kiosco de hierro con flores, frente a la casona de la hacienda.',
         670,
       ),
       chips: { capacity: 'Capacidad: 300 pax', area: '900 m²' },
@@ -290,7 +300,7 @@ export const spaces = {
       imageBadge: 'Área Lounge & Cóctel',
       image: spaceImage(
         spaceTerrace,
-        'Terraza colonial con arcos al atardecer, salas lounge, faroles cálidos y balaustradas de piedra.',
+        'Portal de arcos de cantera al anochecer con salas, mesas altas y faroles; los invitados conversan con cócteles junto a una fuente de piedra.',
       ),
       chips: { capacity: 'Capacidad: 120 pax', area: '210 m²' },
       title: 'Terraza Mirador',
@@ -308,7 +318,7 @@ export const spaces = {
 
 export const pricing = {
   eyebrow: 'Experiencias Completas',
-  title: 'Inversión clara pensada para que sólo te dediques a disfrutar',
+  title: 'Inversión clara pensada para que solo te dediques a disfrutar',
   description:
     'Nuestros paquetes incluyen todo lo esencial sin sorpresas. Puedes personalizar o sumar complementos según el estilo de tu día.',
   featuredLabel: 'Más elegido',
@@ -396,7 +406,7 @@ export const process = {
       icon: 'celebration',
       title: 'Celebra',
       description:
-        'Relájate. Nuestro equipo de coordinación, logística y banquete se encarga de cada detalle para que tú sólo disfrutes con tus invitados.',
+        'Relájate. Nuestro equipo de coordinación, logística y banquete se encarga de cada detalle para que tú solo disfrutes con tus invitados.',
       tag: 'Tu gran día',
     },
   ] satisfies ProcessStepItem[],
@@ -424,7 +434,7 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryWeddingEntrance,
-        'Novios sonriendo bajo la columnata iluminada de la hacienda, rodeados de olivos y centros de mesa florales.',
+        'Novios tomados de la mano cruzan un arco de cantera adornado con flores y luces, entre olivos y mesas de invitados.',
       ),
     },
     {
@@ -434,7 +444,7 @@ export const gallery = {
       wide: true,
       image: galleryImage(
         galleryGardenNight,
-        'Banquete nocturno en el jardín con luces cálidas entre grandes árboles de alcanfor e invitados cenando.',
+        'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
       ),
     },
     {
@@ -443,14 +453,17 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryTableSetting,
-        'Detalle de mesa con servilletas de lino, platos de cerámica, cubiertos dorados y arreglo de rosas blancas.',
+        'Mesa de madera rústica con plato de cerámica, servilleta de lino atada con eucalipto, cubiertos dorados, copas de cristal labrado y rosas blancas en maceta de barro.',
       ),
     },
     {
       category: 'xv',
       caption: 'Vals & Pista Robótica',
       aspect: 'square',
-      image: galleryImage(galleryXvDance, 'Baile de XV años en el gran salón con luces láser, efecto de niebla y pista brillante.'),
+      image: galleryImage(
+        galleryXvDance,
+        'Quinceañera con vestido de gala turquesa y tiara baila con sus chambelanes sobre una pista iluminada, entre rayos de luz, niebla y pantallas con las letras «XV».',
+      ),
     },
     {
       category: 'detalles',
@@ -458,7 +471,7 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryCocktailBar,
-        'Cócteles de autor decorados con romero y toronja sobre la barra exterior de cantera.',
+        'Dos cócteles con rodaja de toronja y ramita de romero sobre una barra de cantera al aire libre, con botellas y fruta al lado e invitados al fondo.',
       ),
     },
     {
@@ -468,7 +481,7 @@ export const gallery = {
       wide: true,
       image: galleryImage(
         galleryGardenCeremony,
-        'Ceremonia civil en el jardín con pasillo floral, pérgola rústica de madera y luz dorada entre los árboles.',
+        'Novios frente al oficiante bajo una pérgola de madera con flores y cortinas blancas; los invitados los miran desde ambos lados de un pasillo de pétalos, con luz dorada de atardecer.',
       ),
     },
   ] satisfies GalleryPhoto[],
@@ -484,14 +497,14 @@ export const testimonials = {
       quote:
         '“Nuestra boda en Casa Alcanfor superó todo lo que soñamos. Mariana, nuestra coordinadora, no nos dejó un solo minuto con dudas. La comida fue elogiada por todos los invitados de Guadalajara y CDMX.”',
       author: 'Sofía & Alejandro',
-      meta: 'Boda Octubre 2024 · 220 Invitados',
+      meta: 'Boda, octubre de 2024 · 220 invitados',
       rating: 5,
     },
     {
       quote:
         '“Los XV años de mi hija Camila fueron mágicos. La iluminación de los árboles y la seguridad del lugar nos dieron una tranquilidad invaluable. Cumplieron todo lo pactado sin un solo peso extra.”',
       author: 'Familia Morales Barba',
-      meta: 'XV Años Diciembre 2024 · 180 Invitados',
+      meta: 'XV Años, diciembre de 2024 · 180 invitados',
       rating: 5,
     },
     {
@@ -541,7 +554,7 @@ export const faq = {
     {
       question: '¿Cuáles son las formas de pago y su política de cambios de fecha?',
       answer:
-        'Se reserva con el 20%, el saldo se divide en cómodas mensualidades sin intereses hasta 15 días antes del evento. Si requieres cambio de fecha por causa de fuerza mayor, reubicamos sin penalización sujeto a calendario con 60 días de aviso.',
+        'Se reserva con el 20% y el saldo se divide en cómodas mensualidades sin intereses hasta 15 días antes del evento. Si requieres cambio de fecha por causa de fuerza mayor, reubicamos sin penalización sujeto a calendario con 60 días de aviso.',
     },
     {
       question: '¿Tienen opciones de menú para restricciones dietéticas o veganas?',
@@ -565,7 +578,7 @@ export const quoteForm = {
   eyebrow: 'Contacto Directo',
   title: 'Solicita tu cotización',
   description:
-    'Llena este breve formulario y en menos de 2 horas un coordinador te enviará propuesta personalizada con fechas libres y cotización formal.',
+    'Llena este breve formulario y en menos de 2 horas un coordinador te enviará una propuesta personalizada con fechas libres y cotización formal.',
   fields: {
     name: { label: 'Nombre completo', placeholder: 'Ej. Mariana González' },
     phone: { label: 'WhatsApp', placeholder: 'Ej. 33 0000 0000' },

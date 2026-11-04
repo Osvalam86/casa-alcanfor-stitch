@@ -27,7 +27,15 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Con un <dialog> modal abierto, la página de fondo no se desplaza */
+  /*
+   * Con un <dialog> modal abierto, la página de fondo no se desplaza.
+   * scrollbar-gutter reserva el canal de la barra: al ocultarla no cambia el ancho,
+   * el texto no se reacomoda y el salto a un ancla desde el menú no se desfasa.
+   */
+  html {
+    scrollbar-gutter: stable;
+  }
+
   html:has(dialog[open]) {
     overflow: hidden;
   }

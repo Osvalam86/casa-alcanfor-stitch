@@ -26,27 +26,29 @@ export type StatItemProps = VariantProps<typeof statIconVariants> & {
 
 /**
  * Par término/valor de la barra de confianza. Debe vivir dentro de un <dl>.
- * El DOM va término → valor; visualmente la cifra va arriba (flex-col-reverse).
+ * El <div> agrupa solo <dt> y <dd> (contenido permitido en <dl>); el ícono decorativo
+ * va dentro del <dt>, posicionado a la izquierda. El DOM va término → valor;
+ * visualmente la cifra va arriba (flex-col-reverse).
  */
 export function StatItem({ icon, value, label, valueLabel, tone, className }: StatItemProps) {
   return (
-    <div className={cn('flex items-center gap-4', className)}>
-      <span className={statIconVariants({ tone })}>
-        <Icon name={icon} size="xl" />
-      </span>
-      <div className="flex flex-col-reverse">
-        <dt className="font-sans text-body-sm text-text-muted">{label}</dt>
-        <dd className="font-serif text-headline-md-mobile leading-tight text-text-strong md:text-headline-md">
-          {valueLabel ? (
-            <>
-              <span aria-hidden="true">{value}</span>
-              <span className="sr-only">{valueLabel}</span>
-            </>
-          ) : (
-            value
-          )}
-        </dd>
-      </div>
+    <div className={cn('relative flex min-h-12 flex-col-reverse justify-center ps-16', className)}>
+      <dt className="font-sans text-body-sm text-text-muted">
+        <span className={cn(statIconVariants({ tone }), 'absolute start-0 top-1/2 -translate-y-1/2')}>
+          <Icon name={icon} size="xl" />
+        </span>
+        {label}
+      </dt>
+      <dd className="font-serif text-headline-md-mobile leading-tight text-text-strong md:text-headline-md">
+        {valueLabel ? (
+          <>
+            <span aria-hidden="true">{value}</span>
+            <span className="sr-only">{valueLabel}</span>
+          </>
+        ) : (
+          value
+        )}
+      </dd>
     </div>
   )
 }
