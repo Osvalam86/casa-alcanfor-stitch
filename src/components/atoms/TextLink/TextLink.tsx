@@ -26,7 +26,7 @@ export type TextLinkProps = Omit<ComponentProps<'a'>, 'target' | 'rel'> &
     children: ReactNode
     iconStart?: ReactNode
     iconEnd?: ReactNode
-    /** Contexto extra solo para lectores de pantalla (p. ej. "de Bodas de Ensueño") */
+    /** Contexto extra solo para lectores de pantalla (p. ej. "de bodas de ensueño") */
     srContext?: string
     /** Si se indica, abre en pestaña nueva y lo anuncia a lectores de pantalla */
     newTabHint?: string

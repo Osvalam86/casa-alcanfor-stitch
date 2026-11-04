@@ -98,7 +98,7 @@ test.describe('prefers-reduced-motion: reduce', () => {
     expect(running).toBe(0)
 
     // El salto es instantáneo: la sección queda en su sitio sin esperar
-    await page.getByRole('link', { name: /Ver detalles y fotos de XV Años/ }).press('Enter')
+    await page.getByRole('link', { name: /Ver detalles y fotos de XV años/ }).press('Enter')
     expect(Math.abs(await offsetBelowHeader(page.locator('#galeria')))).toBeLessThanOrEqual(1)
   })
 })

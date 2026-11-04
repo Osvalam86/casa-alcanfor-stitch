@@ -49,7 +49,7 @@ export const business = {
 
 /** Metadatos de la página (sección 8). */
 export const seo = {
-  title: 'Casa Alcanfor · Jardín & Salón de Eventos en Zapopan',
+  title: 'Casa Alcanfor · Jardín & salón de eventos en Zapopan',
   description:
     'Bodas, XV años, bautizos y eventos corporativos que se viven sin preocupaciones. Espacios de ensueño, un coordinador contigo de principio a fin y precio cerrado desde el primer día.',
   locale: 'es_MX',

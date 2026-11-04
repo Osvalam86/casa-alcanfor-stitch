@@ -58,7 +58,7 @@ export const header = {
 } as const
 
 export const hero = {
-  badge: 'Jardín & Salón de Eventos en Zapopan',
+  badge: 'Jardín & salón de eventos en Zapopan',
   title: { before: 'Celebra donde cada momento ', emphasis: 'se vuelve recuerdo' },
   description:
     'Bodas, XV años, bautizos y eventos corporativos que se viven sin preocupaciones. Espacios de ensueño, un coordinador contigo de principio a fin y precio cerrado desde el primer día.',
@@ -74,19 +74,20 @@ export const hero = {
     width: 1200,
     height: 655,
   },
-  imageCard: { eyebrow: 'Jardín Principal', title: 'Cenas bajo el dosel centenario' },
+  imageCard: { eyebrow: 'Jardín principal', title: 'Cenas bajo el dosel centenario' },
 } as const
 
 export const availabilityChecker = {
-  title: 'Calculador Exprés de Disponibilidad',
+  title: 'Calculador exprés de disponibilidad',
   eventType: {
     label: '¿Qué celebras?',
+    // Los value son datos del formulario (se envían tal cual); solo cambia el texto visible
     options: [
       { value: 'Boda', label: 'Boda de ensueño' },
-      { value: 'XV Años', label: 'XV Años' },
-      { value: 'Bautizo / Comunión', label: 'Bautizo o Comunión' },
-      { value: 'Cumpleaños / Aniversario', label: 'Cumpleaños o Aniversario' },
-      { value: 'Corporativo / Gala', label: 'Gala Corporativa' },
+      { value: 'XV Años', label: 'XV años' },
+      { value: 'Bautizo / Comunión', label: 'Bautizo o comunión' },
+      { value: 'Cumpleaños / Aniversario', label: 'Cumpleaños o aniversario' },
+      { value: 'Corporativo / Gala', label: 'Gala corporativa' },
       // Graduación no existe en el formulario: se envía como "Otro"
       { value: 'Otro', label: 'Graduación' },
     ] satisfies SelectOption[],
@@ -125,7 +126,7 @@ export const trustBar = {
 const eventImage = (src: string, alt: string, height = 437) => ({ src, alt, width: 800, height })
 
 export const events = {
-  eyebrow: 'Momentos Memorables',
+  eyebrow: 'Momentos memorables',
   title: 'Un escenario hecho a la medida de tu celebración',
   description:
     'Cada evento tiene una vibra única. En Casa Alcanfor adaptamos arquitectura, mantelería, tiempos gastronómicos y producción técnica a tus sueños.',
@@ -133,8 +134,8 @@ export const events = {
   linkLabel: 'Ver detalles y fotos',
   items: [
     {
-      title: 'Bodas de Ensueño',
-      badge: 'Banquete & Civil',
+      title: 'Bodas de ensueño',
+      badge: 'Banquete & civil',
       description:
         'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
       image: eventImage(
@@ -142,10 +143,10 @@ export const events = {
         'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       ),
       galleryFilter: 'bodas',
-      linkContext: 'de Bodas de Ensueño',
+      linkContext: 'de bodas de ensueño',
     },
     {
-      title: 'XV Años Inolvidables',
+      title: 'XV años inolvidables',
       badge: 'Producción VIP',
       description:
         'Diseño escénico vanguardista, cabina de DJ con robótica de concierto, pistas interactivas y menú juvenil de autor.',
@@ -154,11 +155,11 @@ export const events = {
         'Salón iluminado en tonos rosa y lila con letras luminosas «XV» al fondo, invitados bailando en la pista de parquet y mesas redondas con centros florales altos.',
       ),
       galleryFilter: 'xv',
-      linkContext: 'de XV Años',
+      linkContext: 'de XV años',
     },
     {
-      title: 'Bautizos y Primeras Comuniones',
-      badge: 'Mañanas & Tardes',
+      title: 'Bautizos y primeras comuniones',
+      badge: 'Mañanas & tardes',
       description:
         'Mañanas y tardes de jardín, ambiente familiar íntimo, juegos seguros para niños y carrusel de postres artesanales.',
       image: eventImage(
@@ -170,8 +171,8 @@ export const events = {
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Cumpleaños y Aniversarios',
-      badge: 'Coctelería de Autor',
+      title: 'Cumpleaños y aniversarios',
+      badge: 'Coctelería de autor',
       description:
         'Cenas maridaje, barras de mixología con tequila y mezcal jalisciense, ambiente acústico o saxofón en vivo al atardecer.',
       image: eventImage(
@@ -182,10 +183,13 @@ export const events = {
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Baby Shower y Graduaciones',
-      badge: 'Brunch & Jardín',
+      title: 'Baby shower y graduaciones',
+      badge: 'Brunch & jardín',
       description:
         'Espacios frescos y versátiles con decoración botánica personalizada, estaciones de mimosa y servicio de brunch artesanal.',
+      // TODO(foto): la imagen muestra una graduación, no un baby shower. Entre las fotos descargadas
+      // de Stitch (design/images) no hay una de baby shower: falta conseguirla o generarla.
+      // El alt describe lo que sí se ve (la graduación).
       image: eventImage(
         eventShowers,
         'Graduados con toga y birrete brindan con su familia en una mesa larga bajo una pérgola con flores, junto a una barra de mimosas y jugos.',
@@ -194,8 +198,8 @@ export const events = {
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Eventos Corporativos y Galas',
-      badge: 'Empresas & Galas',
+      title: 'Eventos corporativos y galas',
+      badge: 'Empresas & galas',
       description:
         'Audio profesional de microfonía, pantallas LED de alta definición, fibra óptica simétrica y servicio de meseros de etiqueta.',
       image: eventImage(
@@ -209,7 +213,7 @@ export const events = {
 } as const
 
 export const promise = {
-  eyebrow: 'Nuestra Promesa',
+  eyebrow: 'Nuestra promesa',
   title: 'La tranquilidad de un evento sin letras chiquitas',
   description:
     'Sabemos el estrés que representa organizar un evento. En Casa Alcanfor unificamos locación, banquete y coordinación bajo un compromiso transparente de excelencia y calidez jalisciense.',
@@ -221,25 +225,25 @@ export const promise = {
   features: [
     {
       icon: 'support-agent',
-      title: 'Coordinación Dedicada',
+      title: 'Coordinación dedicada',
       description:
-        'Una wedding planner y concierge exclusiva asignada a tu evento desde la firma de tu contrato hasta la partida del último invitado. Ella vela por tu minuto a minuto.',
+        'Un coordinador de bodas y concierge exclusivo asignado a tu evento desde la firma de tu contrato hasta la partida del último invitado. Él vela por tu minuto a minuto.',
     },
     {
       icon: 'receipt-long',
-      title: 'Precio Cerrado y Transparente',
+      title: 'Precio cerrado y transparente',
       description:
         'Cotizaciones desglosadas por persona y por concepto. Sin cargos sorpresa el día de la fiesta ni letras chiquitas. Tu presupuesto se respeta al 100%.',
     },
     {
       icon: 'restaurant',
-      title: 'Gastronomía de Alta Escuela',
+      title: 'Gastronomía de alta escuela',
       description:
         'Cocina propia liderada por chefs jaliscienses con más de 15 años de trayectoria. Incluye cata previa para 4 personas y menús adaptables a cualquier dieta o alergia.',
     },
     {
       icon: 'ac-unit',
-      title: 'Jardín y Salón Climatizado',
+      title: 'Jardín y salón climatizado',
       description:
         'Disfruta lo mejor de ambos mundos: más de 40 árboles frondosos para cócteles al atardecer y un salón con aire acondicionado integral ante cualquier clima.',
     },
@@ -249,7 +253,7 @@ export const promise = {
 const spaceImage = (src: string, alt: string, height = 655) => ({ src, alt, width: 1200, height })
 
 export const spaces = {
-  eyebrow: 'Nuestros Espacios',
+  eyebrow: 'Nuestros espacios',
   title: 'Tres atmósferas que se complementan en armonía',
   description:
     'Diseñados para fluir armónicamente entre cóctel de bienvenida, ceremonia y recepción con la elegancia atemporal de una hacienda jalisciense.',
@@ -258,7 +262,7 @@ export const spaces = {
     {
       id: 'salon',
       tab: { label: 'Salón Gran Alcanfor', icon: 'apartment' },
-      imageBadge: 'Salón Techado Principal',
+      imageBadge: 'Salón techado principal',
       image: spaceImage(
         spaceSalon,
         'Salón vacío montado para banquete: mesas redondas con flores blancas rodean una pista de parquet bajo candiles de hierro forjado, entre arcos de cantera y ventanales al jardín.',
@@ -277,7 +281,7 @@ export const spaces = {
     {
       id: 'jardin',
       tab: { label: 'Jardín Los Fresnos', icon: 'nature-people' },
-      imageBadge: 'Jardín & Naturaleza',
+      imageBadge: 'Jardín & naturaleza',
       image: spaceImage(
         spaceGarden,
         'Jardín de noche con césped, sendero de piedra iluminado, árboles cubiertos de series de luces y un kiosco de hierro con flores, frente a la casona de la hacienda.',
@@ -297,7 +301,7 @@ export const spaces = {
     {
       id: 'terraza',
       tab: { label: 'Terraza Mirador', icon: 'wb-twilight' },
-      imageBadge: 'Área Lounge & Cóctel',
+      imageBadge: 'Área lounge & cóctel',
       image: spaceImage(
         spaceTerrace,
         'Portal de arcos de cantera al anochecer con salas, mesas altas y faroles; los invitados conversan con cócteles junto a una fuente de piedra.',
@@ -317,7 +321,7 @@ export const spaces = {
 } as const
 
 export const pricing = {
-  eyebrow: 'Experiencias Completas',
+  eyebrow: 'Experiencias completas',
   title: 'Inversión clara pensada para que solo te dediques a disfrutar',
   description:
     'Nuestros paquetes incluyen todo lo esencial sin sorpresas. Puedes personalizar o sumar complementos según el estilo de tu día.',
@@ -325,7 +329,7 @@ export const pricing = {
   note: 'Precios de referencia para 2027. Pueden variar según fecha y número de invitados.',
   plans: [
     {
-      eyebrow: 'Opción Base',
+      eyebrow: 'Opción base',
       title: 'Esencial',
       description: 'Para celebraciones íntimas que buscan calidez, libertad y encanto natural.',
       price: { prefix: 'Desde', amount: '$690', unit: 'por invitado' },
@@ -339,7 +343,7 @@ export const pricing = {
       cta: { label: 'Cotiza este paquete', href: CONTACT_HREF },
     },
     {
-      eyebrow: 'Experiencia Recomendada',
+      eyebrow: 'Experiencia recomendada',
       title: 'Celebración',
       description: 'La fórmula favorita con gastronomía, ambientación y producción impecable.',
       price: { prefix: 'Desde', amount: '$950', unit: 'por invitado' },
@@ -355,7 +359,8 @@ export const pricing = {
       featured: true,
     },
     {
-      eyebrow: 'All-Inclusive Luxury',
+      // Antetítulo descriptivo (el nombre del paquete es "Gran Gala")
+      eyebrow: 'Todo incluido',
       title: 'Gran Gala',
       description: 'Para anfitriones que desean una celebración magna con el más alto nivel de detalle.',
       price: { prefix: 'Desde', amount: '$1,350', unit: 'por invitado' },
@@ -365,7 +370,7 @@ export const pricing = {
         'Barra libre de destilados prémium por 8 horas',
         'Mobiliario de diseñador y vajilla importada',
         'Show de fuegos pirotécnicos fríos y pista iluminada',
-        'Suite con amenidades prémium y wedding planner integral',
+        'Suite con amenidades prémium y coordinador de bodas integral',
       ],
       cta: { label: 'Cotiza este paquete', href: CONTACT_HREF },
     },
@@ -373,7 +378,7 @@ export const pricing = {
 } as const
 
 export const process = {
-  eyebrow: 'Proceso Transparente',
+  eyebrow: 'Proceso transparente',
   title: 'Planear tu evento nunca fue tan sencillo',
   description: 'Te acompañamos en cada etapa con claridad absoluta, sin tecnicismos ni estrés.',
   steps: [
@@ -415,7 +420,7 @@ export const process = {
 const galleryImage = (src: string, alt: string) => ({ src, alt, width: 800, height: 437 })
 
 export const gallery = {
-  eyebrow: 'Galería Fotográfica',
+  eyebrow: 'Galería fotográfica',
   title: 'Cada rincón cuenta una historia',
   filtersLabel: 'Filtrar fotos', // NUEVO: nombre del grupo de filtros
   // NUEVO: anuncio tras filtrar ({count} se reemplaza)
@@ -423,14 +428,14 @@ export const gallery = {
   filters: [
     { id: 'todos', label: 'Todos' },
     { id: 'bodas', label: 'Bodas' },
-    { id: 'jardin', label: 'Jardín Nocturno' },
-    { id: 'detalles', label: 'Banquete & Detalles' },
-    { id: 'xv', label: 'XV Años' },
+    { id: 'jardin', label: 'Jardín nocturno' },
+    { id: 'detalles', label: 'Banquete & detalles' },
+    { id: 'xv', label: 'XV años' },
   ] satisfies { id: GalleryFilterId; label: string }[],
   photos: [
     {
       category: 'bodas',
-      caption: 'Entrada Nupcial',
+      caption: 'Entrada nupcial',
       aspect: 'portrait',
       image: galleryImage(
         galleryWeddingEntrance,
@@ -439,7 +444,7 @@ export const gallery = {
     },
     {
       category: 'jardin',
-      caption: 'Jardín Bajo las Estrellas',
+      caption: 'Jardín bajo las estrellas',
       aspect: 'square',
       wide: true,
       image: galleryImage(
@@ -449,7 +454,7 @@ export const gallery = {
     },
     {
       category: 'detalles',
-      caption: 'Montaje de Autor',
+      caption: 'Montaje de autor',
       aspect: 'portrait',
       image: galleryImage(
         galleryTableSetting,
@@ -458,7 +463,7 @@ export const gallery = {
     },
     {
       category: 'xv',
-      caption: 'Vals & Pista Robótica',
+      caption: 'Vals & pista robótica',
       aspect: 'square',
       image: galleryImage(
         galleryXvDance,
@@ -467,7 +472,7 @@ export const gallery = {
     },
     {
       category: 'detalles',
-      caption: 'Barra de Coctelería',
+      caption: 'Barra de coctelería',
       aspect: 'portrait',
       image: galleryImage(
         galleryCocktailBar,
@@ -476,7 +481,7 @@ export const gallery = {
     },
     {
       category: 'bodas',
-      caption: 'Ceremonia en el Jardín',
+      caption: 'Ceremonia en el jardín',
       aspect: 'square',
       wide: true,
       image: galleryImage(
@@ -488,7 +493,7 @@ export const gallery = {
 } as const
 
 export const testimonials = {
-  eyebrow: 'Historias Reales',
+  eyebrow: 'Historias reales',
   title: 'La voz de quienes celebraron con nosotros',
   description: 'Más de una década creando recuerdos entrañables para familias y empresas de todo el país.',
   ratingLabel: 'Calificación: {rating} de 5', // NUEVO: lectura accesible de las estrellas
@@ -504,21 +509,21 @@ export const testimonials = {
       quote:
         '“Los XV años de mi hija Camila fueron mágicos. La iluminación de los árboles y la seguridad del lugar nos dieron una tranquilidad invaluable. Cumplieron todo lo pactado sin un solo peso extra.”',
       author: 'Familia Morales Barba',
-      meta: 'XV Años, diciembre de 2024 · 180 invitados',
+      meta: 'XV años, diciembre de 2024 · 180 invitados',
       rating: 5,
     },
     {
       quote:
         '“El evento de fin de año de nuestra empresa fue impecable. Puntualidad, servicio de meseros de diez y el salón climatizado perfecto. Definitivamente volveremos para nuestra gala 2025.”',
       author: 'Ing. Roberto Delgado',
-      meta: 'Director General · Gala Corporativa',
+      meta: 'Director general · Gala corporativa',
       rating: 5,
     },
   ] satisfies Testimonial[],
 } as const
 
 export const ctaBanner = {
-  eyebrow: 'Fechas Limitadas por Temporada',
+  eyebrow: 'Fechas limitadas por temporada',
   title: '¿Tienes una fecha especial en mente?',
   description:
     'Las fechas de fin de semana para temporada alta 2027 se reservan con hasta 14 meses de anticipación. Asegura tu día hoy mismo y congela el precio actual.',
@@ -527,7 +532,7 @@ export const ctaBanner = {
 } as const
 
 export const faq = {
-  eyebrow: 'Preguntas Frecuentes',
+  eyebrow: 'Preguntas frecuentes',
   title: 'Resolvemos tus dudas con claridad',
   description: 'Todo lo que necesitas saber antes de tu primera visita a Casa Alcanfor.',
   items: [
@@ -575,7 +580,7 @@ export const faq = {
 } as const
 
 export const quoteForm = {
-  eyebrow: 'Contacto Directo',
+  eyebrow: 'Contacto directo',
   title: 'Solicita tu cotización',
   description:
     'Llena este breve formulario y en menos de 2 horas un coordinador te enviará una propuesta personalizada con fechas libres y cotización formal.',
@@ -588,10 +593,10 @@ export const quoteForm = {
       placeholder: 'Selecciona una opción',
       options: [
         { value: 'Boda', label: 'Boda' },
-        { value: 'XV Años', label: 'XV Años' },
-        { value: 'Bautizo / Comunión', label: 'Bautizo o Primera Comunión' },
-        { value: 'Cumpleaños / Aniversario', label: 'Cumpleaños o Aniversario' },
-        { value: 'Corporativo / Gala', label: 'Evento Corporativo o Gala' },
+        { value: 'XV Años', label: 'XV años' },
+        { value: 'Bautizo / Comunión', label: 'Bautizo o primera comunión' },
+        { value: 'Cumpleaños / Aniversario', label: 'Cumpleaños o aniversario' },
+        { value: 'Corporativo / Gala', label: 'Evento corporativo o gala' },
         { value: 'Otro', label: 'Otro festejo especial' },
       ] satisfies SelectOption[],
     },
@@ -631,12 +636,12 @@ export const quoteForm = {
 } as const
 
 export const location = {
-  eyebrow: 'Ubicación Estratégica',
+  eyebrow: 'Ubicación estratégica',
   title: 'Ven a conocernos',
   labels: {
     address: 'Dirección',
-    hours: 'Horarios para Visitas Guiadas',
-    phone: 'Atención Telefónica y WhatsApp',
+    hours: 'Horarios para visitas guiadas',
+    phone: 'Atención telefónica y WhatsApp',
   },
   map: {
     image: { src: map, alt: '', width: 800, height: 800 },
@@ -650,7 +655,7 @@ export const footer = {
     'Hacienda contemporánea de hospitalidad artesanal y jardines centenarios en el corazón de Zapopan, Jalisco.',
   headings: {
     location: 'Ubicación',
-    hours: 'Horario de Atención',
+    hours: 'Horario de atención',
     social: 'Social',
   },
   hoursNote: 'Visitas guiadas previa reservación',
@@ -661,8 +666,8 @@ export const footer = {
     { label: 'Contacto', icon: 'mail', href: null },
   ],
   legal: [
-    { label: 'Aviso de Privacidad', href: null },
-    { label: 'Términos de Servicio', href: null },
+    { label: 'Aviso de privacidad', href: null },
+    { label: 'Términos de servicio', href: null },
   ],
   copyright: '© {year} Casa Alcanfor. Todos los derechos reservados. Zapopan, Jalisco.',
 } as const

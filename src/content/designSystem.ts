@@ -2,6 +2,7 @@
  * Copy de la página interna del sistema de diseño (/design-system, noindex).
  * Textos tomados de la pantalla "Sistema de Diseño · Warm Hacienda Editorial" de Stitch
  * y, para los ejemplos de componentes, de la pantalla desktop.
+ * Mayúsculas normalizadas al uso del español en QA (salvo nombres propios y términos técnicos).
  */
 import eventWeddings from '@/assets/images/event-weddings.webp'
 import galleryGardenNight from '@/assets/images/gallery-garden-night.webp'
@@ -9,16 +10,16 @@ import heroWedding from '@/assets/images/hero-wedding.webp'
 
 export const designSystem = {
   meta: {
-    title: 'Sistema de Diseño · Casa Alcanfor',
+    title: 'Sistema de diseño · Casa Alcanfor',
   },
   intro: {
-    eyebrow: 'Documentación Viva',
-    title: 'Sistema de Diseño · Casa Alcanfor',
+    eyebrow: 'Documentación viva',
+    title: 'Sistema de diseño · Casa Alcanfor',
     description:
       'Fundamentos visuales, escala modular y biblioteca de componentes basada en Atomic Design para la experiencia digital de Casa Alcanfor (Zapopan, Jalisco).',
     navLabel: 'Secciones del sistema de diseño',
     nav: [
-      { id: 'tokens', label: '01. Tokens & Fundamentos' },
+      { id: 'tokens', label: '01. Tokens & fundamentos' },
       { id: 'atomos', label: '02. Átomos' },
       { id: 'moleculas', label: '03. Moléculas' },
       { id: 'superficie-oscura', label: '04. Superficie oscura' },
@@ -27,44 +28,44 @@ export const designSystem = {
   },
   tokens: {
     eyebrow: 'Fundamentos 01',
-    title: 'Design Tokens & Variables',
+    title: 'Design tokens & variables',
     description: 'Gama cromática botánica, gradientes de luz de Zapopan, ritmo tipográfico y métricas dimensionales.',
-    colorsTitle: 'Paleta Cromática del Sistema',
+    colorsTitle: 'Paleta cromática del sistema',
     colorGroups: {
-      surfaces: 'Superficies & Cantera / Lienzo',
+      surfaces: 'Superficies & cantera / lienzo',
       text: 'Texto',
-      accent: 'Oro Envejecido / Acentos Cálidos',
-      actions: 'Acciones & Verde Alcanfor',
-      states: 'Semánticos & Estados de Validación',
+      accent: 'Oro envejecido / acentos cálidos',
+      actions: 'Acciones & verde alcanfor',
+      states: 'Semánticos & estados de validación',
     },
-    typographyTitle: 'Escala Tipográfica Modular',
-    typographySample: 'Celebraciones Inolvidables',
+    typographyTitle: 'Escala tipográfica modular',
+    typographySample: 'Celebraciones inolvidables',
     bodySample: 'Texto editorial para introducciones destacadas, sinopsis de espacios y citas con carácter.',
     captionSample: 'Respuesta en menos de 2 horas en horario de oficina. Presupuestos formales sin compromiso.',
-    eyebrowSample: 'Jardín & Salón de Eventos en Zapopan · Jalisco 2027',
-    spacingTitle: 'Escala de Espaciado (Padding & Margin)',
-    radiiTitle: 'Elevaciones Naturales & Arcos de Cantera',
+    eyebrowSample: 'Jardín & salón de eventos en Zapopan · Jalisco 2027',
+    spacingTitle: 'Escala de espaciado (padding & margin)',
+    radiiTitle: 'Elevaciones naturales & arcos de cantera',
   },
   atoms: {
     eyebrow: 'Atomic Design 02',
-    title: 'Átomos del Sistema',
+    title: 'Átomos del sistema',
     description:
       'Componentes indivisibles: botones botánicos, inputs de formulario, píldoras informativas y simbología editorial.',
-    buttonsTitle: 'Botones & Acciones Táctiles',
+    buttonsTitle: 'Botones & acciones táctiles',
     buttonGroups: {
-      primary: '01. Botón Primario',
-      secondary: '02. Botón Secundario (Contorno Sutil)',
-      accent: '03. Botón Acento (Antique Gold & Ghost)',
-      sizes: '04. Escala de Tamaños (Small / Medium / Large)',
+      primary: '01. Botón primario',
+      secondary: '02. Botón secundario (contorno sutil)',
+      accent: '03. Botón acento (Antique Gold & Ghost)',
+      sizes: '04. Escala de tamaños (Small / Medium / Large)',
     },
     buttons: {
-      primary: 'Reservar Recorrido',
-      disabled: 'No Disponible',
+      primary: 'Reservar recorrido',
+      disabled: 'No disponible',
       loadingDemo: 'Simular carga',
-      secondary: 'Descargar Brochure (PDF)',
+      secondary: 'Descargar brochure (PDF)',
       outline: 'Cotiza este paquete',
-      secondaryDisabled: 'Descarga Inactiva',
-      accent: 'Atención Concierge',
+      secondaryDisabled: 'Descarga inactiva',
+      accent: 'Atención concierge',
       textAction: 'Ver plano del salón',
       small: 'Small (36px)',
       medium: 'Medium Default (44px)',
@@ -73,8 +74,8 @@ export const designSystem = {
     linksTitle: 'Enlaces',
     links: {
       arrow: 'Ver detalles y fotos',
-      arrowContext: 'de Bodas de Ensueño',
-      inline: 'Aviso de Privacidad',
+      arrowContext: 'de bodas de ensueño',
+      inline: 'Aviso de privacidad',
       caps: 'Abrir GPS',
       phone: '33 0000 0000',
     },
@@ -84,20 +85,20 @@ export const designSystem = {
       close: 'Cerrar menú',
       whatsapp: 'Contacto por WhatsApp',
     },
-    inputsTitle: 'Campos de Entrada (Form Inputs)',
+    inputsTitle: 'Campos de entrada (form inputs)',
     inputs: {
       name: { label: 'Nombre completo', placeholder: 'Ej. Mariana González', hint: 'Estado vacío por defecto' },
-      date: { label: 'Fecha tentativa', value: '2027-10-16', hint: 'Estado con dato / Seleccionado' },
+      date: { label: 'Fecha tentativa', value: '2027-10-16', hint: 'Estado con dato / seleccionado' },
       phone: {
         label: 'WhatsApp',
         value: '331290',
         error: 'Escribe un número de WhatsApp de 10 dígitos.',
       },
-      folio: { label: 'Folio de Cotización', value: 'CA-2027-0941', hint: 'Bloqueado por sistema' },
+      folio: { label: 'Folio de cotización', value: 'CA-2027-0941', hint: 'Bloqueado por sistema' },
       eventType: {
         label: 'Tipo de evento',
         placeholder: 'Selecciona una opción',
-        options: ['Boda', 'XV Años', 'Bautizo o Primera Comunión', 'Cumpleaños o Aniversario', 'Evento Corporativo o Gala', 'Otro festejo especial'],
+        options: ['Boda', 'XV años', 'Bautizo o primera comunión', 'Cumpleaños o aniversario', 'Evento corporativo o gala', 'Otro festejo especial'],
       },
       comments: {
         label: 'Cuéntanos tu idea',
@@ -105,21 +106,21 @@ export const designSystem = {
       },
       privacy: 'Acepto el aviso de privacidad y autorizo el envío de cotización y recordatorio por WhatsApp.',
     },
-    badgesTitle: 'Insignias & Píldoras de Estado',
+    badgesTitle: 'Insignias & píldoras de estado',
     badges: {
-      featured: 'Más Elegido',
+      featured: 'Más elegido',
       recommended: 'Recomendado 2027',
-      season: 'Temporada Alta',
+      season: 'Temporada alta',
       climate: 'Climatizado',
-      rain: 'Plan Lluvia Garantizado',
-      area: '620 m² de Salón',
+      rain: 'Plan lluvia garantizado',
+      area: '620 m² de salón',
       available: 'Disponible',
-      blocked: 'Fecha Bloqueada',
-      limited: 'Cupo Limitado (3 fechas)',
-      onImage: 'Salón Techado Principal',
-      sage: 'Banquete & Civil',
+      blocked: 'Fecha bloqueada',
+      limited: 'Cupo limitado (3 fechas)',
+      onImage: 'Salón techado principal',
+      sage: 'Banquete & civil',
     },
-    iconsTitle: 'Iconografía Editorial (Material Symbols)',
+    iconsTitle: 'Iconografía editorial (Material Symbols)',
     typographyAtomsTitle: 'Títulos, texto y antetítulos',
     imagesTitle: 'Imagen y arco de hacienda',
     image: {
@@ -131,11 +132,11 @@ export const designSystem = {
   },
   molecules: {
     eyebrow: 'Atomic Design 03',
-    title: 'Moléculas Compuestas',
+    title: 'Moléculas compuestas',
     description:
       'Uniones de átomos con propósitos funcionales específicos: verificador de fechas, tarjetas de espacio, fichas testimoniales y acordeones.',
     sectionHeader: {
-      eyebrow: 'Momentos Memorables',
+      eyebrow: 'Momentos memorables',
       title: 'Un escenario hecho a la medida de tu celebración',
       description:
         'Cada evento tiene una vibra única. En Casa Alcanfor adaptamos arquitectura, mantelería, tiempos gastronómicos y producción técnica a tus sueños.',
@@ -158,10 +159,10 @@ export const designSystem = {
       alerts: 'Alert',
     },
     iconFeature: {
-      title: 'Coordinación Dedicada',
+      title: 'Coordinación dedicada',
       description:
-        'Una wedding planner y concierge exclusiva asignada a tu evento desde la firma de tu contrato hasta la partida del último invitado. Ella vela por tu minuto a minuto.',
-      inlineTitle: 'Precio Cerrado y Transparente',
+        'Un coordinador de bodas y concierge exclusivo asignado a tu evento desde la firma de tu contrato hasta la partida del último invitado. Él vela por tu minuto a minuto.',
+      inlineTitle: 'Precio cerrado y transparente',
       inlineDescription:
         'Cotizaciones desglosadas por persona y por concepto. Sin cargos sorpresa el día de la fiesta ni letras chiquitas. Tu presupuesto se respeta al 100%.',
     },
@@ -176,10 +177,10 @@ export const designSystem = {
       { label: 'Ambiente', value: 'Climatizado' },
     ],
     eventCard: {
-      title: 'Bodas de Ensueño',
+      title: 'Bodas de ensueño',
       description:
         'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
-      badge: 'Banquete & Civil',
+      badge: 'Banquete & civil',
       image: {
         src: eventWeddings,
         alt: 'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
@@ -188,7 +189,7 @@ export const designSystem = {
     },
     pricing: [
       {
-        eyebrow: 'Opción Base',
+        eyebrow: 'Opción base',
         title: 'Esencial',
         description: 'Para celebraciones íntimas que buscan calidez, libertad y encanto natural.',
         price: { prefix: 'Desde', amount: '$690', unit: 'por invitado' },
@@ -200,7 +201,7 @@ export const designSystem = {
         cta: { label: 'Cotiza este paquete', href: '#moleculas' },
       },
       {
-        eyebrow: 'Experiencia Recomendada',
+        eyebrow: 'Experiencia recomendada',
         title: 'Celebración',
         description: 'La fórmula favorita con gastronomía, ambientación y producción impecable.',
         price: { prefix: 'Desde', amount: '$950', unit: 'por invitado' },
@@ -234,7 +235,7 @@ export const designSystem = {
         src: galleryGardenNight,
         alt: 'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
       },
-      caption: 'Jardín Bajo las Estrellas',
+      caption: 'Jardín bajo las estrellas',
     },
     testimonial: {
       quote:
@@ -255,8 +256,8 @@ export const designSystem = {
           'Contamos con toldos arquitectónicos de alta gama y la garantía inmediata de migración o montaje híbrido en el Gran Salón climatizado sin costo extra imprevisto.',
       },
     ],
-    contactLabels: { address: 'Dirección', hours: 'Horarios para Visitas Guiadas', phone: 'Atención Telefónica y WhatsApp' },
-    filters: ['Todos', 'Bodas', 'Jardín Nocturno', 'Banquete & Detalles', 'XV Años'],
+    contactLabels: { address: 'Dirección', hours: 'Horarios para visitas guiadas', phone: 'Atención telefónica y WhatsApp' },
+    filters: ['Todos', 'Bodas', 'Jardín nocturno', 'Banquete & detalles', 'XV años'],
     alerts: {
       successTitle: '¡Solicitud recibida con éxito!',
       success:
@@ -267,13 +268,13 @@ export const designSystem = {
     },
   },
   inverse: {
-    eyebrow: 'Fechas Limitadas por Temporada',
+    eyebrow: 'Fechas limitadas por temporada',
     title: '¿Tienes una fecha especial en mente?',
     description: 'Superficie oscura para validar el color del foco (oro claro sobre verde alcanfor).',
     primary: 'Apartar cita en el jardín',
     secondary: 'Hablar directo por WhatsApp',
     accent: 'Cotiza este paquete',
-    link: 'Aviso de Privacidad',
+    link: 'Aviso de privacidad',
   },
   footer: 'Casa Alcanfor Design System · Zapopan, Jalisco',
 } as const

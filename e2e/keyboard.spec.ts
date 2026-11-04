@@ -101,7 +101,7 @@ test('filtros de galería: Enter y Espacio, aria-pressed, anuncio y URL', async 
   await expect(page.locator('#galeria [role="status"]')).toHaveText('Mostrando 2 fotos')
   await expect(page).toHaveURL(/galeria=bodas/)
 
-  const xv = group.getByRole('button', { name: 'XV Años' })
+  const xv = group.getByRole('button', { name: 'XV años', exact: true })
   await tabTo(page, xv)
   await page.keyboard.press('Space')
   await expect(xv).toHaveAttribute('aria-pressed', 'true')
@@ -139,7 +139,7 @@ test('FAQ: Enter abre, Espacio abre otra y cierra la anterior', async ({ page })
 
 test('calculador: precarga el formulario, lleva el foco y anuncia', async ({ page }) => {
   await page.goto('/')
-  const checker = page.getByRole('form', { name: 'Calculador Exprés de Disponibilidad' })
+  const checker = page.getByRole('form', { name: 'Calculador exprés de disponibilidad', exact: true })
   const eventType = checker.getByLabel('¿Qué celebras?')
   await tabTo(page, eventType)
   await page.keyboard.press('ArrowDown') // XV Años

@@ -66,11 +66,11 @@ for (const start of STARTS) {
 
   test(`"Ver detalles y fotos" filtra la galería y la deja bajo el header (página ${start})`, async ({ page }) => {
     await prepare(page, start)
-    const link = page.getByRole('link', { name: /Ver detalles y fotos de XV Años/ })
+    const link = page.getByRole('link', { name: /Ver detalles y fotos de XV años/ })
     await link.press('Enter')
     await waitForScrollEnd(page)
     await expect(page).toHaveURL(/\?galeria=xv#galeria$/)
-    await expect(page.getByRole('button', { name: 'XV Años', pressed: true })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'XV años', exact: true, pressed: true })).toBeVisible()
     await expect(page.locator('#galeria')).toBeFocused()
     expect(Math.abs(await offsetBelowHeader(page.locator('#galeria')))).toBeLessThanOrEqual(1)
   })
