@@ -59,6 +59,12 @@
     outline-offset: 2px;
   }
 
+  /* Tailwind v4 deja los botones con cursor default: se restaura el puntero en lo accionable */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
   /* Contenedores grandes que reciben foco por script (destino de salto): sin contorno */
   main[tabindex='-1']:focus,
   section[tabindex='-1']:focus {

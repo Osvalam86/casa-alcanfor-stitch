@@ -15,6 +15,8 @@ export type FormFieldProps = {
   label: string
   /** Texto visible de obligatorio (desde content/) */
   requiredText?: string
+  /** Texto visible de opcional (desde content/); se muestra si el campo no es obligatorio */
+  optionalText?: string
   required?: boolean
   hint?: string
   /** Mensaje de error; si existe, el control queda aria-invalid */
@@ -28,6 +30,7 @@ export type FormFieldProps = {
 export function FormField({
   label,
   requiredText,
+  optionalText,
   required = false,
   hint,
   error,
@@ -44,7 +47,7 @@ export function FormField({
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>
-      <Label htmlFor={controlId} requiredText={required ? requiredText : undefined} invalid={invalid}>
+      <Label htmlFor={controlId} indicator={required ? requiredText : optionalText} invalid={invalid}>
         {label}
       </Label>
       {children({

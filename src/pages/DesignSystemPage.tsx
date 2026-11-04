@@ -438,7 +438,7 @@ export function DesignSystemPage() {
                 </label>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="ds-label-demo" requiredText={ui.requiredText}>
+                <Label htmlFor="ds-label-demo" indicator={ui.requiredText}>
                   {ds.atoms.inputs.name.label}
                 </Label>
                 <Input id="ds-label-demo" autoComplete="off" placeholder={ds.atoms.inputs.name.placeholder} />

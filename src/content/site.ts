@@ -21,7 +21,7 @@ export const contact = {
   whatsappHref: 'https://wa.me/523300000000',
   whatsappLabel: 'WhatsApp',
   mapsHref: 'https://maps.google.com/?q=Zapopan,+Jalisco',
-  visitHours: 'Lunes a Sábado: 10:00 a 19:00 hrs',
+  visitHours: 'lunes a sábado: 10:00 a 19:00 h',
   visitHoursNote: '(Previa cita para atención personalizada con café de la casa)',
 } as const
 
@@ -67,6 +67,7 @@ export const ui = {
   skipLink: 'Saltar al contenido principal',
   newTabHint: '(se abre en una pestaña nueva)',
   requiredText: 'Requerido',
+  optionalText: 'Opcional', // NUEVO: indicador de campo opcional, mismo estilo que "Requerido"
   // Del estado loading del sistema de diseño de Stitch
   loading: 'Procesando...',
 } as const

@@ -53,7 +53,7 @@ export function SpacesTabs({ id, eyebrow, title, description, tabsLabel, items, 
           <div
             role="tablist"
             aria-label={tabsLabel}
-            className="flex gap-2 overflow-x-auto rounded-2xl border border-border-subtle bg-surface p-1.5 shadow-sm"
+            className="flex flex-wrap gap-2 self-start rounded-2xl border border-border-subtle bg-surface p-1.5 shadow-sm"
           >
             {items.map((item, index) => {
               const selected = index === selectedIndex

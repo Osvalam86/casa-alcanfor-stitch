@@ -132,6 +132,7 @@
   --color-border: var(--linen-500); /* divisor decorativo (arena) */
   --color-border-subtle: var(--stone-400); /* contornos de tarjetas, decorativos */
   --color-border-control: var(--stone-500); /* inputs: ≥ 3:1 (WCAG 1.4.11) */
+  --color-border-inverse: var(--linen-50); /* marfil, con opacidad, sobre superficies oscuras */
 
   /* Estados */
   --color-error: var(--terracotta-600);
@@ -239,4 +240,6 @@
   --spacing-control-md: 2.75rem; /* botón e input: 44 px */
   --spacing-control-lg: 3.25rem; /* botón hero: 52 px */
   --spacing-fab: 3.5rem;
+  /* Fila de etiqueta de formulario: misma altura lleve o no indicador (Requerido/Opcional) */
+  --leading-label-row: 1.25rem;
 }

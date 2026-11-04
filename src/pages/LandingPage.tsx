@@ -206,6 +206,7 @@ export function LandingPage() {
           <QuoteForm
             copy={quoteForm}
             requiredText={ui.requiredText}
+            optionalText={ui.optionalText}
             loadingLabel={ui.loading}
             titleId={QUOTE_TITLE_ID}
             values={quote.values}

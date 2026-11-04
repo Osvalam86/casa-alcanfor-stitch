@@ -40,6 +40,7 @@ export type QuoteFormCopy = {
 export type QuoteFormProps = {
   copy: QuoteFormCopy
   requiredText: string
+  optionalText: string
   loadingLabel: string
   titleId: string
   values: QuoteValues
@@ -70,6 +71,7 @@ const FIELD_IDS: Record<QuoteField, string> = {
 export function QuoteForm({
   copy,
   requiredText,
+  optionalText,
   loadingLabel,
   titleId,
   values,
@@ -242,7 +244,12 @@ export function QuoteForm({
                 />
               )}
             </FormField>
-            <FormField id={FIELD_IDS.guests} label={fields.guests.label} error={errorFor('guests')}>
+            <FormField
+              id={FIELD_IDS.guests}
+              label={fields.guests.label}
+              optionalText={optionalText}
+              error={errorFor('guests')}
+            >
               {(control) => (
                 <Input
                   {...control}
@@ -257,7 +264,12 @@ export function QuoteForm({
                 />
               )}
             </FormField>
-            <FormField id={FIELD_IDS.comments} label={fields.comments.label} className="md:col-span-2">
+            <FormField
+              id={FIELD_IDS.comments}
+              label={fields.comments.label}
+              optionalText={optionalText}
+              className="md:col-span-2"
+            >
               {(control) => (
                 <Textarea
                   {...control}

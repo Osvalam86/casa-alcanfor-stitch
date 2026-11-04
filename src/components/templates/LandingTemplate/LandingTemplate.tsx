@@ -22,8 +22,8 @@ export function LandingTemplate({ skipLink, header, children, footer, floating }
       <main id="main" tabIndex={-1} className="pt-header">
         {children}
       </main>
-      {/* En móvil la barra fija ocuparía el final del footer: se reserva su altura */}
-      <div className="bg-surface-inverse pb-floating md:pb-0">{footer}</div>
+      {/* Lo fijo inferior (barra móvil / botón de WhatsApp) taparía el final del footer: se reserva su altura */}
+      <div className="bg-surface-inverse pb-floating">{footer}</div>
       {floating}
     </>
   )

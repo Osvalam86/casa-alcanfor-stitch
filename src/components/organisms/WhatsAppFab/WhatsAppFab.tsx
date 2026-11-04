@@ -21,7 +21,7 @@ export function WhatsAppFab({ href, label, bubble, newTabHint }: WhatsAppFabProp
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex size-fab items-center justify-center rounded-full bg-action text-on-action shadow-lg transition-surface hover:bg-accent hover:text-on-accent"
+        className="flex size-fab items-center justify-center rounded-full border-2 border-border-inverse/50 bg-action text-on-action shadow-md transition-surface hover:bg-accent hover:text-on-accent"
       >
         <Icon name="chat" size="3xl" />
         <span className="sr-only">
