@@ -9,10 +9,10 @@ type BusinessData = {
   description: string
   telephone: string
   address: {
-    streetAddress: string
+    streetAddress?: string
     addressLocality: string
     addressRegion: string
-    postalCode: string
+    postalCode?: string
     addressCountry: string
   }
   openingHours: { days: readonly string[]; opens: string; closes: string }

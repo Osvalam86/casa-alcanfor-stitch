@@ -11,7 +11,8 @@ export const brand = {
   monogram: 'CA',
 } as const
 
-// DEMO: dirección, teléfono y horario del bloque "Ven a conocernos" (desktop)
+// DEMO: estructura del bloque "Ven a conocernos" (desktop) con datos ficticios:
+// teléfono de relleno y domicilio solo a nivel municipio, para no apuntar a nadie real
 export const contact = {
   address: 'Zapopan, Jalisco',
   addressNote: '(A solo 12 min de Periférico Norte y Valle Real)',
@@ -35,11 +36,10 @@ export const business = {
   description:
     'Hacienda contemporánea de hospitalidad artesanal y jardines centenarios en el corazón de Zapopan, Jalisco.',
   telephone: '+52 33 0000 0000',
+  // Sin calle ni código postal: el negocio es ficticio
   address: {
-    streetAddress: '',
     addressLocality: 'Zapopan',
     addressRegion: 'Jalisco',
-    postalCode: '',
     addressCountry: 'MX',
   },
   // Horario de visitas guiadas

@@ -20,6 +20,13 @@ dist-ssr
 test-results
 playwright-report
 
+# READMEs de referencia de otros proyectos (consulta local para el README)
+_ref-*.md
+
+# Export de Stitch que no se publica (HTML con datos del diseño y fotos alojadas en Google)
+design/screens/*.html
+design/images/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
