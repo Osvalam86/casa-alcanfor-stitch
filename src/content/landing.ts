@@ -6,36 +6,45 @@
  * Los alt de las imágenes son NUEVOS (redactados a partir del data-alt de Stitch, D8) y se
  * revisaron en QA mirando cada foto: describen lo que se ve, sin repetir el texto que las rodea.
  */
-import eventBaptisms from '@/assets/images/event-baptisms.webp'
-import eventBirthdays from '@/assets/images/event-birthdays.webp'
-import eventCorporate from '@/assets/images/event-corporate.webp'
-import eventShowers from '@/assets/images/event-showers.webp'
-import eventWeddings from '@/assets/images/event-weddings.webp'
-import eventXv from '@/assets/images/event-xv.webp'
-import galleryCocktailBar from '@/assets/images/gallery-cocktail-bar.webp'
-import galleryGardenCeremony from '@/assets/images/gallery-garden-ceremony.webp'
-import galleryGardenNight from '@/assets/images/gallery-garden-night.webp'
-import galleryTableSetting from '@/assets/images/gallery-table-setting.webp'
-import galleryWeddingEntrance from '@/assets/images/gallery-wedding-entrance.webp'
-import galleryXvDance from '@/assets/images/gallery-xv-dance.webp'
-import heroWedding from '@/assets/images/hero-wedding.webp'
-import map from '@/assets/images/map.jpg'
-import spaceGarden from '@/assets/images/space-garden.webp'
-import spaceSalon from '@/assets/images/space-salon.webp'
-import spaceTerrace from '@/assets/images/space-terrace.webp'
+import { images } from '@/assets/images/generated/manifest'
 import type {
   EventItem,
   FaqItem,
   GalleryFilterId,
   GalleryPhoto,
   IconFeatureItem,
+  ImageContent,
   NavItem,
   PricingPlan,
   ProcessStepItem,
+  ResponsiveImage,
   SelectOption,
   SpaceItem,
   Testimonial,
 } from './types'
+
+// Fotos con variantes AVIF (pnpm images); el alt se escribe aquí, mirando cada foto
+const {
+  eventBaptisms,
+  eventBirthdays,
+  eventCorporate,
+  eventShowers,
+  eventWeddings,
+  eventXv,
+  galleryCocktailBar,
+  galleryGardenCeremony,
+  galleryGardenNight,
+  galleryTableSetting,
+  galleryWeddingEntrance,
+  galleryXvDance,
+  heroVertical,
+  map,
+  spaceGarden,
+  spaceSalon,
+  spaceTerrace,
+} = images
+
+const withAlt = (image: ResponsiveImage, alt: string): ImageContent => ({ ...image, alt })
 
 const CONTACT_HREF = '#contacto'
 
@@ -68,12 +77,10 @@ export const hero = {
     { icon: 'verified', label: 'Garantía de precio cerrado' },
     { icon: 'local-florist', label: '1,800 m² de jardines' },
   ],
-  image: {
-    src: heroWedding,
-    alt: 'Novios riendo con sus invitados en un banquete nocturno en el patio empedrado de una hacienda, con arcos de cantera, mesas largas de madera con flores blancas y series de luces colgantes.',
-    width: 1200,
-    height: 655,
-  },
+  image: withAlt(
+    heroVertical,
+    'Invitados brindan al atardecer en una mesa larga con velas, flores blancas y jarrones de barro, en el patio empedrado de una hacienda con arcos de cantera, buganvilias y series de luces.',
+  ),
   imageCard: { eyebrow: 'Jardín principal', title: 'Cenas bajo el dosel centenario' },
 } as const
 
@@ -123,7 +130,7 @@ export const trustBar = {
   ],
 } as const
 
-const eventImage = (src: string, alt: string, height = 437) => ({ src, alt, width: 800, height })
+const eventImage = withAlt
 
 export const events = {
   eyebrow: 'Momentos memorables',
@@ -165,7 +172,6 @@ export const events = {
       image: eventImage(
         eventBaptisms,
         'Comida familiar de día en una mesa larga bajo los arcos de una veranda; al centro, una pareja sostiene a un bebé con ropón blanco entre flores blancas y guías de olivo.',
-        447,
       ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
@@ -250,7 +256,7 @@ export const promise = {
   ] satisfies IconFeatureItem[],
 } as const
 
-const spaceImage = (src: string, alt: string, height = 655) => ({ src, alt, width: 1200, height })
+const spaceImage = withAlt
 
 export const spaces = {
   eyebrow: 'Nuestros espacios',
@@ -285,7 +291,6 @@ export const spaces = {
       image: spaceImage(
         spaceGarden,
         'Jardín de noche con césped, sendero de piedra iluminado, árboles cubiertos de series de luces y un kiosco de hierro con flores, frente a la casona de la hacienda.',
-        670,
       ),
       chips: { capacity: 'Capacidad: 300 pax', area: '900 m²' },
       title: 'Jardín Los Fresnos',
@@ -417,7 +422,7 @@ export const process = {
   ] satisfies ProcessStepItem[],
 } as const
 
-const galleryImage = (src: string, alt: string) => ({ src, alt, width: 800, height: 437 })
+const galleryImage = withAlt
 
 export const gallery = {
   eyebrow: 'Galería fotográfica',
@@ -644,7 +649,7 @@ export const location = {
     phone: 'Atención telefónica y WhatsApp',
   },
   map: {
-    image: { src: map, alt: '', width: 800, height: 800 },
+    image: withAlt(map, ''),
     label: 'Zapopan Poniente · Fácil acceso vehicular',
     link: 'Abrir GPS',
   },

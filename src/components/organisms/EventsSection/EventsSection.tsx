@@ -9,10 +9,19 @@ type EventEntry = {
   title: string
   description: string
   badge: string
-  image: { src: string; alt: string; width: number; height: number }
+  image: { src: string; alt: string; srcSet?: string; width: number; height: number }
   linkContext: string
   href: string
 }
+
+/**
+ * Ancho con que se dibuja cada foto. La caja de la tarjeta tiene alto fijo y la foto (≈1.84:1)
+ * la cubre con object-cover, así que se dibuja a max(ancho de la caja, alto × 1.84):
+ * - móvil: tarjeta de 17.5rem y h-44 (11rem) → gana el alto: 11 × 1.84 = 20.25rem
+ * - md en adelante: h-64 (16rem) → 29.5rem; la caja nunca es más ancha
+ *   (md: (100vw − 5rem) / 2 < 29.5rem hasta lg; lg: (100vw − 10rem) / 3 ≤ 26.67rem con el tope de 90rem)
+ */
+const CARD_IMAGE_SIZES = '(min-width: 48rem) 29.5rem, 20.25rem'
 
 export type EventsSectionProps = {
   id: string
@@ -62,6 +71,7 @@ export function EventsSection({
                 description={item.description}
                 badge={item.badge}
                 image={item.image}
+                sizes={CARD_IMAGE_SIZES}
                 link={{ label: linkLabel, href: item.href }}
                 linkContext={item.linkContext}
                 onLinkClick={onLinkClick ? (event) => onLinkClick(index, event) : undefined}

@@ -16,13 +16,21 @@ export type HeroProps = {
   primaryCta: { label: string; href: string }
   secondaryCta: { label: string; href: string }
   highlights: readonly { icon: IconName; label: string }[]
-  image: { src: string; alt: string; width: number; height: number }
+  /** Foto vertical recortada a 4:5 (la proporción de la caja) */
+  image: { src: string; alt: string; srcSet?: string; width: number; height: number }
   imageCard: { eyebrow: string; title: string }
   /** Calculador de disponibilidad (organismo compuesto en el template) */
   checker?: ReactNode
   /** Barra de confianza (organismo compuesto en el template) */
   trustBar?: ReactNode
 }
+
+/**
+ * Ancho de la foto: caja de máximo 35rem (max-w-hero-media) centrada.
+ * - hasta lg: 100vw − 3rem del contenedor, con tope de 35rem desde 38rem de viewport
+ * - lg: media rejilla de 12 con gap-8 → (100vw − 6rem − 2rem) / 2, con tope de 35rem desde 78rem
+ */
+const HERO_IMAGE_SIZES = '(min-width: 78rem) 35rem, (min-width: 64rem) calc(50vw - 4rem), (min-width: 38rem) 35rem, calc(100vw - 3rem)'
 
 export function Hero({
   id,
@@ -91,11 +99,12 @@ export function Hero({
             <div className="relative mx-auto aspect-4/5 max-w-hero-media overflow-hidden rounded-t-full rounded-b-2xl border-4 border-surface-raised/60 bg-surface-muted shadow-2xl">
               <Image
                 src={image.src}
+                srcSet={image.srcSet}
+                sizes={HERO_IMAGE_SIZES}
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
                 loading="eager"
-                fetchPriority="high"
               />
               <div
                 aria-hidden="true"

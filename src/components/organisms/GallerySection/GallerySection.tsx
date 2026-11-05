@@ -11,8 +11,26 @@ type Photo = {
   caption: string
   aspect: 'portrait' | 'square'
   wide?: boolean
-  image: { src: string; alt: string; width: number; height: number }
+  image: { src: string; alt: string; srcSet?: string; width: number; height: number }
 }
+
+/*
+ * Ancho con que se dibuja cada foto. Ancho de columna (contenedor: 100vw − 3rem; desde lg, min(100vw, 90rem) − 6rem):
+ * - móvil: 2 columnas con gap-3 → (100vw − 3.75rem) / 2
+ * - md: 3 columnas con gap-6 → (100vw − 6rem) / 3
+ * - lg: 4 columnas con gap-6 → (100vw − 10.5rem) / 4; tope en 90rem → 19.875rem
+ * - anchas (md:col-span-2): dos columnas y un gap
+ * Las fotos (≈1.84:1) cubren cajas más altas con object-cover y se dibujan a alto × 1.84:
+ * - cuadrada (todas en móvil): columna × 1.84
+ * - vertical 3:4 (md en adelante): columna × 4/3 × 1.84 = columna × 2.4533
+ */
+const PHOTO_SIZES = {
+  portrait:
+    '(min-width: 90rem) 48.8rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.6134), (min-width: 48rem) calc((100vw - 6rem) * 0.8178), calc((100vw - 3.75rem) * 0.92)',
+  square:
+    '(min-width: 90rem) 36.6rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.46), (min-width: 48rem) calc((100vw - 6rem) * 0.6134), calc((100vw - 3.75rem) * 0.92)',
+  wide: '(min-width: 90rem) 75.9rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.92 + 2.76rem), (min-width: 48rem) calc((100vw - 6rem) * 1.2267 + 2.76rem), calc((100vw - 3.75rem) * 0.92)',
+} as const
 
 export type GallerySectionProps = {
   id: string
@@ -76,7 +94,12 @@ export function GallerySection({
         <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
           {photos.map((photo) => (
             <li key={photo.caption} hidden={!isVisible(photo)} className={cn(photo.wide && 'md:col-span-2')}>
-              <GalleryItem image={photo.image} caption={photo.caption} aspect={photo.aspect} />
+              <GalleryItem
+                image={photo.image}
+                sizes={photo.wide ? PHOTO_SIZES.wide : PHOTO_SIZES[photo.aspect]}
+                caption={photo.caption}
+                aspect={photo.aspect}
+              />
             </li>
           ))}
         </ul>

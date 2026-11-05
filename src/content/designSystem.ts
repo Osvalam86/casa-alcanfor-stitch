@@ -4,9 +4,9 @@
  * y, para los ejemplos de componentes, de la pantalla desktop.
  * Mayúsculas normalizadas al uso del español en QA (salvo nombres propios y términos técnicos).
  */
-import eventWeddings from '@/assets/images/event-weddings.webp'
-import galleryGardenNight from '@/assets/images/gallery-garden-night.webp'
-import heroWedding from '@/assets/images/hero-wedding.webp'
+import { images } from '@/assets/images/generated/manifest'
+
+const { eventWeddings, galleryGardenNight, heroVertical } = images
 
 export const designSystem = {
   meta: {
@@ -124,8 +124,8 @@ export const designSystem = {
     typographyAtomsTitle: 'Títulos, texto y antetítulos',
     imagesTitle: 'Imagen y arco de hacienda',
     image: {
-      src: heroWedding,
-      alt: 'Novios riendo con sus invitados en un banquete nocturno en el patio empedrado de una hacienda, con arcos de cantera, mesas largas de madera con flores blancas y series de luces colgantes.',
+      ...heroVertical,
+      alt: 'Invitados brindan al atardecer en una mesa larga con velas, flores blancas y jarrones de barro, en el patio empedrado de una hacienda con arcos de cantera, buganvilias y series de luces.',
     },
     dividersTitle: 'Separadores y carga',
     spinnerLabel: 'Cargando',
@@ -182,7 +182,7 @@ export const designSystem = {
         'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
       badge: 'Banquete & civil',
       image: {
-        src: eventWeddings,
+        ...eventWeddings,
         alt: 'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       },
       link: { label: 'Ver detalles y fotos', href: '/?galeria=bodas#galeria' },
@@ -232,7 +232,7 @@ export const designSystem = {
     ],
     gallery: {
       image: {
-        src: galleryGardenNight,
+        ...galleryGardenNight,
         alt: 'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
       },
       caption: 'Jardín bajo las estrellas',

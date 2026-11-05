@@ -133,6 +133,7 @@ pnpm lint         # ESLint + jsx-a11y
 pnpm typecheck    # tsc --noEmit (incluye e2e)
 pnpm test:e2e     # Playwright + axe
 pnpm icons        # regenera favicon e íconos
+pnpm images       # regenera las variantes AVIF de las fotos y su manifiesto (sharp)
 ```
 
 ## 13. Excepciones aprobadas

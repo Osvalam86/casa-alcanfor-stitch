@@ -16,7 +16,7 @@ type Space = {
   id: string
   tab: { label: string; icon: IconName }
   imageBadge: string
-  image: { src: string; alt: string; width: number; height: number }
+  image: { src: string; alt: string; srcSet?: string; width: number; height: number }
   chips: { capacity: string; area: string }
   title: string
   description: string
@@ -36,6 +36,15 @@ export type SpacesTabsProps = {
 }
 
 /** Patrón APG de pestañas con activación automática (la pestaña activa vive en la URL). */
+/**
+ * Ancho con que se dibuja la foto del panel (≈1.84:1, object-cover en una caja de alto fijo):
+ * max(ancho de la caja, alto × 1.84).
+ * - móvil: h-56 (14rem) → 25.75rem; la caja (100vw − 3rem) gana desde 28.75rem de viewport
+ * - md: h-80 (20rem) → 36.8rem; la caja (≥ 45rem) siempre gana
+ * - lg: h-panel-media (34.375rem) → 63.25rem; la caja (7/12 del contenedor, ≤ 49rem) nunca gana
+ */
+const PANEL_IMAGE_SIZES = '(min-width: 64rem) 63.25rem, (min-width: 28.75rem) calc(100vw - 3rem), 25.75rem'
+
 export function SpacesTabs({ id, eyebrow, title, description, tabsLabel, items, selectedId, onSelect }: SpacesTabsProps) {
   const baseId = useId()
   const titleId = `${baseId}-title`
@@ -94,7 +103,14 @@ export function SpacesTabs({ id, eyebrow, title, description, tabsLabel, items, 
             className="grid grid-cols-1 items-center overflow-hidden rounded-3xl bg-surface shadow-sm lg:grid-cols-12"
           >
             <div className="relative h-56 overflow-hidden md:h-80 lg:col-span-7 lg:h-panel-media">
-              <Image src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} />
+              <Image
+                src={item.image.src}
+                srcSet={item.image.srcSet}
+                sizes={PANEL_IMAGE_SIZES}
+                alt={item.image.alt}
+                width={item.image.width}
+                height={item.image.height}
+              />
               <div
                 aria-hidden="true"
                 className="absolute inset-0 bg-linear-to-t from-surface-inverse-strong/30 via-transparent to-transparent"

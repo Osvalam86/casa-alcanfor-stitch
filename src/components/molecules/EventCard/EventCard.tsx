@@ -11,7 +11,9 @@ export type EventCardProps = {
   title: string
   description: string
   badge: string
-  image: { src: string; alt: string; width?: number; height?: number }
+  image: { src: string; alt: string; srcSet?: string; width?: number; height?: number }
+  /** Ancho que ocupa la foto según la rejilla del organismo que la contiene */
+  sizes: string
   link: { label: string; href: string }
   /** Contexto oculto del enlace; por defecto, el título */
   linkContext?: string
@@ -26,6 +28,7 @@ export function EventCard({
   description,
   badge,
   image,
+  sizes,
   link,
   linkContext,
   onLinkClick,
@@ -42,6 +45,8 @@ export function EventCard({
       <div className="relative h-44 overflow-hidden md:h-64">
         <Image
           src={image.src}
+          srcSet={image.srcSet}
+          sizes={sizes}
           alt={image.alt}
           width={image.width}
           height={image.height}

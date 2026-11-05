@@ -131,6 +131,22 @@ const statTones = ['sage', 'gold', 'neutral'] as const
 const specIcons: IconName[] = ['groups', 'square-foot', 'mode-fan']
 const processIcons: IconName[] = ['edit-note', 'celebration']
 
+/*
+ * sizes de las muestras con foto: ancho con que se dibuja cada foto
+ * (contenedor: 100vw − 3rem; desde lg, min(100vw, 90rem) − 6rem = C).
+ * - franja con badge (foto 4:5 en caja muy ancha): todo el contenedor
+ * - arco 4:5 (misma proporción que la foto): w-full con tope max-w-xs (20rem)
+ * - tarjeta de evento (foto ≈1.84:1 en caja de alto fijo, object-cover): max(caja, alto × 1.84);
+ *   lg: columna (C − 7rem) / 3 ≤ 25.67rem con h-64 → 29.5rem; md: todo el contenedor;
+ *   móvil: h-44 → 20.25rem hasta que el contenedor lo supera (23.25rem de viewport)
+ * - foto de galería (vertical 3:4 desde md, cuadrada en móvil): columna × 2.4533 / × 1.84
+ */
+const SPECIMEN_WIDE_SIZES = '(min-width: 90rem) 84rem, (min-width: 64rem) calc(100vw - 6rem), calc(100vw - 3rem)'
+const SPECIMEN_ARCH_SIZES = '(min-width: 23rem) 20rem, calc(100vw - 3rem)'
+const SPECIMEN_EVENT_SIZES = '(min-width: 64rem) 29.5rem, (min-width: 23.25rem) calc(100vw - 3rem), 20.25rem'
+const SPECIMEN_GALLERY_SIZES =
+  '(min-width: 90rem) 62.97rem, (min-width: 64rem) calc((100vw - 13rem) * 0.8178), (min-width: 48rem) calc((100vw - 3rem) * 2.4533), calc((100vw - 3rem) * 1.84)'
+
 /* Envoltorios de presentación locales de esta página */
 function DsSection({
   id,
@@ -481,7 +497,14 @@ export function DesignSystemPage() {
                 </Badge>
               </div>
               <div className="relative h-40 overflow-hidden rounded-2xl">
-                <Image src={ds.atoms.image.src} alt="" />
+                <Image
+                  src={ds.atoms.image.src}
+                  srcSet={ds.atoms.image.srcSet}
+                  sizes={SPECIMEN_WIDE_SIZES}
+                  alt=""
+                  width={ds.atoms.image.width}
+                  height={ds.atoms.image.height}
+                />
                 <Badge variant="onImage" dot className="absolute top-4 left-4">
                   {ds.atoms.badges.onImage}
                 </Badge>
@@ -521,7 +544,14 @@ export function DesignSystemPage() {
             </Specimen>
             <Specimen title={ds.atoms.imagesTitle}>
               <div className="mx-auto aspect-4/5 w-full max-w-xs overflow-hidden rounded-t-full rounded-b-2xl border-4 border-surface-raised/60 shadow-2xl">
-                <Image src={ds.atoms.image.src} alt={ds.atoms.image.alt} />
+                <Image
+                  src={ds.atoms.image.src}
+                  srcSet={ds.atoms.image.srcSet}
+                  sizes={SPECIMEN_ARCH_SIZES}
+                  alt={ds.atoms.image.alt}
+                  width={ds.atoms.image.width}
+                  height={ds.atoms.image.height}
+                />
               </div>
             </Specimen>
           </div>
@@ -597,10 +627,10 @@ export function DesignSystemPage() {
 
           <div className="grid gap-space-xl lg:grid-cols-3">
             <Specimen title={ds.molecules.labels.eventCard}>
-              <EventCard {...ds.molecules.eventCard} headingLevel="h4" />
+              <EventCard {...ds.molecules.eventCard} sizes={SPECIMEN_EVENT_SIZES} headingLevel="h4" />
             </Specimen>
             <Specimen title={ds.molecules.labels.gallery}>
-              <GalleryItem {...ds.molecules.gallery} />
+              <GalleryItem {...ds.molecules.gallery} sizes={SPECIMEN_GALLERY_SIZES} />
             </Specimen>
             <Specimen title={ds.molecules.labels.testimonial}>
               <TestimonialCard {...ds.molecules.testimonial} rating={5} />

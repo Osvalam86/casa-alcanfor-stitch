@@ -1,11 +1,17 @@
 import type { IconName } from '@/lib/icons'
 
-export type ImageContent = {
+/** Foto con variantes (de src/assets/images/generated/manifest.ts, pnpm images) */
+export type ResponsiveImage = {
   src: string
-  /** Descriptivo en imágenes de contenido; "" en decorativas */
-  alt: string
+  /** Variantes AVIF por ancho; el `sizes` lo decide el organismo según su rejilla */
+  srcSet: string
   width: number
   height: number
+}
+
+export type ImageContent = ResponsiveImage & {
+  /** Descriptivo en imágenes de contenido; "" en decorativas */
+  alt: string
 }
 
 export type LinkContent = {

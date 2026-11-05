@@ -2,7 +2,9 @@ import { Image } from '@/components/atoms/Image'
 import { cn } from '@/lib/cn'
 
 export type GalleryItemProps = {
-  image: { src: string; alt: string; width?: number; height?: number }
+  image: { src: string; alt: string; srcSet?: string; width?: number; height?: number }
+  /** Ancho que ocupa la foto según la rejilla del organismo que la contiene */
+  sizes: string
   caption: string
   /** Proporción del mosaico desktop */
   aspect?: 'portrait' | 'square'
@@ -13,7 +15,7 @@ export type GalleryItemProps = {
  * Foto con pie. El pie siempre existe en el DOM: visible en móvil (sin hover)
  * y al pasar el mouse en desktop, como en el diseño.
  */
-export function GalleryItem({ image, caption, aspect = 'portrait', className }: GalleryItemProps) {
+export function GalleryItem({ image, sizes, caption, aspect = 'portrait', className }: GalleryItemProps) {
   return (
     <figure
       className={cn(
@@ -24,6 +26,8 @@ export function GalleryItem({ image, caption, aspect = 'portrait', className }: 
     >
       <Image
         src={image.src}
+        srcSet={image.srcSet}
+        sizes={sizes}
         alt={image.alt}
         width={image.width}
         height={image.height}
