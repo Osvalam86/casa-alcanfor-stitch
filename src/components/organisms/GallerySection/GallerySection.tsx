@@ -20,16 +20,16 @@ type Photo = {
  * - md: 3 columnas con gap-6 → (100vw − 6rem) / 3
  * - lg: 4 columnas con gap-6 → (100vw − 10.5rem) / 4; tope en 90rem → 19.875rem
  * - anchas (md:col-span-2): dos columnas y un gap
- * Las fotos (≈1.84:1) cubren cajas más altas con object-cover y se dibujan a alto × 1.84:
- * - cuadrada (todas en móvil): columna × 1.84
- * - vertical 3:4 (md en adelante): columna × 4/3 × 1.84 = columna × 2.4533
+ * Las fotos vienen recortadas a 1:1 (pnpm images), la unión de lo visible en sus celdas:
+ * - cuadrada (todas en móvil, cuadradas y anchas desde md): se dibuja al ancho de la caja
+ * - vertical 3:4 (md en adelante): la foto 1:1 cubre la caja por el alto → columna × 4/3
  */
 const PHOTO_SIZES = {
   portrait:
-    '(min-width: 90rem) 48.8rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.6134), (min-width: 48rem) calc((100vw - 6rem) * 0.8178), calc((100vw - 3.75rem) * 0.92)',
+    '(min-width: 90rem) 26.5rem, (min-width: 64rem) calc((100vw - 10.5rem) / 3), (min-width: 48rem) calc((100vw - 6rem) * 4 / 9), calc((100vw - 3.75rem) / 2)',
   square:
-    '(min-width: 90rem) 36.6rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.46), (min-width: 48rem) calc((100vw - 6rem) * 0.6134), calc((100vw - 3.75rem) * 0.92)',
-  wide: '(min-width: 90rem) 75.9rem, (min-width: 64rem) calc((100vw - 10.5rem) * 0.92 + 2.76rem), (min-width: 48rem) calc((100vw - 6rem) * 1.2267 + 2.76rem), calc((100vw - 3.75rem) * 0.92)',
+    '(min-width: 90rem) 19.875rem, (min-width: 64rem) calc((100vw - 10.5rem) / 4), (min-width: 48rem) calc((100vw - 6rem) / 3), calc((100vw - 3.75rem) / 2)',
+  wide: '(min-width: 90rem) 41.25rem, (min-width: 64rem) calc((100vw - 10.5rem) / 2 + 1.5rem), (min-width: 48rem) calc((100vw - 6rem) * 2 / 3 + 1.5rem), calc((100vw - 3.75rem) / 2)',
 } as const
 
 export type GallerySectionProps = {

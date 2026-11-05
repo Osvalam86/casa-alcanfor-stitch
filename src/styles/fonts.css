@@ -14,3 +14,92 @@
 @import '@fontsource/manrope/latin-500.css';
 @import '@fontsource/manrope/latin-600.css';
 @import '@fontsource/manrope/latin-700.css';
+
+/*
+ * Fuentes de respaldo con métricas ajustadas (evitan el salto de layout al cambiar de fuente).
+ * Mientras cargan EB Garamond y Manrope (font-display: swap), el texto se pinta con Times New Roman
+ * y Arial escaladas para ocupar lo mismo:
+ * - size-adjust: ancho del texto real de la landing con la fuente web ÷ el de la local, por peso y estilo.
+ * - ascent/descent/line-gap-override: métricas de la fuente web (tablas hhea/OS/2 de los .woff de
+ *   @fontsource: EB Garamond 1007/298/0 de 1000; Manrope 2132/600/0 de 2000) ÷ size-adjust.
+ * Si la fuente local no existe (p. ej. Android), la cara falla y se usa el siguiente respaldo de la pila.
+ */
+
+/* EB Garamond → Times New Roman */
+@font-face {
+  font-family: 'EB Garamond Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Times New Roman'), local('TimesNewRomanPSMT');
+  size-adjust: 94.06%;
+  ascent-override: 107.06%;
+  descent-override: 31.68%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'EB Garamond Fallback';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Times New Roman'), local('TimesNewRomanPSMT');
+  size-adjust: 96.59%;
+  ascent-override: 104.26%;
+  descent-override: 30.85%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'EB Garamond Fallback';
+  font-style: italic;
+  font-weight: 400 500;
+  src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT');
+  size-adjust: 86.33%;
+  ascent-override: 116.65%;
+  descent-override: 34.52%;
+  line-gap-override: 0%;
+}
+
+/* Manrope → Arial (400 y 500) y Arial Bold (600 y 700) */
+@font-face {
+  font-family: 'Manrope Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 102.13%;
+  ascent-override: 104.38%;
+  descent-override: 29.37%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 102.64%;
+  ascent-override: 103.86%;
+  descent-override: 29.23%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 98.47%;
+  ascent-override: 108.26%;
+  descent-override: 30.47%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 99.82%;
+  ascent-override: 106.79%;
+  descent-override: 30.05%;
+  line-gap-override: 0%;
+}

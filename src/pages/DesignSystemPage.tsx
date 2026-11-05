@@ -139,13 +139,13 @@ const processIcons: IconName[] = ['edit-note', 'celebration']
  * - tarjeta de evento (foto ≈1.84:1 en caja de alto fijo, object-cover): max(caja, alto × 1.84);
  *   lg: columna (C − 7rem) / 3 ≤ 25.67rem con h-64 → 29.5rem; md: todo el contenedor;
  *   móvil: h-44 → 20.25rem hasta que el contenedor lo supera (23.25rem de viewport)
- * - foto de galería (vertical 3:4 desde md, cuadrada en móvil): columna × 2.4533 / × 1.84
+ * - foto de galería (recortada a 1:1; vertical 3:4 desde md, cuadrada en móvil): columna × 4/3 / columna
  */
 const SPECIMEN_WIDE_SIZES = '(min-width: 90rem) 84rem, (min-width: 64rem) calc(100vw - 6rem), calc(100vw - 3rem)'
 const SPECIMEN_ARCH_SIZES = '(min-width: 23rem) 20rem, calc(100vw - 3rem)'
 const SPECIMEN_EVENT_SIZES = '(min-width: 64rem) 29.5rem, (min-width: 23.25rem) calc(100vw - 3rem), 20.25rem'
 const SPECIMEN_GALLERY_SIZES =
-  '(min-width: 90rem) 62.97rem, (min-width: 64rem) calc((100vw - 13rem) * 0.8178), (min-width: 48rem) calc((100vw - 3rem) * 2.4533), calc((100vw - 3rem) * 1.84)'
+  '(min-width: 90rem) 34.22rem, (min-width: 64rem) calc((100vw - 13rem) * 4 / 9), (min-width: 48rem) calc((100vw - 3rem) * 4 / 3), calc(100vw - 3rem)'
 
 /* Envoltorios de presentación locales de esta página */
 function DsSection({

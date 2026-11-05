@@ -8,6 +8,9 @@ import { expect, test, type Page } from '@playwright/test'
  * con la proporción de los atributos width/height (la del archivo, ya recortado).
  * Además no sobra más de un 25 %: un sizes muy holgado descarga variantes de más.
  * Se resuelve como el navegador: primera condición de media que cumple y su longitud en px.
+ *
+ * Recorte en origen (pnpm images): las fotos de celdas cuadradas llegan ya en 1:1, así que
+ * se dibujan exactamente al ancho de la caja y su sizes es el ancho de la caja.
  */
 
 const PAGES = ['/', '/design-system'] as const
@@ -53,6 +56,9 @@ async function sizesReport(page: Page) {
           hasSrcset: Boolean(img.getAttribute('srcset')),
           hasDimensions: Number.isFinite(ratio) && ratio > 0,
           sizes: img.getAttribute('sizes'),
+          // Celda cuadrada (aspect-ratio 1 / 1 en la caja que la contiene)
+          squareCell: getComputedStyle(img.parentElement!).aspectRatio === '1 / 1',
+          box: box.width,
           drawn: cover ? Math.max(box.width, box.height * ratio) : box.width,
           resolved: img.getAttribute('sizes') ? resolve(img.getAttribute('sizes')!) : null,
         }
@@ -74,6 +80,9 @@ for (const viewport of WIDTHS) {
           expect.soft(image.hasSrcset, `${image.name}: srcset`).toBe(true)
           expect.soft(image.hasDimensions, `${image.name}: width y height`).toBe(true)
           expect.soft(image.sizes, `${image.name}: sizes`).not.toBeNull()
+          if (image.squareCell) {
+            expect.soft(image.drawn, `${image.name}: celda cuadrada, foto recortada a 1:1 (se dibuja al ancho de la caja)`).toBeLessThanOrEqual(image.box + 1)
+          }
           if (image.resolved === null) continue
           expect.soft(image.resolved, `${image.name}: sizes (${image.sizes}) cubre ${image.drawn.toFixed(1)} px dibujados`).toBeGreaterThanOrEqual(image.drawn - 1)
           expect.soft(image.resolved, `${image.name}: sizes no sobra más del 25 % sobre ${image.drawn.toFixed(1)} px`).toBeLessThanOrEqual(image.drawn * 1.25)

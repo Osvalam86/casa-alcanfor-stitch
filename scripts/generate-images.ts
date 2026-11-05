@@ -7,7 +7,13 @@
  *
  * Anchos: 320, 480, 640, 960 y 1280, sin superar nunca el ancho del original;
  * si el original es menor que 1280, se agrega su propio ancho como variante mayor.
- * `aspect` recorta al centro a la proporción de la caja donde se pinta (p. ej. el hero, 4:5).
+ * `aspect` recorta al centro a la proporción de la caja donde se pinta (object-cover centrado).
+ * Criterio: se recorta solo lo que no se ve en ningún ancho de 320 a 1440 px, medido en el build:
+ * - hero: caja 4:5 en la landing → 4:5.
+ * - galería: celdas de 0.75:1 (vertical) a 1:1 (cuadrada); de la foto (≈1.84:1) solo se ve el 54.5 %
+ *   central del ancho en cualquier celda → 1:1, que es la unión de lo visible.
+ * - eventos, espacios y mapa: su caja cambia de proporción con el ancho y en algún ancho se ve la foto
+ *   completa (o casi: eventos dejan fuera ≤ 1.5 %, por debajo del umbral de 5 % que se considera), así que no se recortan.
  */
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
@@ -29,12 +35,12 @@ const SOURCES: Source[] = [
   { file: 'space-garden.webp' },
   { file: 'space-salon.webp' },
   { file: 'space-terrace.webp' },
-  { file: 'gallery-cocktail-bar.webp' },
-  { file: 'gallery-garden-ceremony.webp' },
-  { file: 'gallery-garden-night.webp' },
-  { file: 'gallery-table-setting.webp' },
-  { file: 'gallery-wedding-entrance.webp' },
-  { file: 'gallery-xv-dance.webp' },
+  { file: 'gallery-cocktail-bar.webp', aspect: [1, 1] },
+  { file: 'gallery-garden-ceremony.webp', aspect: [1, 1] },
+  { file: 'gallery-garden-night.webp', aspect: [1, 1] },
+  { file: 'gallery-table-setting.webp', aspect: [1, 1] },
+  { file: 'gallery-wedding-entrance.webp', aspect: [1, 1] },
+  { file: 'gallery-xv-dance.webp', aspect: [1, 1] },
   { file: 'map.jpg' },
 ]
 

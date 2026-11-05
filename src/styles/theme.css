@@ -151,8 +151,9 @@
   --color-focus: var(--focus-ring);
 
   /* Tipografía */
-  --font-serif: 'EB Garamond', ui-serif, Georgia, serif;
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  /* Respaldos con métricas ajustadas (fonts.css) antes de los genéricos */
+  --font-serif: 'EB Garamond', 'EB Garamond Fallback', ui-serif, Georgia, serif;
+  --font-sans: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
 
   --text-*: initial;
   --text-display-hero: 4.5rem;
