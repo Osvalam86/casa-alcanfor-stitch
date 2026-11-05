@@ -4,7 +4,7 @@ import { buildJsonLd } from '../src/lib/seo/jsonld.ts'
 
 /**
  * Metadatos de la sección 8 del CLAUDE.md, generados desde content/:
- * description, theme-color, íconos, manifest, Open Graph, Twitter Card y JSON-LD.
+ * title, description, theme-color, íconos, manifest, Open Graph, Twitter Card y JSON-LD.
  * Lo que depende del dominio (canonical, og:url, URLs absolutas, sitemap) usa
  * VITE_SITE_URL; si está vacía, se omite.
  */
@@ -16,6 +16,8 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
 
   function headTags(): HtmlTagDescriptor[] {
     const tags: HtmlTagDescriptor[] = [
+      // Única fuente del título: seo.title (index.html no lo repite)
+      { tag: 'title', children: seo.title, injectTo: 'head' },
       meta({ name: 'description', content: seo.description }),
       meta({ name: 'theme-color', content: seo.themeColor }),
       link({ rel: 'icon', href: '/favicon.ico', sizes: '32x32' }),

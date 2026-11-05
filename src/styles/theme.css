@@ -62,8 +62,11 @@
   /* Foco: por superficie (se redefine en superficies oscuras) */
   --focus-ring: var(--gold-600); /* 6.16:1 sobre lino, 5.29:1 sobre surface-strong */
 
-  /* Altura del header: la mide useHeaderHeight (ResizeObserver) */
+  /* Altura del header: la mide useMeasuredHeight (ResizeObserver) */
   --header-height: 5rem;
+
+  /* Altura de la franja de aviso sobre el header: también medida (0 sin franja) */
+  --notice-height: 0px;
 
   /* Espacio que ocupan los elementos fijos inferiores (barra móvil o botón de WhatsApp) */
   --floating-offset: calc(4.5rem + env(safe-area-inset-bottom, 0px));
@@ -212,7 +215,7 @@
   --spacing-margin-mobile: 1.5rem;
 
   /* Medidas de layout */
-  --spacing-header: var(--header-height);
+  --spacing-notice: var(--notice-height);
   --spacing-floating: var(--floating-offset);
   --spacing-carousel-card: 17.5rem;
   --spacing-panel-media: 34.375rem;

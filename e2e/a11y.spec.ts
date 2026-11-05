@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { isMobile } from './helpers.ts'
+import { isMobile, tabTo, waitForScrollEnd, waitForStableLayout } from './helpers.ts'
 
 /** Cero violaciones serious o critical (CLAUDE.md §10). */
 async function expectNoSeriousViolations(page: Page) {
@@ -22,8 +22,15 @@ test.describe('axe', () => {
 
   test('landing con errores en el formulario', async ({ page }) => {
     await page.goto('/#contacto')
-    await page.getByRole('button', { name: 'Enviar solicitud' }).press('Enter')
+    await waitForStableLayout(page)
+    // Teclado real: Tab hasta el botón y Enter cuando terminó el scroll que provoca el foco
+    // (locator.press enfoca y pulsa a la vez y deja dos scrolls suaves encimados)
+    await tabTo(page, page.getByRole('button', { name: 'Enviar solicitud' }))
+    await waitForScrollEnd(page)
+    await page.keyboard.press('Enter')
     await expect(page.getByText('Revisa los campos marcados')).toBeVisible()
+    // El foco va al resumen con scroll suave: axe mide target-size solo con la página quieta
+    await waitForScrollEnd(page)
     await expectNoSeriousViolations(page)
   })
 

@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { isMobile, tabTo } from './helpers.ts'
+import { isMobile, tabTo, waitForScrollEnd, waitForStableLayout } from './helpers.ts'
 
 /**
  * Teclado real: solo keyboard.press / keyboard.type. Nunca showModal(), close() ni focus() por script.
@@ -195,6 +195,33 @@ test('formulario vacío: el foco va al resumen y los errores quedan ligados', as
   await page.keyboard.press('Tab')
   await page.keyboard.press('Enter')
   await expect(form.getByLabel('Nombre completo')).toBeFocused()
+})
+
+test('Enter sin esperar al scroll del foco: el resumen de errores queda completo bajo el header', async ({ page }) => {
+  // Desde #contacto el botón de enviar queda bajo lo fijo inferior: al tabularle arranca un scroll suave
+  await page.goto('/#contacto')
+  await waitForStableLayout(page)
+  const form = quote(page)
+  await tabTo(page, form.getByRole('button', { name: 'Enviar solicitud' }))
+  await page.keyboard.press('Enter') // sin esperar a que termine ese scroll
+
+  const summary = form.locator('[aria-labelledby$="-errors"]')
+  await expect(summary).toBeFocused()
+  await waitForScrollEnd(page)
+  const box = await summary.evaluate((element) => {
+    const rect = element.getBoundingClientRect()
+    const header = document.querySelector('header')!.getBoundingClientRect()
+    // Borde superior de lo fijo inferior (barra móvil / botón de WhatsApp)
+    const bottoms = Array.from(document.querySelectorAll<HTMLElement>('body *'))
+      .filter((node) => getComputedStyle(node).position === 'fixed' && node.tagName !== 'DIALOG')
+      .map((node) => node.getBoundingClientRect())
+      .filter((r) => r.height > 0 && r.bottom >= window.innerHeight - 1)
+      .map((r) => r.top)
+    return { top: rect.top, bottom: rect.bottom, headerBottom: header.bottom, freeBottom: Math.min(window.innerHeight, ...bottoms) }
+  })
+  // Inicio del resumen justo bajo el header (±1 px) y el resumen entero a la vista
+  expect(Math.abs(box.top - box.headerBottom)).toBeLessThanOrEqual(1)
+  expect(box.bottom).toBeLessThanOrEqual(box.freeBottom)
 })
 
 test('formulario válido: se envía con teclado y el foco pasa al mensaje de éxito', async ({ page }) => {

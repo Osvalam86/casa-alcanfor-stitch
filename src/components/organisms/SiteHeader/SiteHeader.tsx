@@ -4,7 +4,7 @@ import { Icon } from '@/components/atoms/Icon'
 import { IconButton } from '@/components/atoms/IconButton'
 import { TextLink } from '@/components/atoms/TextLink'
 import { VisuallyHidden } from '@/components/atoms/VisuallyHidden'
-import { useHeaderHeight } from '@/lib/hooks/useHeaderHeight'
+import { useMeasuredHeight } from '@/lib/hooks/useMeasuredHeight'
 import { cn } from '@/lib/cn'
 import { containerClasses } from '@/lib/styles/layout'
 
@@ -34,7 +34,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const headerRef = useRef<HTMLElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  useHeaderHeight(headerRef)
+  useMeasuredHeight(headerRef, '--header-height')
 
   // Al cerrarse, el <dialog> modal devuelve el foco al botón que lo abrió (comportamiento nativo)
   function closeMenu() {
@@ -44,7 +44,7 @@ export function SiteHeader({
   return (
     <header
       ref={headerRef}
-      className="fixed inset-x-0 top-0 z-50 border-b border-border bg-surface-header/95 backdrop-blur-md"
+      className="sticky top-0 z-50 border-b border-border bg-surface-header/95 backdrop-blur-md"
     >
       <div className={cn(containerClasses, 'flex h-16 items-center justify-between gap-6 lg:h-20')}>
         {/* Sin aria-label: el nombre parte del texto visible de la marca (2.5.3) y suma el destino oculto */}

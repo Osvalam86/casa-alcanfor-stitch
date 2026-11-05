@@ -22,7 +22,8 @@ async function walkFocus(page: Page, key: 'Tab' | 'Shift+Tab') {
   for (let i = 0; i < 400; i += 1) {
     await page.keyboard.press(key)
     // El desplazamiento por foco es suave (scroll-behavior: smooth): se mide al terminar
-    await waitForScrollEnd(page, 150)
+    // Arranque corto: la mayoría de los Tab no desplazan y se recorren cientos de elementos
+    await waitForScrollEnd(page, { startTimeoutMs: 150, quietMs: 150 })
     const report = await obscuringReport(page)
     if (!report) continue
     visited += 1
@@ -33,6 +34,19 @@ async function walkFocus(page: Page, key: 'Tab' | 'Shift+Tab') {
     if (back && i > 0) break
   }
   return { problems, visited }
+}
+
+/**
+ * Franja de aviso + header sticky, con la página arriba (cuando ambos se ven juntos):
+ * no ocupan más de un tercio de la altura del viewport.
+ */
+async function expectTopChromeWithinThird(page: Page) {
+  await page.goto('/')
+  const { stacked, viewport } = await page.evaluate(() => ({
+    stacked: document.querySelector('header')!.getBoundingClientRect().bottom - document.querySelector('aside')!.getBoundingClientRect().top,
+    viewport: window.innerHeight,
+  }))
+  expect(stacked).toBeLessThanOrEqual(viewport / 3)
 }
 
 test.describe('320 px', () => {
@@ -48,6 +62,9 @@ test.describe('320 px', () => {
     const forward = await walkFocus(page, 'Tab')
     expect(forward.visited).toBeGreaterThan(50)
     expect(forward.problems).toEqual([])
+  })
+  test('franja de aviso + header: máximo un tercio de la pantalla', async ({ page }) => {
+    await expectTopChromeWithinThird(page)
   })
 })
 
@@ -80,6 +97,9 @@ test.describe('zoom al 200 %', () => {
     const forward = await walkFocus(page, 'Tab')
     expect(forward.problems).toEqual([])
   })
+  test('franja de aviso + header: máximo un tercio de la pantalla', async ({ page }) => {
+    await expectTopChromeWithinThird(page)
+  })
 })
 
 test.describe('prefers-reduced-motion: reduce', () => {
@@ -101,6 +121,31 @@ test.describe('prefers-reduced-motion: reduce', () => {
     await page.getByRole('link', { name: /Ver detalles y fotos de XV años/ }).press('Enter')
     expect(Math.abs(await offsetBelowHeader(page.locator('#galeria')))).toBeLessThanOrEqual(1)
   })
+})
+
+test('aviso de proyecto conceptual: estático arriba del header, que queda pegado al desplazar', async ({ page }) => {
+  await page.goto('/')
+  const notice = page.getByRole('complementary', { name: 'Aviso' })
+  await expect(notice).toHaveText('Proyecto conceptual · Negocio, datos y reseñas ficticios')
+
+  // Arriba: la franja ocupa el borde superior y el header empieza justo debajo
+  const top = await page.evaluate(() => {
+    const aside = document.querySelector('aside')!.getBoundingClientRect()
+    const header = document.querySelector('header')!.getBoundingClientRect()
+    return { asideTop: aside.top, gap: header.top - aside.bottom }
+  })
+  expect(top.asideTop).toBe(0)
+  expect(Math.abs(top.gap)).toBeLessThanOrEqual(1)
+
+  // Desplazada: la franja se va con el scroll (no es fija) y el header queda en el borde
+  await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }))
+  await waitForScrollEnd(page, { startTimeoutMs: 300 })
+  const scrolled = await page.evaluate(() => ({
+    asideBottom: document.querySelector('aside')!.getBoundingClientRect().bottom,
+    headerTop: document.querySelector('header')!.getBoundingClientRect().top,
+  }))
+  expect(scrolled.asideBottom).toBeLessThanOrEqual(0)
+  expect(Math.abs(scrolled.headerTop)).toBeLessThanOrEqual(1)
 })
 
 test.describe('foco no tapado en todo el recorrido (2.4.11)', () => {

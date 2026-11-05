@@ -28,6 +28,17 @@
   }
 
   /*
+   * El header es sticky y vive dentro de su propio scroll-padding-top: sin esto, el navegador
+   * cree que lo tapa y, al enfocar algo dentro (p. ej. el botón del menú cuando el <dialog>
+   * le devuelve el foco), desplaza la página y cancela el scroll suave hacia el ancla.
+   * El margen negativo anula ese padding solo para el header, que siempre está a la vista.
+   */
+  header,
+  header * {
+    scroll-margin-top: calc(-1 * var(--header-height));
+  }
+
+  /*
    * Con un <dialog> modal abierto, la página de fondo no se desplaza.
    * scrollbar-gutter reserva el canal de la barra: al ocultarla no cambia el ancho,
    * el texto no se reacomoda y el salto a un ancla desde el menú no se desfasa.

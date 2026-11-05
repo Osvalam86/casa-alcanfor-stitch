@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { isMobile, offsetBelowHeader, waitForScrollEnd } from './helpers.ts'
+import { isMobile, offsetBelowHeader, waitForScrollEnd, waitForStableLayout } from './helpers.ts'
 
 /**
  * Cada enlace del header deja su sección justo bajo el header (±1 px),
@@ -17,9 +17,10 @@ const STARTS = ['arriba', 'desplazada'] as const
 
 async function prepare(page: Page, start: (typeof STARTS)[number]) {
   await page.goto('/')
+  await waitForStableLayout(page)
   if (start === 'desplazada') {
     await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight * 0.6, behavior: 'instant' }))
-    await waitForScrollEnd(page)
+    await waitForStableLayout(page)
   }
 }
 
@@ -78,7 +79,7 @@ for (const start of STARTS) {
 
 test('carga directa con hash y filtro (?galeria=bodas#galeria)', async ({ page }) => {
   await page.goto('/?galeria=bodas#galeria')
-  await waitForScrollEnd(page)
+  await waitForStableLayout(page)
   await expect(page.getByRole('button', { name: 'Bodas', pressed: true })).toBeVisible()
   expect(Math.abs(await offsetBelowHeader(page.locator('#galeria')))).toBeLessThanOrEqual(1)
 })

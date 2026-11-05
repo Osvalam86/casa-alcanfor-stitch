@@ -3,32 +3,57 @@ import { expect, type Locator, type Page } from '@playwright/test'
 export const isMobile = (page: Page) => (page.viewportSize()?.width ?? 0) < 768
 
 /**
- * Espera a que el desplazamiento (incluido el suave) se detenga.
- * Se mide por tiempo y no por cuadros: con la CPU ocupada el scroll suave puede tardar en arrancar
- * o el hilo principal puede leer el mismo scrollY varios cuadros seguidos.
- * Termina con scrollend o tras `quietMs` sin cambios.
+ * Espera a que el desplazamiento (incluido el suave) termine antes de medir.
+ *
+ * Con varios workers la CPU va cargada: el scroll suave puede tardar en arrancar o detenerse
+ * unos cientos de ms a mitad de camino. Si solo se esperaba silencio, la espera terminaba antes
+ * de tiempo (la causa de la intermitencia). Ahora hay dos fases:
+ * 1. Arranque: hasta `startTimeoutMs` para ver el primer movimiento. Si no hay ninguno,
+ *    no hacía falta desplazar y termina.
+ * 2. Final: una vez que se movió, la señal es scrollend (el navegador lo dispara al terminar
+ *    el scroll suave). El silencio de `quietMs` queda solo como respaldo, largo a propósito.
+ *    Luego espera dos cuadros para que el layout quede asentado.
+ * Un scrollend de un desplazamiento anterior se ignora porque llega antes del primer movimiento.
  */
-export async function waitForScrollEnd(page: Page, quietMs = 350) {
+export async function waitForScrollEnd(page: Page, { startTimeoutMs = 1500, quietMs = 1000 } = {}) {
   await page.evaluate(
-    (quiet) =>
+    ({ startTimeout, quiet }) =>
       new Promise<void>((resolve) => {
+        const start = performance.now()
         let last = window.scrollY
-        let lastChange = performance.now()
-        const done = () => {
-          window.removeEventListener('scrollend', done)
+        let lastChange = start
+        let moved = false
+        const finish = () => {
+          window.removeEventListener('scrollend', onScrollEnd)
           clearInterval(timer)
-          resolve()
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+        }
+        const onScrollEnd = () => {
+          if (moved) finish()
         }
         const timer = setInterval(() => {
+          const now = performance.now()
           if (Math.abs(window.scrollY - last) >= 0.5) {
             last = window.scrollY
-            lastChange = performance.now()
-          } else if (performance.now() - lastChange >= quiet) done()
+            lastChange = now
+            moved = true
+          } else if (moved ? now - lastChange >= quiet : now - start >= startTimeout) {
+            finish()
+          }
         }, 25)
-        window.addEventListener('scrollend', done)
+        window.addEventListener('scrollend', onScrollEnd)
       }),
-    quietMs,
+    { startTimeout: startTimeoutMs, quiet: quietMs },
   )
+}
+
+/**
+ * Página lista para medir posiciones: fuentes cargadas (el cambio de fuente reacomoda el texto
+ * y mueve las secciones) y sin desplazamiento pendiente.
+ */
+export async function waitForStableLayout(page: Page) {
+  await page.evaluate(() => document.fonts.ready.then(() => undefined))
+  await waitForScrollEnd(page, { startTimeoutMs: 100 })
 }
 
 /** Distancia entre el borde superior de un elemento y el borde inferior del header fijo. */
@@ -64,9 +89,11 @@ export async function obscuringReport(page: Page) {
     const active = document.activeElement as HTMLElement | null
     if (!active || active === document.body || active.closest('dialog')) return null
     const rect = active.getBoundingClientRect()
+    // El header es sticky: tapa igual que lo fijo cuando está pegado arriba
+    const isPinned = (element: Element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position)
     const fixedAncestor = (element: Element | null) => {
       for (let node = element; node && node !== document.body; node = node.parentElement) {
-        if (getComputedStyle(node).position === 'fixed') return node as HTMLElement
+        if (isPinned(node)) return node as HTMLElement
       }
       return null
     }
@@ -90,11 +117,15 @@ export async function obscuringReport(page: Page) {
       }
     }
     // Espacio libre entre lo fijo de arriba (header) y lo fijo de abajo (barra / botón flotante)
-    const fixedRects = Array.from(document.querySelectorAll<HTMLElement>('body *'))
-      .filter((element) => getComputedStyle(element).position === 'fixed' && !element.contains(active) && element.tagName !== 'DIALOG')
-      .map((element) => element.getBoundingClientRect())
-      .filter((r) => r.width > 0 && r.height > 0)
-    const topEdge = Math.max(0, ...fixedRects.filter((r) => r.top <= 0).map((r) => r.bottom))
+    const pinned = Array.from(document.querySelectorAll<HTMLElement>('body *')).filter(
+      (element) => isPinned(element) && !element.contains(active) && element.tagName !== 'DIALOG',
+    )
+    const fixedRects = pinned.map((element) => element.getBoundingClientRect()).filter((r) => r.width > 0 && r.height > 0)
+    // Lo sticky siempre acota arriba (aunque la franja de aviso aún lo empuje hacia abajo)
+    const stickyBottoms = pinned
+      .filter((element) => getComputedStyle(element).position === 'sticky')
+      .map((element) => element.getBoundingClientRect().bottom)
+    const topEdge = Math.max(0, ...fixedRects.filter((r) => r.top <= 0).map((r) => r.bottom), ...stickyBottoms)
     const bottomEdge = Math.min(window.innerHeight, ...fixedRects.filter((r) => r.bottom >= window.innerHeight - 1).map((r) => r.top))
     const name = (active.getAttribute('aria-label') || active.textContent || active.id || active.tagName).trim().slice(0, 60)
     return {

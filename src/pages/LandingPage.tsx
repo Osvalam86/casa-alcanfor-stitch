@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from 'react'
 import { SkipLink } from '@/components/atoms/SkipLink'
 import { BrandLockup } from '@/components/molecules/BrandLockup'
 import { AvailabilityChecker, type AvailabilityCheckerValues } from '@/components/organisms/AvailabilityChecker'
+import { ConceptBanner } from '@/components/organisms/ConceptBanner'
 import { ContactSection } from '@/components/organisms/ContactSection'
 import { CtaBanner } from '@/components/organisms/CtaBanner'
 import { EventsSection } from '@/components/organisms/EventsSection'
@@ -41,7 +42,7 @@ import {
   testimonials,
   trustBar,
 } from '@/content/landing'
-import { brand, contact, ui } from '@/content/site'
+import { brand, conceptNotice, contact, ui } from '@/content/site'
 import { useFocusNotObscured } from '@/lib/hooks/useFocusNotObscured'
 import { useInitialHashScroll } from '@/lib/hooks/useInitialHashScroll'
 import { useQuoteForm } from '@/lib/hooks/useQuoteForm'
@@ -106,6 +107,7 @@ export function LandingPage() {
   return (
     <LandingTemplate
       skipLink={<SkipLink targetId="main">{ui.skipLink}</SkipLink>}
+      notice={<ConceptBanner label={conceptNotice.label} text={conceptNotice.text} />}
       header={
         <SiteHeader
           brand={brandLockup}

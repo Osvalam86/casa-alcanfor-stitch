@@ -93,8 +93,17 @@ export function QuoteForm({
   const errorFor = (field: Exclude<QuoteField, 'comments'>) =>
     invalidFields.includes(field) ? copy.errors[field] : undefined
 
+  /*
+   * Resumen de errores: foco y desplazamiento explícito al inicio (bajo el header, por scroll-padding).
+   * Con block 'nearest' no se lanzaba un scroll nuevo si el resumen ya asomaba, y un scroll suave
+   * en curso (el del foco al botón de enviar) lo dejaba a medias bajo el header.
+   * El comportamiento (suave o instantáneo) lo decide scroll-behavior según prefers-reduced-motion.
+   */
   useEffect(() => {
-    if (errorAttempt > 0) summaryRef.current?.focus()
+    if (errorAttempt === 0) return
+    const summary = summaryRef.current
+    summary?.focus({ preventScroll: true })
+    summary?.scrollIntoView({ block: 'start' })
   }, [errorAttempt])
 
   useEffect(() => {

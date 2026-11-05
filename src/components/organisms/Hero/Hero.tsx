@@ -39,8 +39,9 @@ export function Hero({
 }: HeroProps) {
   const titleId = useId()
 
+  // scroll-mt-notice: el ancla de inicio sube también la franja de aviso (vuelve al tope)
   return (
-    <section id={id} aria-labelledby={titleId} className="relative overflow-hidden bg-surface pt-6 pb-16 lg:pb-32">
+    <section id={id} aria-labelledby={titleId} className="relative scroll-mt-notice overflow-hidden bg-surface pt-6 pb-16 lg:pb-32">
       {/* Brillos ambientales decorativos */}
       <div
         aria-hidden="true"

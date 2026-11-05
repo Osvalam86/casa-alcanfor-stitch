@@ -51,7 +51,8 @@ export const business = {
 export const seo = {
   title: 'Casa Alcanfor · Jardín & salón de eventos en Zapopan',
   description:
-    'Bodas, XV años, bautizos y eventos corporativos que se viven sin preocupaciones. Espacios de ensueño, un coordinador contigo de principio a fin y precio cerrado desde el primer día.',
+    // Máximo 150 caracteres (también og:description y twitter:description)
+    'Bodas, XV años, bautizos y eventos corporativos en Zapopan. Jardín y salón con coordinador de principio a fin y precio cerrado desde el primer día.',
   locale: 'es_MX',
   themeColor: '#2f3e36',
   ogImage: {
@@ -60,6 +61,13 @@ export const seo = {
     height: 630,
     alt: 'Casa Alcanfor, jardín y salón de eventos en Zapopan: banquete nocturno bajo arcos de cantera.',
   },
+} as const
+
+/** Aviso de pieza de portafolio: franja estática arriba del header. */
+export const conceptNotice = {
+  // Nombre del landmark <aside>
+  label: 'Aviso',
+  text: 'Proyecto conceptual · Negocio, datos y reseñas ficticios',
 } as const
 
 /** Textos de interfaz que no son contenido editorial (accesibilidad y estados). */

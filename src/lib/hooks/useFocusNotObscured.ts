@@ -12,9 +12,11 @@ import { useEffect } from 'react'
  */
 export function useFocusNotObscured() {
   useEffect(() => {
+    // El header es sticky: cuenta como fijo (desplazar la página no lo mueve mientras está pegado)
     function isInsideFixed(element: Element) {
       for (let node: Element | null = element; node && node !== document.body; node = node.parentElement) {
-        if (getComputedStyle(node).position === 'fixed') return true
+        const { position } = getComputedStyle(node)
+        if (position === 'fixed' || position === 'sticky') return true
       }
       return false
     }
