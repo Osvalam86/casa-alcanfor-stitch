@@ -14,6 +14,7 @@
  *   central del ancho en cualquier celda → 1:1, que es la unión de lo visible.
  * - eventos, espacios y mapa: su caja cambia de proporción con el ancho y en algún ancho se ve la foto
  *   completa (o casi: eventos dejan fuera ≤ 1.5 %, por debajo del umbral de 5 % que se considera), así que no se recortan.
+ * - eventos, además: miniatura cuadrada de la tarjeta compacta (móvil) → recorte 1:1 aparte (`-square`).
  */
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
@@ -22,16 +23,18 @@ import sharp from 'sharp'
 const WIDTHS = [320, 480, 640, 960, 1280]
 const AVIF = { quality: 55, effort: 6 } as const
 
-type Source = { file: string; aspect?: [number, number] }
+/** `name`: nombre de salida cuando una misma foto se recorta a más de una proporción */
+type Source = { file: string; name?: string; aspect?: [number, number] }
+
+/** Eventos: la foto completa (tarjeta vertical) y un recorte 1:1 (miniatura de la tarjeta compacta en móvil) */
+const EVENT_FILES = ['event-weddings', 'event-xv', 'event-baptisms', 'event-birthdays', 'event-corporate', 'event-showers']
 
 const SOURCES: Source[] = [
   { file: 'hero-vertical.png', aspect: [4, 5] },
-  { file: 'event-weddings.webp' },
-  { file: 'event-xv.webp' },
-  { file: 'event-baptisms.webp' },
-  { file: 'event-birthdays.webp' },
-  { file: 'event-corporate.webp' },
-  { file: 'event-showers.webp' },
+  ...EVENT_FILES.flatMap((name): Source[] => [
+    { file: `${name}.webp` },
+    { file: `${name}.webp`, name: `${name}-square`, aspect: [1, 1] },
+  ]),
   { file: 'space-garden.webp' },
   { file: 'space-salon.webp' },
   { file: 'space-terrace.webp' },
@@ -65,7 +68,7 @@ const imports: string[] = []
 const entries: string[] = []
 
 for (const source of SOURCES) {
-  const name = baseName(source.file)
+  const name = source.name ?? baseName(source.file)
   const id = camel(name)
   const input = sharp(`${sourceDir}${source.file}`)
   const meta = await input.metadata()

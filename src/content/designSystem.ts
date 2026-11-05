@@ -6,7 +6,7 @@
  */
 import { images } from '@/assets/images/generated/manifest'
 
-const { eventWeddings, galleryGardenNight, heroVertical } = images
+const { eventWeddings, eventWeddingsSquare, galleryGardenNight, heroVertical } = images
 
 export const designSystem = {
   meta: {
@@ -183,6 +183,7 @@ export const designSystem = {
       badge: 'Banquete & civil',
       image: {
         ...eventWeddings,
+        square: eventWeddingsSquare,
         alt: 'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       },
       link: { label: 'Ver detalles y fotos', href: '/?galeria=bodas#galeria' },

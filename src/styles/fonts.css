@@ -22,7 +22,9 @@
  * - size-adjust: ancho del texto real de la landing con la fuente web ÷ el de la local, por peso y estilo.
  * - ascent/descent/line-gap-override: métricas de la fuente web (tablas hhea/OS/2 de los .woff de
  *   @fontsource: EB Garamond 1007/298/0 de 1000; Manrope 2132/600/0 de 2000) ÷ size-adjust.
- * Si la fuente local no existe (p. ej. Android), la cara falla y se usa el siguiente respaldo de la pila.
+ * Si la fuente local no existe, la cara falla y se usa el siguiente respaldo de la pila:
+ * - Windows y macOS: Times New Roman y Arial ("… Fallback")
+ * - Android (sin esas fuentes): Noto Serif y Roboto ("… Fallback Android"), al final de este archivo
  */
 
 /* EB Garamond → Times New Roman */
@@ -101,5 +103,91 @@
   size-adjust: 99.82%;
   ascent-override: 106.79%;
   descent-override: 30.05%;
+  line-gap-override: 0%;
+}
+
+/*
+ * Android: Noto Serif (por EB Garamond) y Roboto (por Manrope), fuentes del sistema.
+ * Mismo método: size-adjust medido con el texto de la landing contra los archivos de @fontsource/roboto
+ * y @fontsource/noto-serif 5.3.0; overrides con las métricas de EB Garamond y Manrope ÷ size-adjust.
+ * Noto Serif no tiene peso 500 en Android: se usa la regular. Roboto 600 se pinta con la negrita.
+ */
+
+/* EB Garamond → Noto Serif */
+@font-face {
+  font-family: 'EB Garamond Fallback Android';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Serif'), local('NotoSerif-Regular');
+  size-adjust: 79.63%;
+  ascent-override: 126.46%;
+  descent-override: 37.42%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'EB Garamond Fallback Android';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Noto Serif'), local('NotoSerif-Regular');
+  size-adjust: 80.42%;
+  ascent-override: 125.22%;
+  descent-override: 37.06%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'EB Garamond Fallback Android';
+  font-style: italic;
+  font-weight: 400 500;
+  src: local('Noto Serif Italic'), local('NotoSerif-Italic');
+  size-adjust: 74.82%;
+  ascent-override: 134.59%;
+  descent-override: 39.83%;
+  line-gap-override: 0%;
+}
+
+/* Manrope → Roboto */
+@font-face {
+  font-family: 'Manrope Fallback Android';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular');
+  size-adjust: 102.5%;
+  ascent-override: 104%;
+  descent-override: 29.27%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback Android';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium');
+  size-adjust: 103.33%;
+  ascent-override: 103.16%;
+  descent-override: 29.03%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback Android';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 104.62%;
+  ascent-override: 101.89%;
+  descent-override: 28.68%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback Android';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 106.32%;
+  ascent-override: 100.26%;
+  descent-override: 28.22%;
   line-gap-override: 0%;
 }

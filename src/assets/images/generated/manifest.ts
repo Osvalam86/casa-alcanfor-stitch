@@ -7,26 +7,38 @@ import eventWeddings320 from './event-weddings-320.avif'
 import eventWeddings480 from './event-weddings-480.avif'
 import eventWeddings640 from './event-weddings-640.avif'
 import eventWeddings800 from './event-weddings-800.avif'
+import eventWeddingsSquare320 from './event-weddings-square-320.avif'
+import eventWeddingsSquare436 from './event-weddings-square-436.avif'
 import eventXv320 from './event-xv-320.avif'
 import eventXv480 from './event-xv-480.avif'
 import eventXv640 from './event-xv-640.avif'
 import eventXv800 from './event-xv-800.avif'
+import eventXvSquare320 from './event-xv-square-320.avif'
+import eventXvSquare436 from './event-xv-square-436.avif'
 import eventBaptisms320 from './event-baptisms-320.avif'
 import eventBaptisms480 from './event-baptisms-480.avif'
 import eventBaptisms640 from './event-baptisms-640.avif'
 import eventBaptisms800 from './event-baptisms-800.avif'
+import eventBaptismsSquare320 from './event-baptisms-square-320.avif'
+import eventBaptismsSquare447 from './event-baptisms-square-447.avif'
 import eventBirthdays320 from './event-birthdays-320.avif'
 import eventBirthdays480 from './event-birthdays-480.avif'
 import eventBirthdays640 from './event-birthdays-640.avif'
 import eventBirthdays800 from './event-birthdays-800.avif'
+import eventBirthdaysSquare320 from './event-birthdays-square-320.avif'
+import eventBirthdaysSquare436 from './event-birthdays-square-436.avif'
 import eventCorporate320 from './event-corporate-320.avif'
 import eventCorporate480 from './event-corporate-480.avif'
 import eventCorporate640 from './event-corporate-640.avif'
 import eventCorporate800 from './event-corporate-800.avif'
+import eventCorporateSquare320 from './event-corporate-square-320.avif'
+import eventCorporateSquare436 from './event-corporate-square-436.avif'
 import eventShowers320 from './event-showers-320.avif'
 import eventShowers480 from './event-showers-480.avif'
 import eventShowers640 from './event-showers-640.avif'
 import eventShowers800 from './event-showers-800.avif'
+import eventShowersSquare320 from './event-showers-square-320.avif'
+import eventShowersSquare436 from './event-showers-square-436.avif'
 import spaceGarden320 from './space-garden-320.avif'
 import spaceGarden480 from './space-garden-480.avif'
 import spaceGarden640 from './space-garden-640.avif'
@@ -63,11 +75,17 @@ import map800 from './map-800.avif'
 export const images = {
   heroVertical: { src: heroVertical640, srcSet: `${heroVertical320} 320w, ${heroVertical480} 480w, ${heroVertical640} 640w, ${heroVertical896} 896w`, width: 896, height: 1120 },
   eventWeddings: { src: eventWeddings640, srcSet: `${eventWeddings320} 320w, ${eventWeddings480} 480w, ${eventWeddings640} 640w, ${eventWeddings800} 800w`, width: 800, height: 436 },
+  eventWeddingsSquare: { src: eventWeddingsSquare436, srcSet: `${eventWeddingsSquare320} 320w, ${eventWeddingsSquare436} 436w`, width: 436, height: 436 },
   eventXv: { src: eventXv640, srcSet: `${eventXv320} 320w, ${eventXv480} 480w, ${eventXv640} 640w, ${eventXv800} 800w`, width: 800, height: 436 },
+  eventXvSquare: { src: eventXvSquare436, srcSet: `${eventXvSquare320} 320w, ${eventXvSquare436} 436w`, width: 436, height: 436 },
   eventBaptisms: { src: eventBaptisms640, srcSet: `${eventBaptisms320} 320w, ${eventBaptisms480} 480w, ${eventBaptisms640} 640w, ${eventBaptisms800} 800w`, width: 800, height: 447 },
+  eventBaptismsSquare: { src: eventBaptismsSquare447, srcSet: `${eventBaptismsSquare320} 320w, ${eventBaptismsSquare447} 447w`, width: 447, height: 447 },
   eventBirthdays: { src: eventBirthdays640, srcSet: `${eventBirthdays320} 320w, ${eventBirthdays480} 480w, ${eventBirthdays640} 640w, ${eventBirthdays800} 800w`, width: 800, height: 436 },
+  eventBirthdaysSquare: { src: eventBirthdaysSquare436, srcSet: `${eventBirthdaysSquare320} 320w, ${eventBirthdaysSquare436} 436w`, width: 436, height: 436 },
   eventCorporate: { src: eventCorporate640, srcSet: `${eventCorporate320} 320w, ${eventCorporate480} 480w, ${eventCorporate640} 640w, ${eventCorporate800} 800w`, width: 800, height: 436 },
+  eventCorporateSquare: { src: eventCorporateSquare436, srcSet: `${eventCorporateSquare320} 320w, ${eventCorporateSquare436} 436w`, width: 436, height: 436 },
   eventShowers: { src: eventShowers640, srcSet: `${eventShowers320} 320w, ${eventShowers480} 480w, ${eventShowers640} 640w, ${eventShowers800} 800w`, width: 800, height: 436 },
+  eventShowersSquare: { src: eventShowersSquare436, srcSet: `${eventShowersSquare320} 320w, ${eventShowersSquare436} 436w`, width: 436, height: 436 },
   spaceGarden: { src: spaceGarden640, srcSet: `${spaceGarden320} 320w, ${spaceGarden480} 480w, ${spaceGarden640} 640w, ${spaceGarden960} 960w, ${spaceGarden1200} 1200w`, width: 1200, height: 670 },
   spaceSalon: { src: spaceSalon640, srcSet: `${spaceSalon320} 320w, ${spaceSalon480} 480w, ${spaceSalon640} 640w, ${spaceSalon960} 960w, ${spaceSalon1200} 1200w`, width: 1200, height: 655 },
   spaceTerrace: { src: spaceTerrace640, srcSet: `${spaceTerrace320} 320w, ${spaceTerrace480} 480w, ${spaceTerrace640} 640w, ${spaceTerrace960} 960w, ${spaceTerrace1200} 1200w`, width: 1200, height: 655 },

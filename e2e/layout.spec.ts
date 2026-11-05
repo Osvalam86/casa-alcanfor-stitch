@@ -23,7 +23,10 @@ async function walkFocus(page: Page, key: 'Tab' | 'Shift+Tab') {
     await page.keyboard.press(key)
     // El desplazamiento por foco es suave (scroll-behavior: smooth): se mide al terminar
     // Arranque corto: la mayoría de los Tab no desplazan y se recorren cientos de elementos
-    await waitForScrollEnd(page, { startTimeoutMs: 150, quietMs: 150 })
+    const moved = await waitForScrollEnd(page, { startTimeoutMs: 150, quietMs: 150 })
+    // Si hubo scroll, la barra móvil pudo cambiar de estado a mitad de camino: useActionBar corrige
+    // el foco 150 ms después de que el scroll se detiene. Se mide el estado ya asentado.
+    if (moved) await waitForScrollEnd(page, { startTimeoutMs: 400, quietMs: 150 })
     const report = await obscuringReport(page)
     if (!report) continue
     visited += 1
@@ -146,6 +149,60 @@ test('aviso de proyecto conceptual: estático arriba del header, que queda pegad
   }))
   expect(scrolled.asideBottom).toBeLessThanOrEqual(0)
   expect(Math.abs(scrolled.headerTop)).toBeLessThanOrEqual(1)
+})
+
+test.describe('píldora del hero', () => {
+  for (const width of [360, 390]) {
+    test(`en una línea a ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 })
+      await page.goto('/')
+      await page.evaluate(() => document.fonts.ready)
+      const badge = page.locator('#inicio').getByText('Jardín & salón de eventos en Zapopan')
+      // Solo el nodo de texto (el punto decorativo es otra caja, centrada en vertical)
+      const lines = await badge.evaluate((element) => {
+        const text = Array.from(element.childNodes).find((node) => node.nodeType === Node.TEXT_NODE)!
+        const range = document.createRange()
+        range.selectNodeContents(text)
+        return new Set(Array.from(range.getClientRects()).map((rect) => Math.round(rect.top))).size
+      })
+      expect(lines).toBe(1)
+    })
+  }
+})
+
+test.describe('Momentos memorables', () => {
+  for (const { width, layout } of [
+    { width: 320, layout: 'row' },
+    { width: 360, layout: 'row' },
+    { width: 595, layout: 'row' },
+    { width: 640, layout: 'column' },
+    { width: 1440, layout: 'column' },
+  ] as const) {
+    test(`${width} px: tarjetas ${layout === 'row' ? 'compactas en una columna, sin carrusel' : 'verticales en rejilla'}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 })
+      await page.goto('/')
+      const section = page.locator('#eventos')
+      // Sin región desplazable horizontal
+      await expect(section.getByRole('region')).toHaveCount(0)
+      const cards = section.locator('article')
+      await expect(cards).toHaveCount(6)
+      const info = await cards.evaluateAll((articles) =>
+        articles.map((article) => ({
+          direction: getComputedStyle(article).flexDirection,
+          left: Math.round(article.getBoundingClientRect().left),
+          right: article.getBoundingClientRect().right,
+        })),
+      )
+      for (const card of info) {
+        expect(card.direction).toBe(layout)
+        // Ninguna tarjeta se sale del ancho de la pantalla
+        expect(card.right).toBeLessThanOrEqual(width)
+      }
+      const columns = new Set(info.map((card) => card.left)).size
+      if (layout === 'row') expect(columns).toBe(1)
+      else expect(columns).toBeGreaterThan(1)
+    })
+  }
 })
 
 test.describe('foco no tapado en todo el recorrido (2.4.11)', () => {

@@ -31,7 +31,8 @@ export type EventItem = {
   title: string
   description: string
   badge: string
-  image: ImageContent
+  /** Foto completa (tarjeta vertical) y su recorte 1:1 (miniatura de la tarjeta compacta) */
+  image: ImageContent & { square: ResponsiveImage }
   /** Filtro de galería al que lleva "Ver detalles y fotos" */
   galleryFilter: GalleryFilterId
   /** Contexto oculto del enlace (no promete fotos del evento si no hay filtro) */

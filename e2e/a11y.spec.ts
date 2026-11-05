@@ -71,8 +71,9 @@ test('imágenes de contenido: alt presente y distinto del texto que las rodea', 
       return { file: img.src.split('/').pop(), alt: img.alt, around }
     }),
   )
-  // 16 fotos de contenido + el mapa decorativo (alt="")
-  expect(images.filter((image) => image.alt !== '')).toHaveLength(16)
+  // 16 fotos de contenido + 6 miniaturas de eventos (de cada par se muestra una según el ancho)
+  // + el mapa decorativo (alt="")
+  expect(images.filter((image) => image.alt !== '')).toHaveLength(22)
   for (const image of images.filter((item) => item.alt !== '')) {
     expect(image.alt.length, image.file).toBeGreaterThan(40)
     expect(image.around.includes(image.alt.toLowerCase()), image.file).toBe(false)

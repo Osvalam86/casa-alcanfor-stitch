@@ -13,7 +13,8 @@ export type HeroProps = {
   badge: string
   title: { before: string; emphasis: string }
   description: string
-  primaryCta: { label: string; href: string }
+  /** `id` opcional: la página observa este botón para mostrar la barra inferior móvil */
+  primaryCta: { label: string; href: string; id?: string }
   secondaryCta: { label: string; href: string }
   highlights: readonly { icon: IconName; label: string }[]
   /** Foto vertical recortada a 4:5 (la proporción de la caja) */
@@ -61,7 +62,17 @@ export function Hero({
       />
 
       <div className={cn(containerClasses, 'relative z-10 mt-6')}>
-        <Badge variant="outline" dot className="mb-6 whitespace-normal">
+        {/*
+          Hasta sm, espaciado compacto y menos relleno (~294 px): cabe en una línea desde 360 px,
+          también con canal de barra de scroll reservado (297 px útiles en escritorio emulado).
+          A 320 px se parte en dos líneas balanceadas; rounded-2xl se ve igual que la píldora
+          en una línea (el radio se limita a la mitad del alto) y queda bien en dos.
+        */}
+        <Badge
+          variant="outline"
+          dot
+          className="mb-6 rounded-2xl px-2 tracking-caps-compact text-balance whitespace-normal sm:px-3 sm:tracking-caps"
+        >
           {badge}
         </Badge>
 
@@ -78,7 +89,7 @@ export function Hero({
               {description}
             </Text>
             <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-              <ButtonLink href={primaryCta.href} size="lg" iconEnd={<Icon name="calendar-month" />}>
+              <ButtonLink id={primaryCta.id} href={primaryCta.href} size="lg" iconEnd={<Icon name="calendar-month" />}>
                 {primaryCta.label}
               </ButtonLink>
               <ButtonLink href={secondaryCta.href} variant="outline" size="lg" iconEnd={<Icon name="arrow-forward" />}>

@@ -68,12 +68,22 @@
   /* Altura de la franja de aviso sobre el header: también medida (0 sin franja) */
   --notice-height: 0px;
 
-  /* Espacio que ocupan los elementos fijos inferiores (barra móvil o botón de WhatsApp) */
+  /*
+   * Espacio que ocupan los elementos fijos inferiores (scroll-padding-bottom, 2.4.11).
+   * Móvil, estado inicial: solo el botón de WhatsApp (48 px + 10 px de margen inferior).
+   * Móvil con la barra visible (useActionBar pone data-action-bar="open" en <html>): 68 px.
+   */
+  --floating-offset: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+:root[data-action-bar='open'] {
   --floating-offset: calc(4.5rem + env(safe-area-inset-bottom, 0px));
 }
 
+/* Desde md no hay barra: botón flotante de escritorio */
 @media (min-width: 48rem) {
-  :root {
+  :root,
+  :root[data-action-bar] {
     --floating-offset: 6rem;
   }
 }
@@ -152,8 +162,8 @@
 
   /* Tipografía */
   /* Respaldos con métricas ajustadas (fonts.css) antes de los genéricos */
-  --font-serif: 'EB Garamond', 'EB Garamond Fallback', ui-serif, Georgia, serif;
-  --font-sans: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', ui-serif, Georgia, serif;
+  --font-sans: 'Manrope', 'Manrope Fallback', 'Manrope Fallback Android', ui-sans-serif, system-ui, sans-serif;
 
   --text-*: initial;
   --text-display-hero: 4.5rem;
@@ -195,9 +205,12 @@
   --text-body-sm--line-height: 1.6;
   --text-caption: 0.75rem;
   --text-caption--line-height: 1.5;
+  /* Espaciado de las mayúsculas pequeñas: el del diseño y uno compacto para que quepan en una línea en móvil */
+  --tracking-caps: 0.15em;
+  --tracking-caps-compact: 0.05em;
   --text-label-caps: 0.75rem;
   --text-label-caps--line-height: 1.2;
-  --text-label-caps--letter-spacing: 0.15em;
+  --text-label-caps--letter-spacing: var(--tracking-caps);
   --text-label-caps--font-weight: 600;
   --text-label-md: 0.875rem;
   --text-label-md--line-height: 1.4;
@@ -218,12 +231,20 @@
   /* Medidas de layout */
   --spacing-notice: var(--notice-height);
   --spacing-floating: var(--floating-offset);
-  --spacing-carousel-card: 17.5rem;
   --spacing-panel-media: 34.375rem;
   --spacing-glow-lg: 34.375rem;
   --spacing-glow-md: 28.125rem;
   --container-page: 90rem;
   --container-hero-media: 35rem;
+  /*
+   * Cortes de @container para listas de tarjetas (variantes @card-thumb y @card-grid):
+   * desde 25rem de lista, miniatura de 112 px en vez de 96; desde 35rem, rejilla de tarjetas verticales.
+   * 35rem: con la lista más angosta en rejilla (2 columnas de 280 px, 640 px de viewport) los títulos
+   * ocupan como máximo dos líneas; por debajo, la compacta los deja en una o dos (tres a 320 px).
+   * Medido de 320 a 768 px; los títulos usan espacio de no separación tras «de» e «y».
+   */
+  --container-card-thumb: 25rem;
+  --container-card-grid: 35rem;
   --blur-glow-lg: 120px;
   --blur-glow-md: 100px;
 

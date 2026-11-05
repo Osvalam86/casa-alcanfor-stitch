@@ -26,11 +26,17 @@ import type {
 // Fotos con variantes AVIF (pnpm images); el alt se escribe aquí, mirando cada foto
 const {
   eventBaptisms,
+  eventBaptismsSquare,
   eventBirthdays,
+  eventBirthdaysSquare,
   eventCorporate,
+  eventCorporateSquare,
   eventShowers,
+  eventShowersSquare,
   eventWeddings,
+  eventWeddingsSquare,
   eventXv,
+  eventXvSquare,
   galleryCocktailBar,
   galleryGardenCeremony,
   galleryGardenNight,
@@ -130,23 +136,30 @@ export const trustBar = {
   ],
 } as const
 
-const eventImage = withAlt
+/**
+ * Espacio de no separación en los títulos de eventos: une «de» e «y» con la palabra siguiente
+ * para que no queden solas al final de línea (la tarjeta compacta es angosta). No cambia el copy.
+ */
+const NBSP = String.fromCharCode(160)
+
+/** Foto completa + recorte 1:1 para la miniatura de la tarjeta compacta; mismo alt (es la misma escena) */
+const eventImage = (image: ResponsiveImage, square: ResponsiveImage, alt: string) => ({ ...withAlt(image, alt), square })
 
 export const events = {
   eyebrow: 'Momentos memorables',
   title: 'Un escenario hecho a la medida de tu celebración',
   description:
     'Cada evento tiene una vibra única. En Casa Alcanfor adaptamos arquitectura, mantelería, tiempos gastronómicos y producción técnica a tus sueños.',
-  carouselLabel: 'Tipos de evento', // NUEVO: nombre de la región desplazable en móvil
   linkLabel: 'Ver detalles y fotos',
   items: [
     {
-      title: 'Bodas de ensueño',
+      title: `Bodas de${NBSP}ensueño`,
       badge: 'Banquete & civil',
       description:
         'Ceremonias al aire libre, banquete imperial bajo columnatas de cantera y pista estelar iluminada con luces cálidas de bistró.',
       image: eventImage(
         eventWeddings,
+        eventWeddingsSquare,
         'Altar en el jardín con arco de flores blancas y cortinas de gasa; un pasillo de piedra con pétalos y faroles separa a los invitados sentados en sillas de madera.',
       ),
       galleryFilter: 'bodas',
@@ -159,37 +172,40 @@ export const events = {
         'Diseño escénico vanguardista, cabina de DJ con robótica de concierto, pistas interactivas y menú juvenil de autor.',
       image: eventImage(
         eventXv,
+        eventXvSquare,
         'Salón iluminado en tonos rosa y lila con letras luminosas «XV» al fondo, invitados bailando en la pista de parquet y mesas redondas con centros florales altos.',
       ),
       galleryFilter: 'xv',
       linkContext: 'de XV años',
     },
     {
-      title: 'Bautizos y primeras comuniones',
+      title: `Bautizos y${NBSP}primeras comuniones`,
       badge: 'Mañanas & tardes',
       description:
         'Mañanas y tardes de jardín, ambiente familiar íntimo, juegos seguros para niños y carrusel de postres artesanales.',
       image: eventImage(
         eventBaptisms,
+        eventBaptismsSquare,
         'Comida familiar de día en una mesa larga bajo los arcos de una veranda; al centro, una pareja sostiene a un bebé con ropón blanco entre flores blancas y guías de olivo.',
       ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Cumpleaños y aniversarios',
+      title: `Cumpleaños y${NBSP}aniversarios`,
       badge: 'Coctelería de autor',
       description:
         'Cenas maridaje, barras de mixología con tequila y mezcal jalisciense, ambiente acústico o saxofón en vivo al atardecer.',
       image: eventImage(
         eventBirthdays,
+        eventBirthdaysSquare,
         'Amigos brindando con margaritas en una cena nocturna en el patio, entre velas y un pastel de cumpleaños, con un trío de cuerdas tocando al fondo.',
       ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Baby shower y graduaciones',
+      title: `Baby shower y${NBSP}graduaciones`,
       badge: 'Brunch & jardín',
       description:
         'Espacios frescos y versátiles con decoración botánica personalizada, estaciones de mimosa y servicio de brunch artesanal.',
@@ -198,18 +214,20 @@ export const events = {
       // El alt describe lo que sí se ve (la graduación).
       image: eventImage(
         eventShowers,
+        eventShowersSquare,
         'Graduados con toga y birrete brindan con su familia en una mesa larga bajo una pérgola con flores, junto a una barra de mimosas y jugos.',
       ),
       galleryFilter: 'todos',
       linkContext: 'en la galería completa',
     },
     {
-      title: 'Eventos corporativos y galas',
+      title: `Eventos corporativos y${NBSP}galas`,
       badge: 'Empresas & galas',
       description:
         'Audio profesional de microfonía, pantallas LED de alta definición, fibra óptica simétrica y servicio de meseros de etiqueta.',
       image: eventImage(
         eventCorporate,
+        eventCorporateSquare,
         'Ceremonia de premiación en el salón de vigas de madera y muros de piedra: invitados en mesas redondas miran un escenario con pantalla y oradores en el podio.',
       ),
       galleryFilter: 'todos',

@@ -14,11 +14,12 @@ export const isMobile = (page: Page) => (page.viewportSize()?.width ?? 0) < 768
  *    el scroll suave). El silencio de `quietMs` queda solo como respaldo, largo a propósito.
  *    Luego espera dos cuadros para que el layout quede asentado.
  * Un scrollend de un desplazamiento anterior se ignora porque llega antes del primer movimiento.
+ * Devuelve si hubo desplazamiento.
  */
 export async function waitForScrollEnd(page: Page, { startTimeoutMs = 1500, quietMs = 1000 } = {}) {
-  await page.evaluate(
+  return page.evaluate(
     ({ startTimeout, quiet }) =>
-      new Promise<void>((resolve) => {
+      new Promise<boolean>((resolve) => {
         const start = performance.now()
         let last = window.scrollY
         let lastChange = start
@@ -26,7 +27,7 @@ export async function waitForScrollEnd(page: Page, { startTimeoutMs = 1500, quie
         const finish = () => {
           window.removeEventListener('scrollend', onScrollEnd)
           clearInterval(timer)
-          requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve(moved)))
         }
         const onScrollEnd = () => {
           if (moved) finish()

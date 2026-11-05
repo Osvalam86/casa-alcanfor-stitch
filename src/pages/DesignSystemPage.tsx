@@ -136,14 +136,14 @@ const processIcons: IconName[] = ['edit-note', 'celebration']
  * (contenedor: 100vw − 3rem; desde lg, min(100vw, 90rem) − 6rem = C).
  * - franja con badge (foto 4:5 en caja muy ancha): todo el contenedor
  * - arco 4:5 (misma proporción que la foto): w-full con tope max-w-xs (20rem)
- * - tarjeta de evento (foto ≈1.84:1 en caja de alto fijo, object-cover): max(caja, alto × 1.84);
- *   lg: columna (C − 7rem) / 3 ≤ 25.67rem con h-64 → 29.5rem; md: todo el contenedor;
- *   móvil: h-44 → 20.25rem hasta que el contenedor lo supera (23.25rem de viewport)
+ * - tarjeta de evento: vertical solo cuando su contenedor mide 35rem o más (de 38rem de viewport a lg),
+ *   a todo el contenedor (más ancho que alto × 1.84) → 100vw − 3rem; en la columna de lg es compacta
+ *   y usa la miniatura 1:1 (thumbnailSizes)
  * - foto de galería (recortada a 1:1; vertical 3:4 desde md, cuadrada en móvil): columna × 4/3 / columna
  */
 const SPECIMEN_WIDE_SIZES = '(min-width: 90rem) 84rem, (min-width: 64rem) calc(100vw - 6rem), calc(100vw - 3rem)'
 const SPECIMEN_ARCH_SIZES = '(min-width: 23rem) 20rem, calc(100vw - 3rem)'
-const SPECIMEN_EVENT_SIZES = '(min-width: 64rem) 29.5rem, (min-width: 23.25rem) calc(100vw - 3rem), 20.25rem'
+const SPECIMEN_EVENT_SIZES = 'calc(100vw - 3rem)'
 const SPECIMEN_GALLERY_SIZES =
   '(min-width: 90rem) 34.22rem, (min-width: 64rem) calc((100vw - 13rem) * 4 / 9), (min-width: 48rem) calc((100vw - 3rem) * 4 / 3), calc(100vw - 3rem)'
 
@@ -627,7 +627,10 @@ export function DesignSystemPage() {
 
           <div className="grid gap-space-xl lg:grid-cols-3">
             <Specimen title={ds.molecules.labels.eventCard}>
-              <EventCard {...ds.molecules.eventCard} sizes={SPECIMEN_EVENT_SIZES} headingLevel="h4" />
+              {/* Contenedor "cards": la tarjeta es compacta en la columna de lg y vertical a todo el ancho */}
+              <div className="@container/cards">
+                <EventCard {...ds.molecules.eventCard} sizes={SPECIMEN_EVENT_SIZES} thumbnailSizes="7rem" headingLevel="h4" />
+              </div>
             </Specimen>
             <Specimen title={ds.molecules.labels.gallery}>
               <GalleryItem {...ds.molecules.gallery} sizes={SPECIMEN_GALLERY_SIZES} />

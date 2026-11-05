@@ -43,6 +43,7 @@ import {
   trustBar,
 } from '@/content/landing'
 import { brand, conceptNotice, contact, ui } from '@/content/site'
+import { useActionBar } from '@/lib/hooks/useActionBar'
 import { useFocusNotObscured } from '@/lib/hooks/useFocusNotObscured'
 import { useInitialHashScroll } from '@/lib/hooks/useInitialHashScroll'
 import { useQuoteForm } from '@/lib/hooks/useQuoteForm'
@@ -59,6 +60,8 @@ const SECTION_IDS = {
 } as const
 
 const QUOTE_TITLE_ID = 'cotizacion-titulo'
+/** CTA principal del hero: al salir de pantalla aparece la barra inferior móvil */
+const HERO_CTA_ID = 'hero-cta'
 const galleryFilterIds = gallery.filters.map((filter) => filter.id)
 const spaceIds = spaces.items.map((item) => item.id)
 
@@ -71,6 +74,7 @@ export function LandingPage() {
   const [spaceId, setSpaceId] = useSearchParamState('espacio', spaceIds, 'salon')
   const [quoteAnnouncement, setQuoteAnnouncement] = useState('')
   const [quoteFocusRequest, setQuoteFocusRequest] = useState(0)
+  const actionBarOpen = useActionBar({ showAfterId: HERO_CTA_ID, hideWhileVisibleId: SECTION_IDS.contact })
 
   const year = String(new Date().getFullYear())
   const brandLockup = <BrandLockup name={brand.name} tagline={brand.tagline} monogram={brand.monogram} />
@@ -154,6 +158,7 @@ export function LandingPage() {
             newTabHint={ui.newTabHint}
           />
           <MobileActionBar
+            open={actionBarOpen}
             cta={floatingContact.mobileCta}
             whatsapp={{ href: contact.whatsappHref, label: floatingContact.whatsappLabel, newTabHint: ui.newTabHint }}
           />
@@ -163,6 +168,7 @@ export function LandingPage() {
       <Hero
         id={SECTION_IDS.hero}
         {...hero}
+        primaryCta={{ ...hero.primaryCta, id: HERO_CTA_ID }}
         checker={
           <AvailabilityChecker {...availabilityChecker} minDate={quote.today} onSubmit={handleChecker} />
         }
@@ -173,7 +179,6 @@ export function LandingPage() {
         eyebrow={events.eyebrow}
         title={events.title}
         description={events.description}
-        carouselLabel={events.carouselLabel}
         linkLabel={events.linkLabel}
         items={events.items.map((item) => ({
           ...item,
