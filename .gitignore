@@ -23,8 +23,9 @@ playwright-report
 # READMEs de referencia de otros proyectos (consulta local para el README)
 _ref-*.md
 
-# Export de Stitch que no se publica (HTML con datos del diseño y fotos alojadas en Google)
+# Export de Stitch que no se publica (HTML y capturas con datos del diseño, fotos alojadas en Google)
 design/screens/*.html
+design/screens/*.jpg
 design/images/
 
 # Editor directories and files
