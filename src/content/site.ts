@@ -59,7 +59,7 @@ export const seo = {
     path: '/og-image.jpg',
     width: 1200,
     height: 630,
-    alt: 'Casa Alcanfor, jardín y salón de eventos en Zapopan: banquete nocturno bajo arcos de cantera.',
+    alt: 'Casa Alcanfor, jardín y salón de eventos, proyecto conceptual: la landing en una laptop, con el título «Celebra donde cada momento se vuelve recuerdo», y la galería de fotos en un teléfono.',
   },
 } as const
 

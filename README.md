@@ -6,11 +6,9 @@ Caso de estudio de maquetación y accesibilidad: un diseño generado en [Stitch]
 
 **Demo:** pendiente del primer despliegue en Netlify.
 
-| Escritorio (1440 px) | Móvil (360 px) |
-|---|---|
-| [![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-hero-1440.jpg) | [![El mismo hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna.](docs/screens/landing-hero-360.jpg)](docs/screens/landing-hero-360.jpg) |
+[![Portada del caso de estudio Casa Alcanfor. A la izquierda: «Caso de estudio», el nombre Casa Alcanfor, «Diseño de Google Stitch llevado a React, TypeScript y Tailwind CSS v4», Atomic Design, WCAG 2.2 AA, «Probado con Playwright y axe» y «Osvaldo Ocampo · Maquetación y accesibilidad». A la derecha: la landing en una laptop, con el título «Celebra donde cada momento se vuelve recuerdo» y la foto en arco de una cena en un patio, y la galería de fotos en un teléfono.](docs/cover.jpg)](docs/cover.jpg)
 
-Más capturas en [Capturas](#capturas).
+Capturas del sitio en [Capturas](#capturas).
 
 ---
 
@@ -149,7 +147,7 @@ casa-alcanfor-stitch/
 ├── scripts/             # pnpm images, pnpm icons y pnpm screens
 ├── e2e/                 # pruebas de Playwright y fixtures de fuentes
 ├── design/              # referencia del diseño de Stitch (solo consulta, nunca se importa)
-├── docs/screens/        # capturas del README
+├── docs/                # portada del README (cover.jpg) y capturas (screens/)
 ├── public/              # favicon, íconos, manifest e imagen Open Graph
 ├── 404.html             # entrada de la 404 (Netlify la sirve con estado 404)
 └── netlify.toml         # build, encabezados y caché
@@ -169,10 +167,11 @@ Cambios al copy o al contenido del diseño de Stitch, con su motivo.
 
 ## Capturas
 
-Generadas con `pnpm screens` contra el build, a 2×. El hero de los dos anchos está arriba.
+Generadas con `pnpm screens` contra el build, a 2×.
 
-| Eventos en escritorio (1440 px) | Galería en móvil (360 px) |
+| Escritorio (1440 px) | Móvil (360 px) |
 |---|---|
+| [![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-hero-1440.jpg) | [![El mismo hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna.](docs/screens/landing-hero-360.jpg)](docs/screens/landing-hero-360.jpg) |
 | [![Sección «Un escenario hecho a la medida de tu celebración» en escritorio: seis tarjetas de eventos en tres columnas, cada una con foto, etiqueta, título, descripción y el enlace «Ver detalles y fotos».](docs/screens/landing-events-1440.jpg)](docs/screens/landing-events-1440.jpg) | [![Galería «Cada rincón cuenta una historia» en móvil: filtros en una fila que se desplaza y seis fotos en dos columnas, con su pie sobre una franja oscura.](docs/screens/landing-gallery-360.jpg)](docs/screens/landing-gallery-360.jpg) |
 
 ---
