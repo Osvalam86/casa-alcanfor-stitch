@@ -29,9 +29,11 @@ export type EventCardProps = {
 
 /**
  * Tarjeta de tipo de evento. Se adapta al @container "cards" de la lista que la contiene:
- * - menos de 35rem (@card-grid): compacta horizontal, miniatura 1:1 de 96 px (112 px desde 25rem)
- *   a la izquierda y, a la derecha, etiqueta como texto pequeño, título, descripción completa y enlace
- * - desde 35rem: la tarjeta vertical (foto arriba con la etiqueta como badge)
+ * - menos de 35rem (@card-grid): compacta en rejilla de dos columnas. Arriba, la miniatura 1:1
+ *   (96 px; 112 px desde 25rem) con la etiqueta como texto pequeño y el título a su lado; debajo,
+ *   a todo el ancho de la tarjeta, la descripción completa y el enlace.
+ * - desde 35rem: la tarjeta vertical (foto arriba con la etiqueta como badge), con las mismas
+ *   medidas de siempre: el relleno p-4/md:p-8 se reparte entre el encabezado y el cuerpo.
  * Solo una de las dos fotos se muestra (la otra va con display: none y, al ser lazy, no se descarga).
  * El texto del enlace se repite entre tarjetas: lleva contexto oculto.
  */
@@ -53,8 +55,8 @@ export function EventCard({
   return (
     <article
       className={cn(
-        'group flex h-full gap-3 overflow-hidden rounded-2xl bg-surface p-3 shadow-sm transition-shadow duration-300 hover:shadow-xl',
-        '@card-grid/cards:flex-col @card-grid/cards:gap-0 @card-grid/cards:p-0',
+        'group grid h-full grid-cols-thumb gap-3 overflow-hidden rounded-2xl bg-surface p-3 shadow-sm transition-shadow duration-300 hover:shadow-xl',
+        '@card-grid/cards:flex @card-grid/cards:flex-col @card-grid/cards:gap-0 @card-grid/cards:p-0',
         className,
       )}
     >
@@ -86,16 +88,19 @@ export function EventCard({
         </Badge>
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 @card-grid/cards:gap-4 @card-grid/cards:p-4 @card-grid/cards:md:p-8">
-        <div className="flex flex-col gap-1 @card-grid/cards:gap-2">
-          <p className="font-sans text-label-caps tracking-caps-compact text-accent uppercase @card-grid/cards:hidden">{badge}</p>
-          <Heading as={headingLevel} size="md" className="text-headline-xs text-balance @card-grid/cards:text-headline-sm">
-            {title}
-          </Heading>
-          <Text size="sm" tone="muted">
-            {description}
-          </Text>
-        </div>
+      {/* Encabezado: junto a la miniatura (compacta) o bajo la foto (vertical) */}
+      <div className="flex min-w-0 flex-col gap-1 self-center @card-grid/cards:self-auto @card-grid/cards:px-4 @card-grid/cards:pt-4 @card-grid/cards:md:px-8 @card-grid/cards:md:pt-8">
+        <p className="font-sans text-label-caps tracking-caps-compact text-accent uppercase @card-grid/cards:hidden">{badge}</p>
+        <Heading as={headingLevel} size="md" className="text-headline-xs text-balance @card-grid/cards:text-headline-sm">
+          {title}
+        </Heading>
+      </div>
+
+      {/* Cuerpo: a todo el ancho de la tarjeta en la compacta; el enlace queda abajo en la vertical */}
+      <div className="col-span-2 flex flex-col justify-between gap-3 @card-grid/cards:flex-1 @card-grid/cards:gap-4 @card-grid/cards:px-4 @card-grid/cards:pt-2 @card-grid/cards:pb-4 @card-grid/cards:md:px-8 @card-grid/cards:md:pb-8">
+        <Text size="sm" tone="muted">
+          {description}
+        </Text>
         <TextLink
           href={link.href}
           srContext={linkContext ?? title}

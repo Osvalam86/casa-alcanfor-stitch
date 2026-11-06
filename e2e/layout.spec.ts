@@ -172,13 +172,13 @@ test.describe('píldora del hero', () => {
 
 test.describe('Momentos memorables', () => {
   for (const { width, layout } of [
-    { width: 320, layout: 'row' },
-    { width: 360, layout: 'row' },
-    { width: 595, layout: 'row' },
-    { width: 640, layout: 'column' },
-    { width: 1440, layout: 'column' },
+    { width: 320, layout: 'compact' },
+    { width: 360, layout: 'compact' },
+    { width: 595, layout: 'compact' },
+    { width: 640, layout: 'vertical' },
+    { width: 1440, layout: 'vertical' },
   ] as const) {
-    test(`${width} px: tarjetas ${layout === 'row' ? 'compactas en una columna, sin carrusel' : 'verticales en rejilla'}`, async ({ page }) => {
+    test(`${width} px: tarjetas ${layout === 'compact' ? 'compactas en una columna, sin carrusel' : 'verticales en rejilla'}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })
       await page.goto('/')
       const section = page.locator('#eventos')
@@ -187,19 +187,41 @@ test.describe('Momentos memorables', () => {
       const cards = section.locator('article')
       await expect(cards).toHaveCount(6)
       const info = await cards.evaluateAll((articles) =>
-        articles.map((article) => ({
-          direction: getComputedStyle(article).flexDirection,
-          left: Math.round(article.getBoundingClientRect().left),
-          right: article.getBoundingClientRect().right,
-        })),
+        articles.map((article) => {
+          const card = article.getBoundingClientRect()
+          const styles = getComputedStyle(article)
+          const inner = card.width - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight)
+          const thumb = Array.from(article.querySelectorAll('img')).find((img) => img.checkVisibility())!.getBoundingClientRect()
+          const title = article.querySelector('h3, h4')!.getBoundingClientRect()
+          const description = Array.from(article.querySelectorAll('p')).find((p) => p.checkVisibility() && (p.textContent ?? '').length > 60)!
+          const text = description.getBoundingClientRect()
+          return {
+            display: styles.display,
+            direction: styles.flexDirection,
+            left: Math.round(card.left),
+            right: card.right,
+            // Compacta: título al lado de la miniatura y descripción debajo, a todo el ancho interior
+            titleBesideThumb: title.left >= thumb.right && title.top < thumb.bottom,
+            descriptionBelowThumb: text.top >= thumb.bottom,
+            descriptionFullWidth: Math.abs(text.width - inner) <= 1,
+          }
+        }),
       )
       for (const card of info) {
-        expect(card.direction).toBe(layout)
         // Ninguna tarjeta se sale del ancho de la pantalla
         expect(card.right).toBeLessThanOrEqual(width)
+        if (layout === 'compact') {
+          expect(card.display).toBe('grid')
+          expect(card.titleBesideThumb, 'título junto a la miniatura').toBe(true)
+          expect(card.descriptionBelowThumb, 'descripción debajo de la fila de la miniatura').toBe(true)
+          expect(card.descriptionFullWidth, 'descripción a todo el ancho de la tarjeta').toBe(true)
+        } else {
+          expect(card.display).toBe('flex')
+          expect(card.direction).toBe('column')
+        }
       }
       const columns = new Set(info.map((card) => card.left)).size
-      if (layout === 'row') expect(columns).toBe(1)
+      if (layout === 'compact') expect(columns).toBe(1)
       else expect(columns).toBeGreaterThan(1)
     })
   }

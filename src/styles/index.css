@@ -13,6 +13,11 @@
   transition-duration: var(--default-transition-duration);
 }
 
+/* Tarjeta compacta: miniatura a su ancho natural y el resto para el texto (sin desbordar) */
+@utility grid-cols-thumb {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
 /* Relleno inferior de la barra móvil fija: respeta el área segura del dispositivo */
 @utility pb-safe-bar {
   padding-bottom: max(0.625rem, env(safe-area-inset-bottom));
