@@ -1,14 +1,14 @@
 /**
  * pnpm screens — capturas del README contra el build (dist/), servido con la API de vite preview.
- * Salida: docs/screens/ en JPEG (sharp con mozjpeg), a 360 px y 1440 px:
- * - Páginas completas, a 1×: la landing, /design-system y la 404.
- * - Secciones clave de la landing, a la densidad del viewport (2× en 360, 1× en 1440):
- *   hero, eventos, espacios, galería y contacto.
- * Las secciones se recortan de la captura de página completa (con el scroll arriba), así que el
- * header sticky queda en su sitio y no se encima sobre ellas.
+ * Salida: docs/screens/, 4 recortes de sección de la landing en JPEG calidad 92 (sharp con mozjpeg), a 2×:
+ * - Escritorio (1440 px): hero y eventos.
+ * - Móvil (360 px): hero y galería.
+ * El directorio se vacía antes de generar, para que no queden capturas viejas.
+ * Cada recorte sale de la página con el scroll arriba (el header sticky queda en su sitio y no se
+ * encima) y sin lo fijo (botón de WhatsApp, barra móvil), que si no aparecería sobre el hero.
  * Con prefers-reduced-motion: reduce, para que ninguna transición quede a medias.
  */
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { chromium, type Browser, type Page } from '@playwright/test'
 import sharp from 'sharp'
@@ -17,30 +17,32 @@ import { preview } from 'vite'
 const root = fileURLToPath(new URL('..', import.meta.url))
 const OUT_DIR = `${root}docs/screens/`
 const PORT = 4175
-// JPEG y no WebP: WebP no pasa de 16 383 px de alto y la landing móvil mide más incluso a 1×
-const JPEG = { quality: 82, mozjpeg: true } as const
+const JPEG = { quality: 92, mozjpeg: true } as const
+const DEVICE_SCALE_FACTOR = 2
 
-const VIEWPORTS = [
-  { name: '360', width: 360, height: 800, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
-  { name: '1440', width: 1440, height: 900, deviceScaleFactor: 1, isMobile: false, hasTouch: false },
+/** Por ancho: las secciones de la landing (id del ancla → nombre del archivo) */
+const SHOTS = [
+  {
+    name: '1440',
+    viewport: { width: 1440, height: 900 },
+    isMobile: false,
+    sections: [
+      { id: 'inicio', name: 'hero' },
+      { id: 'eventos', name: 'events' },
+    ],
+  },
+  {
+    name: '360',
+    viewport: { width: 360, height: 800 },
+    isMobile: true,
+    sections: [
+      { id: 'inicio', name: 'hero' },
+      { id: 'galeria', name: 'gallery' },
+    ],
+  },
 ] as const
 
-const PAGES = [
-  { name: 'landing', path: '/' },
-  { name: 'design-system', path: '/design-system' },
-  { name: '404', path: '/404.html' },
-] as const
-
-/** Secciones de la landing (id del ancla → nombre del archivo) */
-const SECTIONS = [
-  { id: 'inicio', name: 'hero' },
-  { id: 'eventos', name: 'events' },
-  { id: 'espacios', name: 'spaces' },
-  { id: 'galeria', name: 'gallery' },
-  { id: 'contacto', name: 'contact' },
-] as const
-
-/** Recorre la página para que carguen las fotos diferidas, espera a que todas decodifiquen y vuelve arriba. */
+/** Recorre la página para que carguen las fotos diferidas, espera a que decodifiquen, oculta lo fijo y vuelve arriba. */
 async function settle(page: Page) {
   await page.evaluate(async () => {
     await document.fonts.ready
@@ -54,66 +56,49 @@ async function settle(page: Page) {
     const visible = Array.from(document.images).filter((image) => image.getClientRects().length > 0)
     const withTimeout = (promise: Promise<unknown>) => Promise.race([promise, new Promise((resolve) => setTimeout(resolve, 5000))])
     await Promise.all(visible.map((image) => withTimeout(image.decode().catch(() => undefined))))
+    for (const element of document.querySelectorAll<HTMLElement>('body *')) {
+      if (getComputedStyle(element).position === 'fixed') element.style.visibility = 'hidden'
+    }
     window.scrollTo({ top: 0, behavior: 'instant' })
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
   })
 }
 
-async function save(name: string, png: Buffer) {
-  const jpeg = await sharp(png).jpeg(JPEG).toBuffer()
-  await writeFile(`${OUT_DIR}${name}.jpg`, jpeg)
-  console.log(`✓ docs/screens/${name}.jpg (${Math.round(jpeg.length / 1024)} KB)`)
-}
-
 async function capture(browser: Browser, baseUrl: string) {
-  for (const { name: viewportName, width, height, deviceScaleFactor, isMobile, hasTouch } of VIEWPORTS) {
+  let total = 0
+  for (const { name: viewportName, viewport, isMobile, sections } of SHOTS) {
     const context = await browser.newContext({
-      viewport: { width, height },
-      deviceScaleFactor,
+      viewport,
+      deviceScaleFactor: DEVICE_SCALE_FACTOR,
       isMobile,
-      hasTouch,
+      hasTouch: isMobile,
       locale: 'es-MX',
       reducedMotion: 'reduce',
     })
     const page = await context.newPage()
+    await page.goto(baseUrl, { waitUntil: 'networkidle' })
+    await settle(page)
 
-    for (const { name, path } of PAGES) {
-      await page.goto(`${baseUrl}${path}`, { waitUntil: 'networkidle' })
-      await settle(page)
-      const full = await page.screenshot({ fullPage: true, type: 'png' })
-      // Página completa a 1× (ancho en px CSS), para que pese poco en el repo.
-      // Las secciones sí conservan la densidad del viewport.
-      await save(`${name}-${viewportName}`, await sharp(full).resize({ width }).png().toBuffer())
-
-      if (name !== 'landing') continue
-      // Los recortes de sección van sin lo fijo (botón de WhatsApp, barra móvil): en la captura de
-      // página completa quedan donde estaban en la primera pantalla y se encimarían sobre el hero
-      await page.evaluate(() => {
-        for (const element of document.querySelectorAll<HTMLElement>('body *')) {
-          if (getComputedStyle(element).position === 'fixed') element.style.visibility = 'hidden'
-        }
+    for (const section of sections) {
+      // Caja en coordenadas del documento (scroll arriba), en px CSS: con fullPage, clip las usa tal cual
+      const clip = await page.locator(`#${section.id}`).evaluate((element) => {
+        const rect = element.getBoundingClientRect()
+        return { x: rect.left + window.scrollX, y: rect.top + window.scrollY, width: rect.width, height: rect.height }
       })
-      const clean = await page.screenshot({ fullPage: true, type: 'png' })
-      for (const section of SECTIONS) {
-        // Caja en coordenadas del documento (scroll arriba), en píxeles CSS
-        const box = await page.locator(`#${section.id}`).evaluate((element) => {
-          const rect = element.getBoundingClientRect()
-          return { left: rect.left + window.scrollX, top: rect.top + window.scrollY, width: rect.width, height: rect.height }
-        })
-        const crop = {
-          left: Math.round(box.left * deviceScaleFactor),
-          top: Math.round(box.top * deviceScaleFactor),
-          width: Math.round(box.width * deviceScaleFactor),
-          height: Math.round(box.height * deviceScaleFactor),
-        }
-        await save(`landing-${section.name}-${viewportName}`, await sharp(clean).extract(crop).png().toBuffer())
-      }
+      const png = await page.screenshot({ fullPage: true, clip, type: 'png' })
+      const jpeg = await sharp(png).jpeg(JPEG).toBuffer()
+      const file = `landing-${section.name}-${viewportName}.jpg`
+      await writeFile(`${OUT_DIR}${file}`, jpeg)
+      total += jpeg.length
+      console.log(`✓ docs/screens/${file} (${Math.round(jpeg.length / 1024)} KB)`)
     }
 
     await context.close()
   }
+  console.log(`Total: ${Math.round(total / 1024)} KB`)
 }
 
+await rm(OUT_DIR, { recursive: true, force: true })
 await mkdir(OUT_DIR, { recursive: true })
 const server = await preview({ preview: { port: PORT, strictPort: true, open: false }, logLevel: 'warn' })
 const browser = await chromium.launch()

@@ -8,9 +8,9 @@ Caso de estudio de maquetación y accesibilidad: un diseño generado en [Stitch]
 
 | Escritorio (1440 px) | Móvil (360 px) |
 |---|---|
-| [![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-1440.jpg) | [![El mismo hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna.](docs/screens/landing-hero-360.jpg)](docs/screens/landing-360.jpg) |
+| [![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-hero-1440.jpg) | [![El mismo hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna.](docs/screens/landing-hero-360.jpg)](docs/screens/landing-hero-360.jpg) |
 
-Cada imagen enlaza a la página completa. Más capturas en [Capturas](#capturas).
+Más capturas en [Capturas](#capturas).
 
 ---
 
@@ -124,7 +124,7 @@ Abre <http://localhost:5173>. El formulario valida y simula el envío: no hay ba
 | `pnpm test:e2e` | Compila y corre Playwright + axe contra el build |
 | `pnpm images` | Regenera las variantes AVIF de las fotos y su manifiesto (sharp) |
 | `pnpm icons` | Regenera el favicon y los íconos desde `public/icon.svg` |
-| `pnpm screens` | Compila y guarda las capturas de `docs/screens/` (360 y 1440 px) |
+| `pnpm screens` | Compila y guarda las 4 capturas del README en `docs/screens/` (360 y 1440 px, a 2×) |
 
 `pnpm test:e2e` y `pnpm screens` usan el Chromium de Playwright (`pnpm exec playwright install chromium`). `pnpm icons` usa Edge; con `PW_CHANNEL=chrome` usa Chrome.
 
@@ -169,17 +169,11 @@ Cambios al copy o al contenido del diseño de Stitch, con su motivo.
 
 ## Capturas
 
-Generadas con `pnpm screens` contra el build. Las páginas completas van a 1×; las secciones, a 2× en móvil.
+Generadas con `pnpm screens` contra el build, a 2×. El hero de los dos anchos está arriba.
 
-| Página | 1440 px | 360 px |
-|---|---|---|
-| Landing completa | [landing-1440.jpg](docs/screens/landing-1440.jpg) | [landing-360.jpg](docs/screens/landing-360.jpg) |
-| Eventos | [landing-events-1440.jpg](docs/screens/landing-events-1440.jpg) | [landing-events-360.jpg](docs/screens/landing-events-360.jpg) |
-| Espacios | [landing-spaces-1440.jpg](docs/screens/landing-spaces-1440.jpg) | [landing-spaces-360.jpg](docs/screens/landing-spaces-360.jpg) |
-| Galería | [landing-gallery-1440.jpg](docs/screens/landing-gallery-1440.jpg) | [landing-gallery-360.jpg](docs/screens/landing-gallery-360.jpg) |
-| Contacto | [landing-contact-1440.jpg](docs/screens/landing-contact-1440.jpg) | [landing-contact-360.jpg](docs/screens/landing-contact-360.jpg) |
-| Sistema de diseño | [design-system-1440.jpg](docs/screens/design-system-1440.jpg) | [design-system-360.jpg](docs/screens/design-system-360.jpg) |
-| 404 | [404-1440.jpg](docs/screens/404-1440.jpg) | [404-360.jpg](docs/screens/404-360.jpg) |
+| Eventos en escritorio (1440 px) | Galería en móvil (360 px) |
+|---|---|
+| [![Sección «Un escenario hecho a la medida de tu celebración» en escritorio: seis tarjetas de eventos en tres columnas, cada una con foto, etiqueta, título, descripción y el enlace «Ver detalles y fotos».](docs/screens/landing-events-1440.jpg)](docs/screens/landing-events-1440.jpg) | [![Galería «Cada rincón cuenta una historia» en móvil: filtros en una fila que se desplaza y seis fotos en dos columnas, con su pie sobre una franja oscura.](docs/screens/landing-gallery-360.jpg)](docs/screens/landing-gallery-360.jpg) |
 
 ---
 
