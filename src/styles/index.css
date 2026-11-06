@@ -29,6 +29,8 @@
     scroll-padding-top: var(--header-height);
     /* Lo fijo de abajo (barra móvil / botón de WhatsApp) no tapa el foco (2.4.11) */
     scroll-padding-bottom: var(--floating-offset);
+    /* Fondo del lienzo completo, incluido el canal reservado de la barra de desplazamiento */
+    background-color: var(--color-surface);
     -webkit-text-size-adjust: 100%;
   }
 
@@ -47,8 +49,10 @@
    * Con un <dialog> modal abierto, la página de fondo no se desplaza.
    * scrollbar-gutter reserva el canal de la barra: al ocultarla no cambia el ancho,
    * el texto no se reacomoda y el salto a un ancla desde el menú no se desfasa.
+   * Solo en páginas con <dialog> (la landing): en las demás (404, /design-system) queda en
+   * auto, para que una página sin scroll no muestre un canal vacío a la derecha.
    */
-  html {
+  html:has(dialog) {
     scrollbar-gutter: stable;
   }
 
