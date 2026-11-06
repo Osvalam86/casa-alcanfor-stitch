@@ -201,6 +201,48 @@ test('formulario vacío: el foco va al título del resumen y los errores quedan 
   await expect(form.getByLabel('Nombre completo')).toBeFocused()
 })
 
+/**
+ * Destinos de salto por script (encabezados con tabIndex -1): reciben el foco sin contorno, porque
+ * no son interactivos; el siguiente control sí lo muestra. Se llega a cada uno con teclado real.
+ */
+test('destinos de salto por script: sin contorno de foco; los controles sí lo muestran', async ({ page }) => {
+  const outline = (locator: import('@playwright/test').Locator) =>
+    locator.evaluate((element) => {
+      const style = getComputedStyle(element)
+      return { style: style.outlineStyle, width: style.outlineWidth }
+    })
+
+  // Resumen de errores
+  await page.goto('/')
+  const form = quote(page)
+  await tabTo(page, form.getByRole('button', { name: 'Enviar solicitud' }))
+  await page.keyboard.press('Enter')
+  const summaryTitle = form.locator('[data-error-summary]').getByRole('heading', { level: 3 })
+  await expect(summaryTitle).toBeFocused()
+  // outline: none deja el ancho en «medium» (3 px) en el estilo calculado, pero no se pinta: cuenta el estilo
+  expect((await outline(summaryTitle)).style).toBe('none')
+  // El primer enlace del resumen (un control) conserva su contorno de 2 px
+  await page.keyboard.press('Tab')
+  const firstLink = form.locator('[data-error-summary] a').first()
+  await expect(firstLink).toBeFocused()
+  expect(await outline(firstLink)).toEqual({ style: 'solid', width: '2px' })
+
+  // Título de la galería, desde «Ver detalles y fotos»
+  await page.goto('/')
+  await tabTo(page, page.getByRole('link', { name: /Ver detalles y fotos de XV años/ }))
+  await page.keyboard.press('Enter')
+  const galleryTitle = page.locator('#galeria').getByRole('heading', { level: 2 })
+  await expect(galleryTitle).toBeFocused()
+  expect((await outline(galleryTitle)).style).toBe('none')
+
+  // Pestañas no seleccionadas (tabIndex -1, roving): al llegar con flechas sí muestran contorno
+  const tabs = page.getByRole('tablist', { name: 'Espacios de Casa Alcanfor' }).getByRole('tab')
+  await tabTo(page, tabs.first())
+  await page.keyboard.press('ArrowRight')
+  await expect(tabs.nth(1)).toBeFocused()
+  expect(await outline(tabs.nth(1))).toEqual({ style: 'solid', width: '2px' })
+})
+
 test('Enter sin esperar al scroll del foco: el resumen de errores queda completo bajo el header', async ({ page }) => {
   // Desde #contacto el botón de enviar queda bajo lo fijo inferior: al tabularle arranca un scroll suave
   await page.goto('/#contacto')

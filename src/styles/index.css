@@ -94,10 +94,13 @@
   }
 
   /*
-   * <main>, destino del skip link (ancla nativa): sin contorno alrededor de toda la página.
-   * El foco por script nunca va a un contenedor, sino a un encabezado o a un control, con su contorno.
+   * Destinos de salto (tabIndex -1 en algo que no es un control): sin contorno de foco.
+   * - <main>, destino del skip link.
+   * - Encabezados que reciben el foco por script: resumen de errores, mensaje de éxito, galería.
+   * No son interactivos: el contorno indicaría algo accionable. Los controles conservan el suyo,
+   * también los que llevan tabIndex -1 (pestañas no seleccionadas del tablist, roving tabindex).
    */
-  main[tabindex='-1']:focus {
+  [tabindex='-1']:not(a[href], button, input, select, textarea, summary, [role='tab'], [role='button'], [contenteditable]):focus {
     outline: none;
   }
 
