@@ -1,12 +1,12 @@
 /**
- * pnpm icons — genera favicon, íconos y la imagen Open Graph (D17: con Playwright).
- * Fuentes: public/icon.svg (monograma), EB Garamond/Manrope de @fontsource y la foto del hero.
+ * pnpm icons — genera favicon e íconos (D17: con Playwright).
+ * Fuentes: public/icon.svg (monograma) y EB Garamond/Manrope de @fontsource.
+ * La imagen Open Graph (public/og-image.jpg, 1200×630) se diseña aparte y no la toca este script.
  * Usa el navegador del sistema (Edge por defecto; PW_CHANNEL=chrome para cambiarlo).
  */
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { chromium, type Page } from '@playwright/test'
-import { brand, seo } from '../src/content/site.ts'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const fromRoot = (path: string) => `${root}${path}`
@@ -16,7 +16,6 @@ const toBase64 = async (path: string) => (await readFile(fromRoot(path))).toStri
 const garamond = await toBase64('node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-400-italic.woff2')
 const garamondRegular = await toBase64('node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-400-normal.woff2')
 const manrope = await toBase64('node_modules/@fontsource/manrope/files/manrope-latin-600-normal.woff2')
-const heroImage = await toBase64('src/assets/images/hero-wedding.webp')
 const iconSvg = await readFile(fromRoot('public/icon.svg'), 'utf8')
 
 const fontFaces = `
@@ -68,30 +67,6 @@ function buildIco(images: { size: number; png: Buffer }[]) {
   return Buffer.concat([header, ...entries, ...images.map(({ png }) => png)])
 }
 
-async function renderOgImage(page: Page) {
-  const [, subtitle = ''] = seo.title.split(' · ')
-  await page.setViewportSize({ width: 1200, height: 630 })
-  await page.setContent(`<!doctype html><html lang="es-MX"><head><style>${fontFaces}
-    body { width: 1200px; height: 630px; display: grid; grid-template-columns: 1fr 1fr; background: #2f3e36; }
-    .copy { padding: 72px 64px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
-    .eyebrow { font-family: 'Manrope'; font-weight: 600; font-size: 20px; letter-spacing: .15em; text-transform: uppercase; color: #e7c08b; }
-    h1 { font-family: 'EB Garamond'; font-weight: 400; font-size: 96px; line-height: 1; color: #fef9f1; }
-    p { font-family: 'EB Garamond'; font-style: italic; font-size: 40px; line-height: 1.2; color: #ece8e0; }
-    .photo { position: relative; margin: 48px 48px 0 0; border-radius: 9999px 9999px 0 0; overflow: hidden; border: 6px solid #e7c08b; border-bottom: 0; }
-    .photo img { width: 100%; height: 100%; object-fit: cover; }
-  </style></head><body>
-    <div class="copy">
-      <span class="eyebrow">${brand.tagline}</span>
-      <h1>${brand.name}</h1>
-      <p>${subtitle}</p>
-    </div>
-    <div class="photo"><img alt="" src="data:image/webp;base64,${heroImage}"></div>
-  </body></html>`)
-  await page.evaluate(() => document.fonts.ready)
-  await page.locator('img').evaluate((img: HTMLImageElement) => img.decode())
-  return page.screenshot({ type: 'jpeg', quality: 85 })
-}
-
 const browser = await chromium.launch({ channel: process.env.PW_CHANNEL ?? 'msedge' })
 try {
   const page = await browser.newPage({ deviceScaleFactor: 1 })
@@ -107,8 +82,6 @@ try {
   const icoImages = []
   for (const size of icoSizes) icoImages.push({ size, png: await renderIcon(page, size) })
   outputs.push(['public/favicon.ico', buildIco(icoImages)])
-
-  outputs.push(['public/og-image.jpg', await renderOgImage(page)])
 
   for (const [path, data] of outputs) {
     await writeFile(fromRoot(path), data)

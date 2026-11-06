@@ -16,7 +16,8 @@
     "preview": "vite preview",
     "test:e2e": "pnpm build && playwright test",
     "icons": "node scripts/generate-icons.ts",
-    "images": "node scripts/generate-images.ts"
+    "images": "node scripts/generate-images.ts",
+    "screens": "pnpm build && node scripts/screenshots.ts"
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.3.0",
