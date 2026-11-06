@@ -1,0 +1,33 @@
+# Despliegue en Netlify (pieza de portafolio, no indexable)
+
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  # Misma versión mayor que en desarrollo; pnpm se fija con "packageManager" en package.json
+  NODE_VERSION = "26"
+  # URL pública para canonical, og:url, og:image absoluta, JSON-LD y sitemap (vacía: se omiten).
+  # Se define en la interfaz de Netlify cuando haya dominio: VITE_SITE_URL = "https://…"
+
+# Todo el sitio: fuera de buscadores (proyecto conceptual) y encabezados de seguridad básicos
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Archivos con hash en el nombre (JS, CSS, fuentes, imágenes de Vite): caché de un año, inmutable.
+# Lo de public/ (íconos, og-image, manifest) no lleva hash y conserva la caché por defecto.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Catálogo de componentes: ruta del cliente (main.tsx lee el pathname) servida por index.html.
+# Sin regla /*: las rutas inexistentes siguen dando 404.
+[[redirects]]
+  from = "/design-system"
+  to = "/index.html"
+  status = 200
