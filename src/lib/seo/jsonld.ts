@@ -17,9 +17,11 @@ type BusinessData = {
   }
   openingHours: { days: readonly string[]; opens: string; closes: string }
   maximumAttendeeCapacity: number
+  /** Foto del lugar, con ruta relativa al sitio */
+  image?: { path: string }
 }
 
-export function buildJsonLd(business: BusinessData, options: { siteUrl?: string; imagePath?: string }) {
+export function buildJsonLd(business: BusinessData, options: { siteUrl?: string }) {
   const siteUrl = options.siteUrl?.replace(/\/+$/, '')
 
   const data: Record<string, unknown> = {
@@ -41,7 +43,7 @@ export function buildJsonLd(business: BusinessData, options: { siteUrl?: string;
   // Lo que depende del dominio solo se incluye si hay VITE_SITE_URL
   if (siteUrl) {
     data.url = `${siteUrl}/`
-    if (options.imagePath) data.image = `${siteUrl}${options.imagePath}`
+    if (business.image) data.image = `${siteUrl}${business.image.path}`
   }
 
   return data

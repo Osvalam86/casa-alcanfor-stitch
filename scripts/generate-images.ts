@@ -6,6 +6,7 @@
  * visible en las variantes AVIF, que se comprimen con calidad 55).
  * Salida:  src/assets/images/generated/ — un AVIF por ancho y manifest.ts con src, srcSet,
  *          width y height de cada foto. Se versiona: el build no depende de sharp.
+ *          public/images/hero.jpg — la foto del lugar para el JSON-LD (ver el final del script).
  *
  * Anchos: 320, 480, 640, 960 y 1280, sin superar nunca el ancho del original;
  * si el original es menor que 1280, se agrega su propio ancho como variante mayor.
@@ -20,11 +21,14 @@
  * - eventos, además: miniatura cuadrada de la tarjeta compacta (móvil) → recorte 1:1 aparte (`-square`).
  */
 import { mkdir, rm, writeFile } from 'node:fs/promises'
+import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
+import { business } from '../src/content/site.ts'
 
 const WIDTHS = [320, 480, 640, 960, 1280]
 const AVIF = { quality: 55, effort: 6 } as const
+const VENUE_JPEG = { quality: 85, mozjpeg: true } as const
 
 /** `name`: nombre de salida cuando una misma foto se recorta a más de una proporción */
 type Source = { file: string; name?: string; aspect?: [number, number] }
@@ -122,3 +126,27 @@ const manifest = [
 
 await writeFile(`${outDir}manifest.ts`, manifest)
 console.log(`Listo: ${SOURCES.length} fotos en src/assets/images/generated/`)
+
+/*
+ * Foto del lugar para el JSON-LD (business.image): JPG, el formato que acepta cualquier consumidor de
+ * datos estructurados (AVIF no está garantizado), con ruta estable en public/ (las variantes de
+ * src/assets llevan hash y el plugin de metadatos no las conoce). Mismo recorte que el hero, a su
+ * ancho mayor.
+ */
+const venue = business.image
+const venueMeta = await sharp(`${sourceDir}${venue.source}`).metadata()
+const [venueRatioW, venueRatioH] = venue.aspect
+const venueWidth = Math.min(venueMeta.width, Math.round((venueMeta.height * venueRatioW) / venueRatioH))
+const venueHeight = Math.round((venueWidth * venueRatioH) / venueRatioW)
+const venueOut = fileURLToPath(new URL(`../public${venue.path}`, import.meta.url))
+await mkdir(dirname(venueOut), { recursive: true })
+await sharp(`${sourceDir}${venue.source}`)
+  .extract({
+    left: Math.floor((venueMeta.width - venueWidth) / 2),
+    top: Math.floor((venueMeta.height - venueHeight) / 2),
+    width: venueWidth,
+    height: venueHeight,
+  })
+  .jpeg(VENUE_JPEG)
+  .toFile(venueOut)
+console.log(`${venue.source} → public${venue.path} (${venueWidth}×${venueHeight}, JPG)`)

@@ -62,7 +62,7 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
     tags.push({
       tag: 'script',
       attrs: { type: 'application/ld+json' },
-      children: JSON.stringify(buildJsonLd(business, { siteUrl, imagePath: seo.ogImage.path })),
+      children: JSON.stringify(buildJsonLd(business, { siteUrl })),
       injectTo: 'head',
     })
 

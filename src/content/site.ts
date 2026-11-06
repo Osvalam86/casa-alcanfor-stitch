@@ -45,6 +45,11 @@ export const business = {
   // Horario de visitas guiadas
   openingHours: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '19:00' },
   maximumAttendeeCapacity: 450,
+  /*
+   * Foto del lugar (la del hero, recorte 4:5 a su ancho mayor) en JPG con ruta estable en public/:
+   * la genera pnpm images. No la OG, que es una maqueta. URL absoluta con VITE_SITE_URL.
+   */
+  image: { path: '/images/hero.jpg', source: 'hero-vertical.webp', aspect: [4, 5] },
 } as const
 
 /** Metadatos de la página (sección 8). */
