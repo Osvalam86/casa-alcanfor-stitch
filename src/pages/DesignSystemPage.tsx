@@ -139,7 +139,8 @@ const processIcons: IconName[] = ['edit-note', 'celebration']
  * - tarjeta de evento: vertical solo cuando su contenedor mide 35rem o más (de 38rem de viewport a lg),
  *   a todo el contenedor (más ancho que alto × 1.84) → 100vw − 3rem; en la columna de lg es compacta
  *   y usa la miniatura 1:1 (thumbnailSizes)
- * - foto de galería (recortada a 1:1; vertical 3:4 desde md, cuadrada en móvil): columna × 4/3 / columna
+ * - foto de galería (la cuadrada del jardín de noche en una celda vertical 3:4 desde md, cuadrada en
+ *   móvil): la cubre por el alto → columna × 4/3; en móvil, la columna
  */
 const SPECIMEN_WIDE_SIZES = '(min-width: 90rem) 84rem, (min-width: 64rem) calc(100vw - 6rem), calc(100vw - 3rem)'
 const SPECIMEN_ARCH_SIZES = '(min-width: 23rem) 20rem, calc(100vw - 3rem)'

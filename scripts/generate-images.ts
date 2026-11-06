@@ -10,8 +10,9 @@
  * `aspect` recorta al centro a la proporción de la caja donde se pinta (object-cover centrado).
  * Criterio: se recorta solo lo que no se ve en ningún ancho de 320 a 1440 px, medido en el build:
  * - hero: caja 4:5 en la landing → 4:5.
- * - galería: celdas de 0.75:1 (vertical) a 1:1 (cuadrada); de la foto (≈1.84:1) solo se ve el 54.5 %
- *   central del ancho en cualquier celda → 1:1, que es la unión de lo visible.
+ * - galería: fotos generadas ya a la proporción de su celda. Las verticales (3:4) cubren su celda
+ *   3:4 desde md y, recortadas al centro por object-cover, la cuadrada de móvil; se ven completas a lo
+ *   ancho en ambas, así que solo se ajustan a 3:4 exacto (896×1200 → 896×1195). Las cuadradas, 1:1.
  * - eventos, espacios y mapa: su caja cambia de proporción con el ancho y en algún ancho se ve la foto
  *   completa (o casi: eventos dejan fuera ≤ 1.5 %, por debajo del umbral de 5 % que se considera), así que no se recortan.
  * - eventos, además: miniatura cuadrada de la tarjeta compacta (móvil) → recorte 1:1 aparte (`-square`).
@@ -38,12 +39,13 @@ const SOURCES: Source[] = [
   { file: 'space-garden.webp' },
   { file: 'space-salon.webp' },
   { file: 'space-terrace.webp' },
-  { file: 'gallery-cocktail-bar.webp', aspect: [1, 1] },
-  { file: 'gallery-garden-ceremony.webp', aspect: [1, 1] },
-  { file: 'gallery-garden-night.webp', aspect: [1, 1] },
-  { file: 'gallery-table-setting.webp', aspect: [1, 1] },
-  { file: 'gallery-wedding-entrance.webp', aspect: [1, 1] },
-  { file: 'gallery-xv-dance.webp', aspect: [1, 1] },
+  // Galería (Stitch, 896×1200 y 1024×1024): verticales 3:4 y cuadradas 1:1
+  { file: 'gallery-cocktail-bar.png', aspect: [3, 4] },
+  { file: 'gallery-table-setting.png', aspect: [3, 4] },
+  { file: 'gallery-wedding-entrance.png', aspect: [3, 4] },
+  { file: 'gallery-garden-ceremony.png', aspect: [1, 1] },
+  { file: 'gallery-garden-night.png', aspect: [1, 1] },
+  { file: 'gallery-xv-dance.png', aspect: [1, 1] },
   { file: 'map.jpg' },
 ]
 

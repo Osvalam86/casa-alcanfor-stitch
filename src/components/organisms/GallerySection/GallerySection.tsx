@@ -20,15 +20,16 @@ type Photo = {
  * - md: 3 columnas con gap-6 → (100vw − 6rem) / 3
  * - lg: 4 columnas con gap-6 → (100vw − 10.5rem) / 4; tope en 90rem → 19.875rem
  * - anchas (md:col-span-2): dos columnas y un gap
- * Las fotos vienen recortadas a 1:1 (pnpm images), la unión de lo visible en sus celdas:
- * - cuadrada (todas en móvil, cuadradas y anchas desde md): se dibuja al ancho de la caja
- * - vertical 3:4 (md en adelante): la foto 1:1 cubre la caja por el alto → columna × 4/3
+ * Cada foto viene a la proporción de su celda (pnpm images), así que se dibuja al ancho de la caja:
+ * - cuadradas 1:1 (cuadradas y anchas): exacto en todos los anchos
+ * - verticales 3:4: exacto en su celda 3:4 desde md; en la cuadrada de móvil, object-cover la
+ *   recorta por el alto (centro) y el ancho sigue siendo el de la caja
  */
+const COLUMN_SIZES =
+  '(min-width: 90rem) 19.875rem, (min-width: 64rem) calc((100vw - 10.5rem) / 4), (min-width: 48rem) calc((100vw - 6rem) / 3), calc((100vw - 3.75rem) / 2)'
 const PHOTO_SIZES = {
-  portrait:
-    '(min-width: 90rem) 26.5rem, (min-width: 64rem) calc((100vw - 10.5rem) / 3), (min-width: 48rem) calc((100vw - 6rem) * 4 / 9), calc((100vw - 3.75rem) / 2)',
-  square:
-    '(min-width: 90rem) 19.875rem, (min-width: 64rem) calc((100vw - 10.5rem) / 4), (min-width: 48rem) calc((100vw - 6rem) / 3), calc((100vw - 3.75rem) / 2)',
+  portrait: COLUMN_SIZES,
+  square: COLUMN_SIZES,
   wide: '(min-width: 90rem) 41.25rem, (min-width: 64rem) calc((100vw - 10.5rem) / 2 + 1.5rem), (min-width: 48rem) calc((100vw - 6rem) * 2 / 3 + 1.5rem), calc((100vw - 3.75rem) / 2)',
 } as const
 

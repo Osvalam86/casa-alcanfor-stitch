@@ -462,7 +462,7 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryWeddingEntrance,
-        'Novios tomados de la mano cruzan un arco de cantera adornado con flores y luces, entre olivos y mesas de invitados.',
+        'Novios de espaldas, tomados de la mano, caminan por un sendero empedrado bajo un arco de piedra cubierto de flores blancas, hacia mesas largas con velas entre olivos y los arcos de una hacienda.',
       ),
     },
     {
@@ -472,7 +472,7 @@ export const gallery = {
       wide: true,
       image: galleryImage(
         galleryGardenNight,
-        'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
+        'Invitados cenan en mesas largas con velas y flores blancas bajo un árbol enorme del que cuelgan cortinas de luces, frente a los arcos iluminados de una hacienda con buganvilias.',
       ),
     },
     {
@@ -481,7 +481,7 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryTableSetting,
-        'Mesa de madera rústica con plato de cerámica, servilleta de lino atada con eucalipto, cubiertos dorados, copas de cristal labrado y rosas blancas en maceta de barro.',
+        'Mesa de madera rústica con plato de cerámica moteada, servilleta de lino atada con eucalipto, cubiertos dorados, copas de cristal labrado, velas y un jarrón de barro con rosas blancas; al fondo, arcos y series de luces.',
       ),
     },
     {
@@ -490,7 +490,7 @@ export const gallery = {
       aspect: 'square',
       image: galleryImage(
         galleryXvDance,
-        'Quinceañera con vestido de gala turquesa y tiara baila con sus chambelanes sobre una pista iluminada, entre rayos de luz, niebla y pantallas con las letras «XV».',
+        'Quinceañera con vestido turquesa y tiara baila con sus chambelanes de esmoquin sobre una pista de parquet, en un patio con arcos de cantera bajo series de luces, mientras los invitados aplauden desde sus mesas.',
       ),
     },
     {
@@ -499,7 +499,7 @@ export const gallery = {
       aspect: 'portrait',
       image: galleryImage(
         galleryCocktailBar,
-        'Dos cócteles con rodaja de toronja y ramita de romero sobre una barra de cantera al aire libre, con botellas y fruta al lado e invitados al fondo.',
+        'Dos cócteles con rodaja de toronja y romero sobre una barra de cantera, junto a botellas de mezcal, un plato de toronjas y un jigger dorado; al fondo, invitados conversan en un patio con arcos y luces.',
       ),
     },
     {
@@ -509,7 +509,7 @@ export const gallery = {
       wide: true,
       image: galleryImage(
         galleryGardenCeremony,
-        'Novios frente al oficiante bajo una pérgola de madera con flores y cortinas blancas; los invitados los miran desde ambos lados de un pasillo de pétalos, con luz dorada de atardecer.',
+        'Novios tomados de las manos frente al oficiante bajo una pérgola de madera con flores blancas y gasas, con invitados sentados a ambos lados de un pasillo cubierto de pétalos, al atardecer.',
       ),
     },
   ] satisfies GalleryPhoto[],

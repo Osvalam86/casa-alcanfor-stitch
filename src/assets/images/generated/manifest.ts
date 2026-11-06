@@ -55,17 +55,32 @@ import spaceTerrace640 from './space-terrace-640.avif'
 import spaceTerrace960 from './space-terrace-960.avif'
 import spaceTerrace1200 from './space-terrace-1200.avif'
 import galleryCocktailBar320 from './gallery-cocktail-bar-320.avif'
-import galleryCocktailBar436 from './gallery-cocktail-bar-436.avif'
-import galleryGardenCeremony320 from './gallery-garden-ceremony-320.avif'
-import galleryGardenCeremony436 from './gallery-garden-ceremony-436.avif'
-import galleryGardenNight320 from './gallery-garden-night-320.avif'
-import galleryGardenNight436 from './gallery-garden-night-436.avif'
+import galleryCocktailBar480 from './gallery-cocktail-bar-480.avif'
+import galleryCocktailBar640 from './gallery-cocktail-bar-640.avif'
+import galleryCocktailBar896 from './gallery-cocktail-bar-896.avif'
 import galleryTableSetting320 from './gallery-table-setting-320.avif'
-import galleryTableSetting436 from './gallery-table-setting-436.avif'
+import galleryTableSetting480 from './gallery-table-setting-480.avif'
+import galleryTableSetting640 from './gallery-table-setting-640.avif'
+import galleryTableSetting896 from './gallery-table-setting-896.avif'
 import galleryWeddingEntrance320 from './gallery-wedding-entrance-320.avif'
-import galleryWeddingEntrance436 from './gallery-wedding-entrance-436.avif'
+import galleryWeddingEntrance480 from './gallery-wedding-entrance-480.avif'
+import galleryWeddingEntrance640 from './gallery-wedding-entrance-640.avif'
+import galleryWeddingEntrance896 from './gallery-wedding-entrance-896.avif'
+import galleryGardenCeremony320 from './gallery-garden-ceremony-320.avif'
+import galleryGardenCeremony480 from './gallery-garden-ceremony-480.avif'
+import galleryGardenCeremony640 from './gallery-garden-ceremony-640.avif'
+import galleryGardenCeremony960 from './gallery-garden-ceremony-960.avif'
+import galleryGardenCeremony1024 from './gallery-garden-ceremony-1024.avif'
+import galleryGardenNight320 from './gallery-garden-night-320.avif'
+import galleryGardenNight480 from './gallery-garden-night-480.avif'
+import galleryGardenNight640 from './gallery-garden-night-640.avif'
+import galleryGardenNight960 from './gallery-garden-night-960.avif'
+import galleryGardenNight1024 from './gallery-garden-night-1024.avif'
 import galleryXvDance320 from './gallery-xv-dance-320.avif'
-import galleryXvDance436 from './gallery-xv-dance-436.avif'
+import galleryXvDance480 from './gallery-xv-dance-480.avif'
+import galleryXvDance640 from './gallery-xv-dance-640.avif'
+import galleryXvDance960 from './gallery-xv-dance-960.avif'
+import galleryXvDance1024 from './gallery-xv-dance-1024.avif'
 import map320 from './map-320.avif'
 import map480 from './map-480.avif'
 import map640 from './map-640.avif'
@@ -89,11 +104,11 @@ export const images = {
   spaceGarden: { src: spaceGarden640, srcSet: `${spaceGarden320} 320w, ${spaceGarden480} 480w, ${spaceGarden640} 640w, ${spaceGarden960} 960w, ${spaceGarden1200} 1200w`, width: 1200, height: 670 },
   spaceSalon: { src: spaceSalon640, srcSet: `${spaceSalon320} 320w, ${spaceSalon480} 480w, ${spaceSalon640} 640w, ${spaceSalon960} 960w, ${spaceSalon1200} 1200w`, width: 1200, height: 655 },
   spaceTerrace: { src: spaceTerrace640, srcSet: `${spaceTerrace320} 320w, ${spaceTerrace480} 480w, ${spaceTerrace640} 640w, ${spaceTerrace960} 960w, ${spaceTerrace1200} 1200w`, width: 1200, height: 655 },
-  galleryCocktailBar: { src: galleryCocktailBar436, srcSet: `${galleryCocktailBar320} 320w, ${galleryCocktailBar436} 436w`, width: 436, height: 436 },
-  galleryGardenCeremony: { src: galleryGardenCeremony436, srcSet: `${galleryGardenCeremony320} 320w, ${galleryGardenCeremony436} 436w`, width: 436, height: 436 },
-  galleryGardenNight: { src: galleryGardenNight436, srcSet: `${galleryGardenNight320} 320w, ${galleryGardenNight436} 436w`, width: 436, height: 436 },
-  galleryTableSetting: { src: galleryTableSetting436, srcSet: `${galleryTableSetting320} 320w, ${galleryTableSetting436} 436w`, width: 436, height: 436 },
-  galleryWeddingEntrance: { src: galleryWeddingEntrance436, srcSet: `${galleryWeddingEntrance320} 320w, ${galleryWeddingEntrance436} 436w`, width: 436, height: 436 },
-  galleryXvDance: { src: galleryXvDance436, srcSet: `${galleryXvDance320} 320w, ${galleryXvDance436} 436w`, width: 436, height: 436 },
+  galleryCocktailBar: { src: galleryCocktailBar640, srcSet: `${galleryCocktailBar320} 320w, ${galleryCocktailBar480} 480w, ${galleryCocktailBar640} 640w, ${galleryCocktailBar896} 896w`, width: 896, height: 1195 },
+  galleryTableSetting: { src: galleryTableSetting640, srcSet: `${galleryTableSetting320} 320w, ${galleryTableSetting480} 480w, ${galleryTableSetting640} 640w, ${galleryTableSetting896} 896w`, width: 896, height: 1195 },
+  galleryWeddingEntrance: { src: galleryWeddingEntrance640, srcSet: `${galleryWeddingEntrance320} 320w, ${galleryWeddingEntrance480} 480w, ${galleryWeddingEntrance640} 640w, ${galleryWeddingEntrance896} 896w`, width: 896, height: 1195 },
+  galleryGardenCeremony: { src: galleryGardenCeremony640, srcSet: `${galleryGardenCeremony320} 320w, ${galleryGardenCeremony480} 480w, ${galleryGardenCeremony640} 640w, ${galleryGardenCeremony960} 960w, ${galleryGardenCeremony1024} 1024w`, width: 1024, height: 1024 },
+  galleryGardenNight: { src: galleryGardenNight640, srcSet: `${galleryGardenNight320} 320w, ${galleryGardenNight480} 480w, ${galleryGardenNight640} 640w, ${galleryGardenNight960} 960w, ${galleryGardenNight1024} 1024w`, width: 1024, height: 1024 },
+  galleryXvDance: { src: galleryXvDance640, srcSet: `${galleryXvDance320} 320w, ${galleryXvDance480} 480w, ${galleryXvDance640} 640w, ${galleryXvDance960} 960w, ${galleryXvDance1024} 1024w`, width: 1024, height: 1024 },
   map: { src: map640, srcSet: `${map320} 320w, ${map480} 480w, ${map640} 640w, ${map800} 800w`, width: 800, height: 800 },
 } as const

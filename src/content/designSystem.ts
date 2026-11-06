@@ -234,7 +234,7 @@ export const designSystem = {
     gallery: {
       image: {
         ...galleryGardenNight,
-        alt: 'Invitados cenando en mesas largas bajo árboles enormes de los que cuelgan cortinas de luces cálidas.',
+        alt: 'Invitados cenan en mesas largas con velas y flores blancas bajo un árbol enorme del que cuelgan cortinas de luces, frente a los arcos iluminados de una hacienda con buganvilias.',
       },
       caption: 'Jardín bajo las estrellas',
     },
