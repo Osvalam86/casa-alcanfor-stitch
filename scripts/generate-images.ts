@@ -2,6 +2,8 @@
  * pnpm images — genera las variantes AVIF de las fotos y su manifiesto tipado.
  *
  * Fuentes: src/assets/images/ (las fotos originales, que no se importan directo en la app).
+ * Las de Stitch llegan en PNG y se guardan en WebP calidad 92 (≈ 6 veces más ligeras, sin diferencia
+ * visible en las variantes AVIF, que se comprimen con calidad 55).
  * Salida:  src/assets/images/generated/ — un AVIF por ancho y manifest.ts con src, srcSet,
  *          width y height de cada foto. Se versiona: el build no depende de sharp.
  *
@@ -31,7 +33,7 @@ type Source = { file: string; name?: string; aspect?: [number, number] }
 const EVENT_FILES = ['event-weddings', 'event-xv', 'event-baptisms', 'event-birthdays', 'event-corporate', 'event-showers']
 
 const SOURCES: Source[] = [
-  { file: 'hero-vertical.png', aspect: [4, 5] },
+  { file: 'hero-vertical.webp', aspect: [4, 5] },
   ...EVENT_FILES.flatMap((name): Source[] => [
     { file: `${name}.webp` },
     { file: `${name}.webp`, name: `${name}-square`, aspect: [1, 1] },
@@ -40,12 +42,12 @@ const SOURCES: Source[] = [
   { file: 'space-salon.webp' },
   { file: 'space-terrace.webp' },
   // Galería (Stitch, 896×1200 y 1024×1024): verticales 3:4 y cuadradas 1:1
-  { file: 'gallery-cocktail-bar.png', aspect: [3, 4] },
-  { file: 'gallery-table-setting.png', aspect: [3, 4] },
-  { file: 'gallery-wedding-entrance.png', aspect: [3, 4] },
-  { file: 'gallery-garden-ceremony.png', aspect: [1, 1] },
-  { file: 'gallery-garden-night.png', aspect: [1, 1] },
-  { file: 'gallery-xv-dance.png', aspect: [1, 1] },
+  { file: 'gallery-cocktail-bar.webp', aspect: [3, 4] },
+  { file: 'gallery-table-setting.webp', aspect: [3, 4] },
+  { file: 'gallery-wedding-entrance.webp', aspect: [3, 4] },
+  { file: 'gallery-garden-ceremony.webp', aspect: [1, 1] },
+  { file: 'gallery-garden-night.webp', aspect: [1, 1] },
+  { file: 'gallery-xv-dance.webp', aspect: [1, 1] },
   { file: 'map.jpg' },
 ]
 

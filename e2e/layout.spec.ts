@@ -171,14 +171,21 @@ test.describe('píldora del hero', () => {
 })
 
 test.describe('Momentos memorables', () => {
+  // Compacta: apilada (lista < 21rem) o con todo el texto al lado de la miniatura (21–35rem)
+  const LABELS = {
+    stacked: 'compactas con la descripción a todo el ancho',
+    side: 'compactas con el texto al lado de la miniatura',
+    vertical: 'verticales en rejilla',
+  } as const
   for (const { width, layout } of [
-    { width: 320, layout: 'compact' },
-    { width: 360, layout: 'compact' },
-    { width: 595, layout: 'compact' },
+    { width: 320, layout: 'stacked' },
+    { width: 360, layout: 'stacked' },
+    { width: 480, layout: 'side' },
+    { width: 595, layout: 'side' },
     { width: 640, layout: 'vertical' },
     { width: 1440, layout: 'vertical' },
   ] as const) {
-    test(`${width} px: tarjetas ${layout === 'compact' ? 'compactas en una columna, sin carrusel' : 'verticales en rejilla'}`, async ({ page }) => {
+    test(`${width} px: tarjetas ${LABELS[layout]}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })
       await page.goto('/')
       const section = page.locator('#eventos')
@@ -200,9 +207,9 @@ test.describe('Momentos memorables', () => {
             direction: styles.flexDirection,
             left: Math.round(card.left),
             right: card.right,
-            // Compacta: título al lado de la miniatura y descripción debajo, a todo el ancho interior
             titleBesideThumb: title.left >= thumb.right && title.top < thumb.bottom,
             descriptionBelowThumb: text.top >= thumb.bottom,
+            descriptionBesideThumb: text.left >= thumb.right,
             descriptionFullWidth: Math.abs(text.width - inner) <= 1,
           }
         }),
@@ -210,19 +217,24 @@ test.describe('Momentos memorables', () => {
       for (const card of info) {
         // Ninguna tarjeta se sale del ancho de la pantalla
         expect(card.right).toBeLessThanOrEqual(width)
-        if (layout === 'compact') {
+        if (layout !== 'vertical') {
           expect(card.display).toBe('grid')
           expect(card.titleBesideThumb, 'título junto a la miniatura').toBe(true)
+        }
+        if (layout === 'stacked') {
           expect(card.descriptionBelowThumb, 'descripción debajo de la fila de la miniatura').toBe(true)
           expect(card.descriptionFullWidth, 'descripción a todo el ancho de la tarjeta').toBe(true)
+        } else if (layout === 'side') {
+          expect(card.descriptionBesideThumb, 'descripción al lado de la miniatura').toBe(true)
+          expect(card.descriptionFullWidth, 'la descripción no ocupa todo el ancho').toBe(false)
         } else {
           expect(card.display).toBe('flex')
           expect(card.direction).toBe('column')
         }
       }
       const columns = new Set(info.map((card) => card.left)).size
-      if (layout === 'compact') expect(columns).toBe(1)
-      else expect(columns).toBeGreaterThan(1)
+      if (layout === 'vertical') expect(columns).toBeGreaterThan(1)
+      else expect(columns).toBe(1)
     })
   }
 })

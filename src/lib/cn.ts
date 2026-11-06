@@ -93,7 +93,7 @@ const twMerge = extendTailwindMerge({
         'control-lg',
         'fab',
       ],
-      container: ['page', 'hero-media', 'card-thumb', 'card-grid'],
+      container: ['page', 'hero-media', 'card-thumb', 'card-side', 'card-grid'],
       tracking: ['caps', 'caps-compact'],
       leading: ['label-row'],
       blur: ['glow-lg', 'glow-md'],

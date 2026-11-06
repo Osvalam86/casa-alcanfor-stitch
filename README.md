@@ -1,5 +1,15 @@
 # React + TypeScript + Vite
 
+<!-- El README completo del proyecto se escribe en el bloque 5; esta sección se conserva. -->
+
+## Decisiones respecto al diseño
+
+Cambios al copy o al contenido del diseño de Stitch, con su motivo.
+
+| Qué | Diseño | Sitio | Por qué |
+|---|---|---|---|
+| Pie de la foto del vals en la galería | «Vals & pista robótica» | «Vals entre arcos» | La foto se regeneró en Stitch: el vals ocurre en un patio con arcos de cantera y pista de parquet, sin pista robótica ni luces de escenario. |
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

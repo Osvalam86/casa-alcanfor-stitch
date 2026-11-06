@@ -237,13 +237,18 @@
   --container-page: 90rem;
   --container-hero-media: 35rem;
   /*
-   * Cortes de @container para listas de tarjetas (variantes @card-thumb y @card-grid):
-   * desde 25rem de lista, miniatura de 112 px en vez de 96; desde 35rem, rejilla de tarjetas verticales.
+   * Cortes de @container para listas de tarjetas (variantes @card-side, @card-thumb y @card-grid):
+   * - card-side (21rem): por debajo, la compacta apila la descripción a todo el ancho; desde ahí, todo
+   *   el texto va al lado de la miniatura. Es donde ambas miden lo mismo (lista de 6 tarjetas medida
+   *   de 320 a 600 px: apilada 1491 px vs. al lado 1494 px a 21rem; antes gana la apilada, después la otra).
+   * - card-thumb (25rem): miniatura de 112 px en vez de 96.
+   * - card-grid (35rem): rejilla de tarjetas verticales.
    * 35rem: con la lista más angosta en rejilla (2 columnas de 280 px, 640 px de viewport) los títulos
    * ocupan como máximo dos líneas; por debajo, la compacta los deja en una o dos (tres a 320 px).
    * Medido de 320 a 768 px; los títulos usan espacio de no separación tras «de» e «y».
    */
   --container-card-thumb: 25rem;
+  --container-card-side: 21rem;
   --container-card-grid: 35rem;
   --blur-glow-lg: 120px;
   --blur-glow-md: 100px;

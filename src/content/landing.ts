@@ -486,7 +486,8 @@ export const gallery = {
     },
     {
       category: 'xv',
-      caption: 'Vals & pista robótica',
+      // Cambio respecto al diseño (README): la foto nueva no muestra la pista robótica
+      caption: 'Vals entre arcos',
       aspect: 'square',
       image: galleryImage(
         galleryXvDance,
