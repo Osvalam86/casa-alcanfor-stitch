@@ -16,5 +16,21 @@ export default defineConfig(({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    build: {
+      rollupOptions: {
+        // 404.html: Netlify la sirve en cualquier ruta inexistente (sin regla /* en netlify.toml)
+        input: {
+          main: fileURLToPath(new URL('./index.html', import.meta.url)),
+          notFound: fileURLToPath(new URL('./404.html', import.meta.url)),
+        },
+        // Con dos entradas, Rollup nombra el código compartido por su primer módulo
+        // (p. ej. VisuallyHidden-*.css): se le da un nombre estable
+        output: {
+          chunkFileNames: 'assets/app-[hash].js',
+          assetFileNames: (asset) =>
+            asset.names.some((name) => name.endsWith('.css')) ? 'assets/styles-[hash][extname]' : 'assets/[name]-[hash][extname]',
+        },
+      },
+    },
   }
 })

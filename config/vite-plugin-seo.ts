@@ -1,4 +1,5 @@
 import type { HtmlTagDescriptor, Plugin } from 'vite'
+import { notFound } from '../src/content/notFound.ts'
 import { brand, business, seo } from '../src/content/site.ts'
 import { buildJsonLd } from '../src/lib/seo/jsonld.ts'
 
@@ -7,6 +8,7 @@ import { buildJsonLd } from '../src/lib/seo/jsonld.ts'
  * title, description, theme-color, íconos, manifest, Open Graph, Twitter Card y JSON-LD.
  * Lo que depende del dominio (canonical, og:url, URLs absolutas, sitemap) usa
  * VITE_SITE_URL; si está vacía, se omite.
+ * 404.html lleva solo título, noindex, theme-color e íconos (sin Open Graph, canonical ni JSON-LD).
  */
 export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
   const siteUrl = rawSiteUrl?.trim().replace(/\/+$/, '') || undefined
@@ -14,16 +16,25 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
   const meta = (attrs: Record<string, string>): HtmlTagDescriptor => ({ tag: 'meta', attrs, injectTo: 'head' })
   const link = (attrs: Record<string, string>): HtmlTagDescriptor => ({ tag: 'link', attrs, injectTo: 'head' })
 
+  const iconTags = (): HtmlTagDescriptor[] => [
+    meta({ name: 'theme-color', content: seo.themeColor }),
+    link({ rel: 'icon', href: '/favicon.ico', sizes: '32x32' }),
+    link({ rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' }),
+    link({ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }),
+    link({ rel: 'manifest', href: '/site.webmanifest' }),
+  ]
+
+  /** 404.html: se sirve en cualquier ruta inexistente; no se indexa ni se comparte */
+  function notFoundTags(): HtmlTagDescriptor[] {
+    return [{ tag: 'title', children: notFound.meta.title, injectTo: 'head' }, meta({ name: 'robots', content: 'noindex' }), ...iconTags()]
+  }
+
   function headTags(): HtmlTagDescriptor[] {
     const tags: HtmlTagDescriptor[] = [
       // Única fuente del título: seo.title (index.html no lo repite)
       { tag: 'title', children: seo.title, injectTo: 'head' },
       meta({ name: 'description', content: seo.description }),
-      meta({ name: 'theme-color', content: seo.themeColor }),
-      link({ rel: 'icon', href: '/favicon.ico', sizes: '32x32' }),
-      link({ rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' }),
-      link({ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }),
-      link({ rel: 'manifest', href: '/site.webmanifest' }),
+      ...iconTags(),
       meta({ property: 'og:type', content: 'website' }),
       meta({ property: 'og:locale', content: seo.locale }),
       meta({ property: 'og:site_name', content: brand.name }),
@@ -60,8 +71,8 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
 
   return {
     name: 'casa-alcanfor-seo',
-    transformIndexHtml() {
-      return headTags()
+    transformIndexHtml(_html, ctx) {
+      return ctx.path.endsWith('/404.html') ? notFoundTags() : headTags()
     },
     generateBundle() {
       const robots = ['User-agent: *', 'Allow: /']

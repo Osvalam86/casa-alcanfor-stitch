@@ -54,7 +54,7 @@ async function heroLayout(page: Page, mode: Mode) {
   }
   if (mode === 'android') {
     // Simula Android: sin Arial ni Times New Roman, con Roboto y Noto Serif "instaladas"
-    await page.route(/\/assets\/index-.*\.css$/, async (route) => {
+    await page.route(/\/assets\/.*\.css$/, async (route) => {
       const response = await route.fetch()
       const css = (await response.text())
         .replace(localPattern(DESKTOP_LOCALS), 'local(__ausente__)')

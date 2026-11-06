@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { obscuringReport, offsetBelowHeader, waitForScrollEnd } from './helpers.ts'
 
-const PAGES = ['/', '/design-system'] as const
+const PAGES = ['/', '/design-system', '/404.html'] as const
 
 // Los recorridos completos con Tab esperan el fin del scroll en cada paso
 test.describe.configure({ timeout: 120_000 })
