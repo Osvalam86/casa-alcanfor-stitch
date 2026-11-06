@@ -85,8 +85,9 @@ export function QuoteForm({
   onSubmit,
 }: QuoteFormProps) {
   const summaryRef = useRef<HTMLDivElement>(null)
+  const summaryTitleRef = useRef<HTMLHeadingElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
-  const statusRef = useRef<HTMLDivElement>(null)
+  const successTitleRef = useRef<HTMLHeadingElement>(null)
   const privacyErrorId = useId()
   const fields = copy.fields
 
@@ -94,25 +95,31 @@ export function QuoteForm({
     invalidFields.includes(field) ? copy.errors[field] : undefined
 
   /*
-   * Resumen de errores: foco y desplazamiento explícito al inicio (bajo el header, por scroll-padding).
+   * Resumen de errores: foco en su título (h3, no en el contenedor: NVDA lee el encabezado y sigue
+   * desde ahí) y desplazamiento explícito del resumen al inicio (bajo el header, por scroll-padding).
    * Con block 'nearest' no se lanzaba un scroll nuevo si el resumen ya asomaba, y un scroll suave
    * en curso (el del foco al botón de enviar) lo dejaba a medias bajo el header.
    * El comportamiento (suave o instantáneo) lo decide scroll-behavior según prefers-reduced-motion.
    */
   useEffect(() => {
     if (errorAttempt === 0) return
-    const summary = summaryRef.current
-    summary?.focus({ preventScroll: true })
-    summary?.scrollIntoView({ block: 'start' })
+    summaryTitleRef.current?.focus({ preventScroll: true })
+    summaryRef.current?.scrollIntoView({ block: 'start' })
   }, [errorAttempt])
 
   useEffect(() => {
     if (focusRequest > 0) nameRef.current?.focus()
   }, [focusRequest])
 
-  // Al enviar con éxito el formulario desaparece: el foco pasa al mensaje
+  /*
+   * Al enviar con éxito el formulario desaparece: el foco pasa al título del mensaje (h3) y se
+   * desplaza solo si hace falta ('nearest' respeta el scroll-padding: no queda bajo el header)
+   */
   useEffect(() => {
-    if (status === 'success') statusRef.current?.focus()
+    if (status !== 'success') return
+    const title = successTitleRef.current
+    title?.focus({ preventScroll: true })
+    title?.scrollIntoView({ block: 'nearest' })
   }, [status])
 
   const listedErrors = invalidFields.filter((field): field is Exclude<QuoteField, 'comments'> => field !== 'comments')
@@ -130,9 +137,9 @@ export function QuoteForm({
       </div>
 
       {/* Región viva presente desde el render inicial: anuncios y éxito */}
-      <div ref={statusRef} role="status" tabIndex={-1} className="rounded-2xl">
+      <div role="status" className="rounded-2xl">
         {status === 'success' ? (
-          <Alert tone="success" title={copy.success.title}>
+          <Alert tone="success" title={copy.success.title} titleAs="h3" titleRef={successTitleRef}>
             <p>{copy.success.description}</p>
           </Alert>
         ) : announcement ? (
@@ -145,16 +152,16 @@ export function QuoteForm({
       {status === 'success' ? null : (
         <form noValidate onSubmit={onSubmit} aria-labelledby={titleId} className="flex flex-col gap-6">
           {listedErrors.length > 0 ? (
-            <div
-              ref={summaryRef}
-              tabIndex={-1}
-              aria-labelledby={`${titleId}-errors`}
-              className="rounded-2xl border-2 border-error bg-error-soft p-4 md:p-6"
-            >
-              <p id={`${titleId}-errors`} className="flex items-center gap-2 font-serif text-headline-sm text-text">
+            <div ref={summaryRef} data-error-summary className="rounded-2xl border-2 border-error bg-error-soft p-4 md:p-6">
+              <h3
+                ref={summaryTitleRef}
+                id={`${titleId}-errors`}
+                tabIndex={-1}
+                className="flex items-center gap-2 rounded-xs font-serif text-headline-sm text-text"
+              >
                 <Icon name="error" size="lg" className="text-error" />
                 {copy.errorSummary.title}
-              </p>
+              </h3>
               <p className="mt-1 font-sans text-body-sm text-text">{countText}</p>
               <ul className="mt-2 list-disc pl-6 font-sans text-body-sm">
                 {listedErrors.map((field) => (
@@ -296,7 +303,8 @@ export function QuoteForm({
               <Checkbox
                 id={FIELD_IDS.privacy}
                 name="privacy"
-                required
+                // aria-required y no `required`: el nativo expone invalid=true desde la carga (ver FormField)
+                aria-required="true"
                 checked={values.privacy}
                 aria-invalid={errorFor('privacy') ? true : undefined}
                 aria-describedby={errorFor('privacy') ? privacyErrorId : undefined}

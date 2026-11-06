@@ -14,10 +14,13 @@ function isInsideFixed(element: Element) {
  * (scroll-padding-top/bottom). scrollIntoView({ block: 'nearest' }) no hace nada si ya está libre.
  * Solo con foco de teclado (:focus-visible), fuera de lo fijo y de los <dialog>, y si el elemento
  * cabe en el espacio libre (los destinos grandes, como <main>, se ignoran).
+ * Los encabezados con tabIndex -1 solo reciben foco por script (resumen de errores, galería, éxito):
+ * quien mueve el foco hace su propio desplazamiento, y llamar aquí a scrollIntoView lo cancelaría.
  */
 export function revealFocused(target: Element | null = document.activeElement) {
   if (!(target instanceof HTMLElement) || !target.matches(':focus-visible')) return
   if (target.closest('dialog') || isInsideFixed(target)) return
+  if (/^H[1-6]$/.test(target.tagName) && target.tabIndex < 0) return
 
   const root = getComputedStyle(document.documentElement)
   const top = parseFloat(root.scrollPaddingTop || '0')

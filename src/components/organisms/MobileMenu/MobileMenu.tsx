@@ -15,16 +15,22 @@ export type MobileMenuProps = {
 
 /**
  * Menú en <dialog> modal: showModal() atrapa el foco, Escape lo cierra (evento cancel)
- * y al cerrar el foco vuelve al botón que lo abrió (lo gestiona SiteHeader).
+ * y al cerrar el <dialog> devuelve el foco al botón que lo abrió (comportamiento nativo).
+ * Foco inicial explícito en «Cerrar menú», un control: no depende de la regla del navegador para
+ * elegir el primer enfocable ni cae en el contenedor del diálogo.
  */
 export function MobileMenu({ open, onClose, title, closeLabel, navLabel, items, cta }: MobileMenuProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
   const titleId = useId()
 
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
-    if (open && !dialog.open) dialog.showModal()
+    if (open && !dialog.open) {
+      dialog.showModal()
+      closeRef.current?.focus()
+    }
     if (!open && dialog.open) dialog.close()
   }, [open])
 
@@ -40,7 +46,7 @@ export function MobileMenu({ open, onClose, title, closeLabel, navLabel, items, 
           <p id={titleId} className="font-sans text-label-caps uppercase text-accent">
             {title}
           </p>
-          <IconButton label={closeLabel} onClick={onClose}>
+          <IconButton ref={closeRef} label={closeLabel} onClick={onClose}>
             <Icon name="close" size="xl" />
           </IconButton>
         </div>

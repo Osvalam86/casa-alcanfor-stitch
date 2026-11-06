@@ -5,6 +5,7 @@ import { Icon } from '@/components/atoms/Icon'
 import { Image } from '@/components/atoms/Image'
 import { TextLink } from '@/components/atoms/TextLink'
 import { ContactInfoItem } from '@/components/molecules/ContactInfoItem'
+import { NBSP } from '@/lib/text'
 
 export type LocationCardProps = {
   eyebrow: string
@@ -64,7 +65,7 @@ export function LocationCard({ eyebrow, title, labels, address, hours, phone, wh
               className="underline-offset-4 hover:text-accent hover:underline"
             >
               {whatsapp.label}: {whatsapp.display}
-              <span className="sr-only"> {newTabHint}</span>
+              <span className="sr-only">{`${NBSP}${newTabHint}`}</span>
             </a>
           </ContactInfoItem>
         </dl>

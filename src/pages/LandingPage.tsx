@@ -60,6 +60,8 @@ const SECTION_IDS = {
 } as const
 
 const QUOTE_TITLE_ID = 'cotizacion-titulo'
+/** Título de la galería: destino del foco desde «Ver detalles y fotos» */
+const GALLERY_TITLE_ID = 'galeria-titulo'
 /** CTA principal del hero: al salir de pantalla aparece la barra inferior móvil */
 const HERO_CTA_ID = 'hero-cta'
 const galleryFilterIds = gallery.filters.map((filter) => filter.id)
@@ -93,7 +95,7 @@ export function LandingPage() {
     setQuoteFocusRequest((request) => request + 1)
   }
 
-  /** "Ver detalles y fotos": filtra la galería sin recargar y lleva el foco a la sección. */
+  /** "Ver detalles y fotos": filtra la galería sin recargar y lleva el foco al título de la sección (h2). */
   function handleEventLink(index: number, event: MouseEvent<HTMLAnchorElement>) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
     event.preventDefault()
@@ -103,9 +105,8 @@ export function LandingPage() {
     else url.searchParams.set('galeria', filter)
     url.hash = SECTION_IDS.gallery
     updateUrl(url, 'push')
-    const target = document.getElementById(SECTION_IDS.gallery)
-    target?.scrollIntoView()
-    target?.focus({ preventScroll: true })
+    document.getElementById(SECTION_IDS.gallery)?.scrollIntoView()
+    document.getElementById(GALLERY_TITLE_ID)?.focus({ preventScroll: true })
   }
 
   return (
@@ -200,6 +201,7 @@ export function LandingPage() {
       <ProcessSection {...process} />
       <GallerySection
         id={SECTION_IDS.gallery}
+        titleId={GALLERY_TITLE_ID}
         {...gallery}
         activeFilter={galleryFilter}
         onFilterChange={(id) => setGalleryFilter(id as (typeof galleryFilterIds)[number])}

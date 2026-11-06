@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/cn'
+import { NBSP } from '@/lib/text'
 
 const textLinkVariants = cva(
   // relative: contiene el texto sr-only (absoluto) dentro de contenedores con scroll
@@ -56,8 +57,9 @@ export function TextLink({
       {iconStart}
       <span>
         {children}
-        {srContext ? <span className="sr-only"> {srContext}</span> : null}
-        {external ? <span className="sr-only"> {newTabHint}</span> : null}
+        {/* Separador NBSP: el texto oculto va en posición absoluta y un espacio normal en su borde se pierde */}
+        {srContext ? <span className="sr-only">{`${NBSP}${srContext}`}</span> : null}
+        {external ? <span className="sr-only">{`${NBSP}${newTabHint}`}</span> : null}
       </span>
       {iconEnd ? (
         <span className="inline-flex motion-safe:transition-transform motion-safe:group-hover/link:translate-x-1">

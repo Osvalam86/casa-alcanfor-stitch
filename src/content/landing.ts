@@ -7,6 +7,7 @@
  * revisaron en QA mirando cada foto: describen lo que se ve, sin repetir el texto que las rodea.
  */
 import { images } from '@/assets/images/generated/manifest'
+import { NBSP } from '@/lib/text'
 import type {
   EventItem,
   FaqItem,
@@ -23,15 +24,14 @@ import type {
   Testimonial,
 } from './types'
 
-/**
- * Espacio de no separación: une una palabra corta con la siguiente para que no quede sola al final
- * de línea. No cambia el copy.
+/*
+ * NBSP (lib/text) en este archivo: une una palabra corta con la siguiente para que no quede sola al
+ * final de línea. No cambia el copy.
  * - Títulos de eventos: «de» e «y» (la tarjeta compacta es angosta).
  * - Título del hero: «se vuelve». Con text-balance, si la itálica web carga antes que la redonda,
  *   la diferencia de ancho con el respaldo subía «se» a la segunda línea (CLS de 0.059 a 1440 px).
  *   Con la fuente web ningún ancho corta entre «se» y «vuelve», así que el diseño no cambia.
  */
-const NBSP = String.fromCharCode(160)
 
 // Fotos con variantes AVIF (pnpm images); el alt se escribe aquí, mirando cada foto
 const {

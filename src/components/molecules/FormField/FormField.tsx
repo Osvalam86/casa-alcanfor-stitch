@@ -3,12 +3,17 @@ import { Icon } from '@/components/atoms/Icon'
 import { Label } from '@/components/atoms/Label'
 import { cn } from '@/lib/cn'
 
-/** Props que el control recibe ya cableadas (id, descripción, error). */
+/**
+ * Props que el control recibe ya cableadas (id, descripción, obligatorio, error).
+ * Obligatorio con aria-required y no con `required` nativo: con el nativo, Chrome expone invalid=true
+ * desde la carga en select e input de fecha vacíos, y NVDA anuncia «entrada inválida» antes de escribir.
+ * La validación es propia (form noValidate); aria-invalid llega solo con el error, tras el primer envío.
+ */
 export type FieldControlProps = {
   id: string
   'aria-describedby'?: string
   'aria-invalid'?: true
-  required?: boolean
+  'aria-required'?: true
 }
 
 export type FormFieldProps = {
@@ -54,7 +59,7 @@ export function FormField({
         id: controlId,
         'aria-describedby': describedBy,
         'aria-invalid': invalid ? true : undefined,
-        required,
+        'aria-required': required ? true : undefined,
       })}
       {hint ? (
         <p id={hintId} className="font-sans text-caption text-text-muted">

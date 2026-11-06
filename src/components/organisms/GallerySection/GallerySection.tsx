@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useState } from 'react'
 import { Heading } from '@/components/atoms/Heading'
 import { Eyebrow } from '@/components/atoms/Eyebrow'
 import { FilterChip } from '@/components/molecules/FilterChip'
@@ -35,6 +35,8 @@ const PHOTO_SIZES = {
 
 export type GallerySectionProps = {
   id: string
+  /** id fijo del título (h2): destino del foco al llegar desde «Ver detalles y fotos» */
+  titleId: string
   eyebrow: string
   title: string
   filtersLabel: string
@@ -49,6 +51,7 @@ export type GallerySectionProps = {
 
 export function GallerySection({
   id,
+  titleId,
   eyebrow,
   title,
   filtersLabel,
@@ -58,7 +61,6 @@ export function GallerySection({
   activeFilter,
   onFilterChange,
 }: GallerySectionProps) {
-  const titleId = useId()
   // El anuncio solo se llena tras una acción del usuario (la región existe desde el inicio)
   const [announcement, setAnnouncement] = useState('')
   const isVisible = (photo: Photo) => activeFilter === 'todos' || photo.category === activeFilter
@@ -70,12 +72,14 @@ export function GallerySection({
   }
 
   return (
-    <section id={id} aria-labelledby={titleId} tabIndex={-1} className={cn(sectionClasses, 'bg-surface')}>
+    <section id={id} aria-labelledby={titleId} className={cn(sectionClasses, 'bg-surface')}>
       <div className={cn(containerClasses, 'flex flex-col gap-8 md:gap-12')}>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="flex flex-col gap-3">
             <Eyebrow>{eyebrow}</Eyebrow>
-            <Heading as="h2" id={titleId}>
+            {/* Enfocable por script (tabIndex -1): el foco llega al encabezado, no al contenedor */}
+            <Heading as="h2" id={titleId} tabIndex={-1} className="rounded-xs">
+
               {title}
             </Heading>
           </div>

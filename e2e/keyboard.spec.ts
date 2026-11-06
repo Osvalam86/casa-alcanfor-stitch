@@ -30,8 +30,11 @@ test('menú móvil: abre con Enter, atrapa el foco, Escape cierra y el foco regr
   await tabTo(page, trigger)
   await page.keyboard.press('Enter')
   const dialog = page.getByRole('dialog', { name: 'Menú' })
+  const close = page.getByRole('button', { name: 'Cerrar menú' })
   await expect(dialog).toBeVisible()
   await expect(trigger).toHaveAttribute('aria-expanded', 'true')
+  // Foco inicial en un control («Cerrar menú»), no en el contenedor del diálogo
+  await expect(close).toBeFocused()
 
   // El foco queda dentro del diálogo aunque se tabule de más
   for (let i = 0; i < 12; i += 1) {
@@ -51,7 +54,7 @@ test('menú móvil: abre con Enter, atrapa el foco, Escape cierra y el foco regr
   // El botón de cerrar también devuelve el foco
   await page.keyboard.press('Enter')
   await expect(dialog).toBeVisible()
-  await tabTo(page, page.getByRole('button', { name: 'Cerrar menú' }))
+  await expect(close).toBeFocused()
   await page.keyboard.press('Enter')
   await expect(dialog).toBeHidden()
   await expect(trigger).toBeFocused()
@@ -165,14 +168,15 @@ test('calculador: precarga el formulario, lleva el foco y anuncia', async ({ pag
   await expect(page.getByRole('status').filter({ hasText: 'Completa tus datos' })).toBeVisible()
 })
 
-test('formulario vacío: el foco va al resumen y los errores quedan ligados', async ({ page }) => {
+test('formulario vacío: el foco va al título del resumen y los errores quedan ligados', async ({ page }) => {
   await page.goto('/')
   const form = quote(page)
   await tabTo(page, form.getByRole('button', { name: 'Enviar solicitud' }))
   await page.keyboard.press('Enter')
 
-  const summary = form.locator('[aria-labelledby$="-errors"]')
-  await expect(summary).toBeFocused()
+  // Foco en el encabezado del resumen (h3), no en su contenedor
+  const summary = form.locator('[data-error-summary]')
+  await expect(summary.getByRole('heading', { level: 3 })).toBeFocused()
   await expect(summary).toContainText('Hay 6 campos por corregir')
   await expect(summary.getByRole('link')).toHaveCount(6)
 
@@ -205,8 +209,8 @@ test('Enter sin esperar al scroll del foco: el resumen de errores queda completo
   await tabTo(page, form.getByRole('button', { name: 'Enviar solicitud' }))
   await page.keyboard.press('Enter') // sin esperar a que termine ese scroll
 
-  const summary = form.locator('[aria-labelledby$="-errors"]')
-  await expect(summary).toBeFocused()
+  const summary = form.locator('[data-error-summary]')
+  await expect(summary.getByRole('heading', { level: 3 })).toBeFocused()
   await waitForScrollEnd(page)
   const box = await summary.evaluate((element) => {
     const rect = element.getBoundingClientRect()
@@ -224,7 +228,7 @@ test('Enter sin esperar al scroll del foco: el resumen de errores queda completo
   expect(box.bottom).toBeLessThanOrEqual(box.freeBottom)
 })
 
-test('formulario válido: se envía con teclado y el foco pasa al mensaje de éxito', async ({ page }) => {
+test('formulario válido: se envía con teclado y el foco pasa al título del mensaje de éxito', async ({ page }) => {
   await page.goto('/')
   const form = quote(page)
   await tabTo(page, form.getByLabel('Nombre completo'))
@@ -250,6 +254,7 @@ test('formulario válido: se envía con teclado y el foco pasa al mensaje de éx
   await page.keyboard.press('Tab')
   await page.keyboard.press('Enter')
 
-  const success = page.getByRole('status').filter({ hasText: '¡Solicitud recibida con éxito!' })
+  // Foco en el encabezado del aviso (h3), dentro de la región viva, no en el contenedor
+  const success = page.getByRole('status').getByRole('heading', { level: 3, name: '¡Solicitud recibida con éxito!' })
   await expect(success).toBeFocused({ timeout: 5_000 })
 })

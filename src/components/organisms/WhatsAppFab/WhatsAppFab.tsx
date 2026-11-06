@@ -1,4 +1,5 @@
 import { Icon } from '@/components/atoms/Icon'
+import { NBSP } from '@/lib/text'
 
 export type WhatsAppFabProps = {
   href: string
@@ -24,9 +25,7 @@ export function WhatsAppFab({ href, label, bubble, newTabHint }: WhatsAppFabProp
         className="flex size-fab items-center justify-center rounded-full border-2 border-border-inverse/50 bg-action text-on-action shadow-md transition-surface hover:bg-accent hover:text-on-accent"
       >
         <Icon name="chat" size="3xl" />
-        <span className="sr-only">
-          {label} {newTabHint}
-        </span>
+        <span className="sr-only">{`${label}${NBSP}${newTabHint}`}</span>
       </a>
     </div>
   )

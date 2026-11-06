@@ -93,9 +93,11 @@
     cursor: pointer;
   }
 
-  /* Contenedores grandes que reciben foco por script (destino de salto): sin contorno */
-  main[tabindex='-1']:focus,
-  section[tabindex='-1']:focus {
+  /*
+   * <main>, destino del skip link (ancla nativa): sin contorno alrededor de toda la página.
+   * El foco por script nunca va a un contenedor, sino a un encabezado o a un control, con su contorno.
+   */
+  main[tabindex='-1']:focus {
     outline: none;
   }
 

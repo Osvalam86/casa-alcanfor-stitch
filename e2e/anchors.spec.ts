@@ -72,7 +72,8 @@ for (const start of STARTS) {
     await waitForScrollEnd(page)
     await expect(page).toHaveURL(/\?galeria=xv#galeria$/)
     await expect(page.getByRole('button', { name: 'XV años', exact: true, pressed: true })).toBeVisible()
-    await expect(page.locator('#galeria')).toBeFocused()
+    // Foco en el título de la sección (h2), no en el contenedor
+    await expect(page.locator('#galeria').getByRole('heading', { level: 2 })).toBeFocused()
     expect(Math.abs(await offsetBelowHeader(page.locator('#galeria')))).toBeLessThanOrEqual(1)
   })
 }

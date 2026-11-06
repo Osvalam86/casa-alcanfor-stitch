@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from '@/components/atoms/Icon'
 import { cn } from '@/lib/cn'
@@ -23,6 +23,10 @@ const toneIcon: Record<'success' | 'info' | 'error', IconName> = {
 
 export type AlertProps = VariantProps<typeof alertVariants> & {
   title?: string
+  /** Nivel del título: p por defecto; h3 cuando el aviso reemplaza contenido y recibe el foco */
+  titleAs?: 'p' | 'h3'
+  /** Si se indica, el título (h3) es enfocable por script (tabIndex -1): destino del foco */
+  titleRef?: Ref<HTMLHeadingElement>
   children?: ReactNode
   className?: string
 }
@@ -31,7 +35,7 @@ export type AlertProps = VariantProps<typeof alertVariants> & {
  * Aviso visual. No es región viva por sí mismo: el organismo lo coloca dentro de
  * un contenedor con role="status" / role="alert" que existe desde el render inicial.
  */
-export function Alert({ tone = 'info', title, children, className }: AlertProps) {
+export function Alert({ tone = 'info', title, titleAs = 'p', titleRef, children, className }: AlertProps) {
   const resolvedTone = tone ?? 'info'
 
   return (
@@ -49,7 +53,13 @@ export function Alert({ tone = 'info', title, children, className }: AlertProps)
         )}
       />
       <div className="flex flex-col gap-1">
-        {title ? <p className="font-serif text-headline-sm">{title}</p> : null}
+        {title && titleAs === 'h3' ? (
+          <h3 ref={titleRef} tabIndex={titleRef ? -1 : undefined} className="rounded-xs font-serif text-headline-sm">
+            {title}
+          </h3>
+        ) : title ? (
+          <p className="font-serif text-headline-sm">{title}</p>
+        ) : null}
         {children}
       </div>
     </div>

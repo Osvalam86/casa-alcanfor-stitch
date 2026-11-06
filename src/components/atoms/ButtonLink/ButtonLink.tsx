@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { NBSP } from '@/lib/text'
 import { buttonVariants, type ButtonVariantProps } from '@/components/atoms/Button/buttonVariants'
 
 export type ButtonLinkProps = Omit<ComponentProps<'a'>, 'target' | 'rel'> &
@@ -41,8 +42,9 @@ export function ButtonLink({
       {iconStart}
       <span>
         {children}
-        {srContext ? <span className="sr-only"> {srContext}</span> : null}
-        {external ? <span className="sr-only"> {newTabHint}</span> : null}
+        {/* Separador NBSP: el texto oculto va en posición absoluta y un espacio normal en su borde se pierde */}
+        {srContext ? <span className="sr-only">{`${NBSP}${srContext}`}</span> : null}
+        {external ? <span className="sr-only">{`${NBSP}${newTabHint}`}</span> : null}
       </span>
       {iconEnd}
     </a>

@@ -1,6 +1,7 @@
 import { ButtonLink } from '@/components/atoms/ButtonLink'
 import { Icon } from '@/components/atoms/Icon'
 import { cn } from '@/lib/cn'
+import { NBSP } from '@/lib/text'
 
 export type MobileActionBarProps = {
   /** Barra visible (fondo + CTA). Cerrada: solo el botón flotante de WhatsApp. */
@@ -50,9 +51,7 @@ export function MobileActionBar({ open, cta, whatsapp }: MobileActionBarProps) {
           className="pointer-events-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-surface-inverse text-text-on-inverse shadow-sm transition-surface hover:bg-accent"
         >
           <Icon name="chat" size="xl" />
-          <span className="sr-only">
-            {whatsapp.label} {whatsapp.newTabHint}
-          </span>
+          <span className="sr-only">{`${whatsapp.label}${NBSP}${whatsapp.newTabHint}`}</span>
         </a>
       </div>
     </div>
