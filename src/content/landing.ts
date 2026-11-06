@@ -23,6 +23,16 @@ import type {
   Testimonial,
 } from './types'
 
+/**
+ * Espacio de no separación: une una palabra corta con la siguiente para que no quede sola al final
+ * de línea. No cambia el copy.
+ * - Títulos de eventos: «de» e «y» (la tarjeta compacta es angosta).
+ * - Título del hero: «se vuelve». Con text-balance, si la itálica web carga antes que la redonda,
+ *   la diferencia de ancho con el respaldo subía «se» a la segunda línea (CLS de 0.059 a 1440 px).
+ *   Con la fuente web ningún ancho corta entre «se» y «vuelve», así que el diseño no cambia.
+ */
+const NBSP = String.fromCharCode(160)
+
 // Fotos con variantes AVIF (pnpm images); el alt se escribe aquí, mirando cada foto
 const {
   eventBaptisms,
@@ -74,7 +84,7 @@ export const header = {
 
 export const hero = {
   badge: 'Jardín & salón de eventos en Zapopan',
-  title: { before: 'Celebra donde cada momento ', emphasis: 'se vuelve recuerdo' },
+  title: { before: 'Celebra donde cada momento ', emphasis: `se${NBSP}vuelve recuerdo` },
   description:
     'Bodas, XV años, bautizos y eventos corporativos que se viven sin preocupaciones. Espacios de ensueño, un coordinador contigo de principio a fin y precio cerrado desde el primer día.',
   primaryCta: { label: 'Consulta disponibilidad', href: CONTACT_HREF },
@@ -135,12 +145,6 @@ export const trustBar = {
     },
   ],
 } as const
-
-/**
- * Espacio de no separación en los títulos de eventos: une «de» e «y» con la palabra siguiente
- * para que no queden solas al final de línea (la tarjeta compacta es angosta). No cambia el copy.
- */
-const NBSP = String.fromCharCode(160)
 
 /** Foto completa + recorte 1:1 para la miniatura de la tarjeta compacta; mismo alt (es la misma escena) */
 const eventImage = (image: ResponsiveImage, square: ResponsiveImage, alt: string) => ({ ...withAlt(image, alt), square })

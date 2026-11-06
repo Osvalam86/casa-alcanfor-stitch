@@ -50,6 +50,7 @@
   line-gap-override: 0%;
 }
 
+/* Itálica: medida con «se vuelve recuerdo» (el título del hero), coincide con EB Garamond al 0.0 % */
 @font-face {
   font-family: 'EB Garamond Fallback';
   font-style: italic;
