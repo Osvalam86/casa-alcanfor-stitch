@@ -141,6 +141,7 @@ pnpm images       # regenera las variantes AVIF de las fotos y su manifiesto (sh
 Registro de toda excepción a estas reglas: qué, dónde y por qué.
 
 - [Ejemplo: `style` inline del parallax del hero, porque `motion` requiere un valor dinámico.]
+- Sin `sitemap.xml` ni línea `Sitemap` en `robots.txt` (sección 8), en `config/vite-plugin-seo.ts`: el sitio es un proyecto conceptual con `X-Robots-Tag: noindex` en todas las rutas, y un sitemap invita a indexar.
 
 ## 14. No hacer
 

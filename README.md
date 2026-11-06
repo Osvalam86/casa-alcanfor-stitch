@@ -4,7 +4,7 @@ Caso de estudio de maquetación y accesibilidad: un diseño generado en [Stitch]
 
 > **Proyecto conceptual.** Casa Alcanfor no existe. El negocio, los datos de contacto, las cifras («+1,200 eventos», «más de 380 reseñas») y los testimonios son ficticios, y el sitio lo dice en una franja fija arriba del header. Los teléfonos y correos usan valores reservados (`33 0000 0000`, dominio `.example`).
 
-**Demo:** pendiente del primer despliegue en Netlify.
+**Demo:** [casa-alcanfor-hacienda.netlify.app](https://casa-alcanfor-hacienda.netlify.app) · catálogo de componentes en [`/design-system`](https://casa-alcanfor-hacienda.netlify.app/design-system)
 
 [![Portada del caso de estudio Casa Alcanfor. A la izquierda: «Caso de estudio», el nombre Casa Alcanfor, «Diseño de Google Stitch llevado a React, TypeScript y Tailwind CSS v4», Atomic Design, WCAG 2.2 AA, «Probado con Playwright y axe» y «Osvaldo Ocampo · Maquetación y accesibilidad». A la derecha: la landing en una laptop, con el título «Celebra donde cada momento se vuelve recuerdo» y la foto en arco de una cena en un patio, y la galería de fotos en un teléfono.](docs/cover.jpg)](docs/cover.jpg)
 
@@ -78,7 +78,7 @@ Capturas del sitio en [Capturas](#capturas).
 - **Foco no tapado (2.4.11).** Además del `scroll-padding`, un hook vuelve a mostrar el control enfocado con teclado si algo fijo lo tapa. La barra móvil cambia de estado según la sección y su espacio reservado sigue a lo visible.
 - **`@container`.** La tarjeta de eventos pasa a compacta (miniatura cuadrada y texto a todo el ancho) cuando su contenedor es angosto, con su propio recorte 1:1 de la foto.
 - **`scrollbar-gutter`.** Solo en páginas con `<dialog>` (`html:has(dialog)`): al bloquear el scroll del fondo con el menú abierto, el ancho no cambia. En la 404 y en `/design-system` queda en `auto`, así que una página sin scroll no muestra un canal vacío.
-- **Metadatos desde el contenido.** Un plugin de Vite genera título, descripción, Open Graph, Twitter Card y JSON-LD (`EventVenue`) desde `src/content/`, sin reseñas ni datos inventados en los datos estructurados. Lo que depende del dominio (canonical, `og:url`, `og:image`, sitemap) sale de `VITE_SITE_URL` y se omite si está vacía.
+- **Metadatos desde el contenido.** Un plugin de Vite genera título, descripción, Open Graph, Twitter Card y JSON-LD (`EventVenue`) desde `src/content/`, sin reseñas ni datos inventados en los datos estructurados. Lo que depende del dominio (canonical, `og:url`, `og:image` y las URL del JSON-LD) sale de `VITE_SITE_URL` y se omite si está vacía. La imagen del JSON-LD es la foto del lugar (`public/images/hero.jpg`, que genera `pnpm images`), no la imagen Open Graph. Sin `sitemap.xml`: con `noindex` en todo el sitio, un sitemap invitaría a indexarlo.
 - **Netlify.** `X-Robots-Tag: noindex` en todo el sitio (es un proyecto conceptual), `nosniff`, `Referrer-Policy` y caché inmutable de un año en `/assets/*`.
 
 ---
@@ -89,12 +89,14 @@ El objetivo es **WCAG 2.2 AA**. Este README no afirma conformidad: dice qué se 
 
 - `pnpm lint`: ESLint con `jsx-a11y` en modo strict, con los átomos mapeados a su elemento nativo (`Button` → `button`, `TextLink` → `a`…).
 - `pnpm typecheck` y `pnpm build`: TypeScript strict, también en las pruebas y los scripts.
-- `pnpm test:e2e`: Playwright contra el build (`vite preview`) en dos proyectos, 390 y 1440 px. 180 pruebas: 162 pasan y 18 se omiten a propósito (las que solo aplican a uno de los dos anchos).
+- `pnpm test:e2e`: Playwright contra el build (`vite preview`) en dos proyectos, 390 y 1440 px. 202 pruebas: 184 pasan y 18 se omiten a propósito (las que solo aplican a uno de los dos anchos).
   - axe sin violaciones serious ni critical en la landing (también con errores en el formulario y con el menú abierto), en `/design-system` y en la 404.
   - Teclado real con `keyboard.press`: skip link, menú, pestañas, filtros, acordeón, calculador y formulario, con y sin errores.
   - Anclas: cada enlace deja su sección justo debajo del header (±1 px), desde arriba y con la página ya desplazada.
   - 320 px, zoom al 200 % y `prefers-reduced-motion: reduce`.
   - Foco no tapado por lo fijo con Tab y Shift+Tab en toda la página.
+  - Árbol de accesibilidad de Chrome (CDP): el texto oculto conserva sus separadores, ningún campo es inválido al cargar y los obligatorios se anuncian.
+  - Fuentes de respaldo y cargas parciales sin mover el título del hero, y JSON-LD con la foto del lugar.
 - Cada corrección se validó quitándola y comprobando que su prueba vuelve a fallar.
 
 ---
@@ -157,22 +159,61 @@ casa-alcanfor-stitch/
 
 ## Decisiones respecto al diseño
 
-Cambios al copy o al contenido del diseño de Stitch, con su motivo.
+Cambios frente al diseño de Stitch (pantallas de escritorio y móvil, `design/DESIGN.md` y `design/theme.json`), con su motivo. Lo que no aparece aquí sigue el diseño: copy, colores, tipografía, espaciado y composición.
+
+**Contenido y copy**
 
 | Qué | Diseño | Sitio | Por qué |
 |---|---|---|---|
+| Datos de contacto | Teléfonos, WhatsApp, domicilio con calle y código postal, y correos de ejemplo | `33 0000 0000`, «Zapopan, Jalisco» y dominio `.example` | El negocio es ficticio: ningún dato debe apuntar a una persona o un lugar reales. El JSON-LD omite calle y código postal. |
+| Aviso de proyecto conceptual | No existe | Franja «Proyecto conceptual · Negocio, datos y reseñas ficticios» arriba del header, también en la 404 | Las cifras y los testimonios del diseño son inventados; el aviso lo dice antes de cualquier otro contenido. |
+| Temporada en el banner de reservas | «temporada alta 2025-2026» | 2027 | Las fechas del diseño ya pasaron. |
+| Formularios | Precargados con datos de ejemplo («Mariana González», teléfono, correo, fecha y número de invitados) | Vacíos, con los mismos placeholders | Un formulario lleno parece enviado y obliga a borrar antes de escribir. La casilla de privacidad sigue sin marcar. |
+| Mayúsculas | Mayúscula en cada palabra («Momentos Memorables», «Montaje de Autor», «No. de Invitados»…) | Solo la primera palabra y los nombres propios (marca, espacios, paquetes, personas, lugares) | Es la norma del español; las mayúsculas pequeñas se siguen viendo igual porque las da `uppercase`. |
+| Anglicismos | «wedding planner», antetítulo «All-Inclusive Luxury» del paquete Gran Gala | «coordinador de bodas», «Todo incluido» | Hay equivalentes naturales en español. |
+| Horario | «Lunes a Sábado: 10:00 a 19:00 hrs»; en el footer, «Lunes a Viernes: 09:00 - 19:00 hrs / Sábados: 10:00 - 15:00 hrs» | «lunes a sábado: 10:00 a 19:00 h» en contacto y footer | Días en minúscula y «h» como abreviatura; el diseño daba dos horarios distintos para lo mismo. |
 | Pie de la foto del vals en la galería | «Vals & pista robótica» | «Vals entre arcos» | La foto se regeneró en Stitch: el vals ocurre en un patio con arcos de cantera y pista de parquet, sin pista robótica ni luces de escenario. |
+| Logo | Imagen de Stitch | Monograma tipográfico «CA» en un arco, con el nombre en texto | La imagen del logo respondía 403 al descargarla. |
+| Textos para lector de pantalla y validación | No existen | Nombres de landmarks, pestañas y filtros, anuncios de resultados, mensajes de error, resumen de errores y aviso de envío fallido, en `src/content/` | El diseño no los dibuja, pero la accesibilidad los necesita. |
+
+**Imágenes**
+
+| Qué | Diseño | Sitio | Por qué |
+|---|---|---|---|
+| Foto del hero | Foto horizontal de 512×279 en un marco en arco 4:5 | Foto vertical generada en Stitch (896×1200), recortada a 4:5 | En el marco 4:5 la horizontal perdía más de la mitad del ancho y se veía ampliada; la vertical llena el marco con nitidez. |
+| Fotos de la galería | Fotos horizontales de 512×279 en celdas verticales 3:4 y cuadradas | Versiones nuevas de Stitch a la proporción de cada celda: tres verticales 3:4 (896×1200) y tres cuadradas 1:1 (1024×1024) | Se ven completas en su celda y con resolución suficiente para pantallas 2×. |
+| Mapa | Imagen de fondo CSS alojada en Google, sin texto alternativo | `<img>` local con texto alternativo y variantes AVIF; el enlace «Abrir GPS» apunta al municipio | Es contenido, no decoración; y el sitio no depende de imágenes de terceros. |
+| Formato de las fotos | JPG y PNG alojados en Google | Variantes AVIF de 320 a 1280 px con `srcset` y `sizes` | Peso y nitidez según el ancho en que se dibuja cada foto. |
+
+**Componentes y comportamiento**
+
+| Qué | Diseño | Sitio | Por qué |
+|---|---|---|---|
+| Header | `fixed`, encima del contenido | `sticky`, debajo del aviso conceptual | La franja del aviso queda estática arriba y el header se pega al desplazar sin tapar nada; su altura medida alimenta `scroll-padding-top`. |
+| «Momentos memorables» en móvil | Carrusel horizontal con `scroll-snap` | Tarjeta compacta con miniatura 1:1 y rejilla vertical desde 35rem de lista (`@container`) | Las seis opciones se ven sin deslizar y sin controles ocultos; la tarjeta responde a su contenedor, no a la pantalla. |
+| Pestañas de espacios | Lista con scroll horizontal | Pestañas que bajan de línea (`flex-wrap`), con flechas, Inicio y Fin | Ninguna pestaña queda oculta fuera de la pantalla. |
+| Barra inferior móvil | Fija desde el inicio con «Consulta disponibilidad» y WhatsApp | Al inicio solo WhatsApp; al pasar el botón principal del hero aparecen el fondo y «Consulta disponibilidad»; con contacto a la vista vuelve al inicio | Al inicio repetía el botón del hero, que está a la vista, y al final tapaba el formulario al que lleva. Así la acción queda a mano solo cuando hace falta; reserva su espacio para no tapar el foco (2.4.11). |
+| Botón flotante de WhatsApp (escritorio) | Círculo verde salvia sin borde | Mismo círculo con borde marfil semitransparente y sombra suave | Sin borde se perdía sobre las secciones oscuras (banner de reservas y footer), del mismo verde. El footer reserva su franja. |
+| Bordes de los campos | `outline-variant` al 40 %, casi invisible | Borde con contraste de al menos 3:1 | Límite de un control (1.4.11). |
+| Etiquetas del formulario | Solo «Requerido» en algunos campos; la fila cambiaba de alto | Fila con interlineado fijo e indicador «Opcional» en los campos no obligatorios | Los campos de una misma fila quedan alineados. |
+| Cursor | Mano en los botones (Tailwind v3) | Mano en botones habilitados y `[role="button"]` | Tailwind v4 lo quitó; se repone en la capa base. |
+| Píldora del hero | Espaciado de las mayúsculas del diseño en todos los anchos | Espaciado compacto en móvil | Cabe en una línea desde 360 px. |
+| Página 404 | No existe | 404 propia con el aviso, la marca, «Volver al inicio» y «Agenda tu visita» | Netlify la sirve con estado 404 en cualquier ruta inexistente. |
 
 ---
 
 ## Capturas
 
-Generadas con `pnpm screens` contra el build, a 2×.
+Generadas con `pnpm screens` contra el build, a 2×. Escritorio a 1440 px y móvil a 360 px.
 
-| Escritorio (1440 px) | Móvil (360 px) |
-|---|---|
-| [![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-hero-1440.jpg) | [![El mismo hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna.](docs/screens/landing-hero-360.jpg)](docs/screens/landing-hero-360.jpg) |
-| [![Sección «Un escenario hecho a la medida de tu celebración» en escritorio: seis tarjetas de eventos en tres columnas, cada una con foto, etiqueta, título, descripción y el enlace «Ver detalles y fotos».](docs/screens/landing-events-1440.jpg)](docs/screens/landing-events-1440.jpg) | [![Galería «Cada rincón cuenta una historia» en móvil: filtros en una fila que se desplaza y seis fotos en dos columnas, con su pie sobre una franja oscura.](docs/screens/landing-gallery-360.jpg)](docs/screens/landing-gallery-360.jpg) |
+[![Hero de Casa Alcanfor en escritorio: título «Celebra donde cada momento se vuelve recuerdo», botones «Consulta disponibilidad» y «Recorre el salón», foto en arco de una cena en un patio con bugambilias y el calculador de disponibilidad debajo.](docs/screens/landing-hero-1440.jpg)](docs/screens/landing-hero-1440.jpg)
+
+[![Sección «Un escenario hecho a la medida de tu celebración» en escritorio: seis tarjetas de eventos en tres columnas, cada una con foto, etiqueta, título, descripción y el enlace «Ver detalles y fotos».](docs/screens/landing-events-1440.jpg)](docs/screens/landing-events-1440.jpg)
+
+<p>
+  <a href="docs/screens/landing-hero-360.jpg"><img src="docs/screens/landing-hero-360.jpg" width="300" alt="El hero en móvil: el texto y los botones apilados arriba, la foto en arco debajo y el calculador en una sola columna."></a>
+  <a href="docs/screens/landing-gallery-360.jpg"><img src="docs/screens/landing-gallery-360.jpg" width="300" alt="Galería «Cada rincón cuenta una historia» en móvil: filtros en una fila que se desplaza y seis fotos en dos columnas, con su pie sobre una franja oscura."></a>
+</p>
 
 ---
 

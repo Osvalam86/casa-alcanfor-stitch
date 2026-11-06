@@ -6,7 +6,7 @@ import { buildJsonLd } from '../src/lib/seo/jsonld.ts'
 /**
  * Metadatos de la sección 8 del CLAUDE.md, generados desde content/:
  * title, description, theme-color, íconos, manifest, Open Graph, Twitter Card y JSON-LD.
- * Lo que depende del dominio (canonical, og:url, URLs absolutas, sitemap) usa
+ * Lo que depende del dominio (canonical, og:url y las URL absolutas de og:image y del JSON-LD) usa
  * VITE_SITE_URL; si está vacía, se omite.
  * 404.html lleva solo título, noindex, theme-color e íconos (sin Open Graph, canonical ni JSON-LD).
  */
@@ -75,23 +75,12 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
       return ctx.path.endsWith('/404.html') ? notFoundTags() : headTags()
     },
     generateBundle() {
-      const robots = ['User-agent: *', 'Allow: /']
-      if (siteUrl) {
-        robots.push(`Sitemap: ${siteUrl}/sitemap.xml`)
-        this.emitFile({
-          type: 'asset',
-          fileName: 'sitemap.xml',
-          source: [
-            '<?xml version="1.0" encoding="UTF-8"?>',
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-            `  <url><loc>${siteUrl}/</loc></url>`,
-            '</urlset>',
-            '',
-          ].join('\n'),
-        })
-      }
-      // Las páginas internas (/design-system) llevan noindex; no se bloquean aquí
-      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: `${robots.join('\n')}\n` })
+      /*
+       * Sin sitemap.xml ni línea Sitemap: el sitio entero lleva noindex (X-Robots-Tag en netlify.toml,
+       * es un proyecto conceptual) y un sitemap invitaría a indexarlo.
+       * robots.txt no bloquea nada: si bloqueara, el buscador no leería el noindex.
+       */
+      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: 'User-agent: *\nAllow: /\n' })
     },
   }
 }
