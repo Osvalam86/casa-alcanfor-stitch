@@ -19,7 +19,8 @@ export function Select({ id, className, children, ...props }: SelectProps) {
       <svg
         aria-hidden="true"
         focusable="false"
-        className="pointer-events-none absolute top-1/2 right-3 size-5 -translate-y-1/2 fill-current text-text-muted"
+        data-field-icon="expand-more"
+        className="pointer-events-none absolute top-1/2 right-3 size-icon-field -translate-y-1/2 fill-current text-text-muted"
       >
         <use href={iconHref('expand-more')} />
       </svg>

@@ -270,6 +270,8 @@
   --spacing-control-md: 2.75rem; /* botón e input: 44 px */
   --spacing-control-lg: 3.25rem; /* botón hero: 52 px */
   --spacing-fab: 3.5rem;
+  /* Ícono de los campos: flecha del Select y calendario de la fecha (con el indicador nativo transparente encima) */
+  --spacing-icon-field: 1.25rem;
   /* Fila de etiqueta de formulario: misma altura lleve o no indicador (Requerido/Opcional) */
   --leading-label-row: 1.25rem;
 }

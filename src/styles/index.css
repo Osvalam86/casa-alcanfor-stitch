@@ -23,6 +23,63 @@
   padding-bottom: max(0.625rem, env(safe-area-inset-bottom));
 }
 
+/*
+ * Campo de fecha (Input type="date") con el ícono "calendar-today" del sitio en el lugar de la flecha del Select:
+ * a 12 px del borde exterior (right-3), centrado y del tamaño --spacing-icon-field.
+ * - Donde existe el indicador de WebKit/Blink:
+ *   - appearance: none, porque en Chrome Android la flecha delgada es la apariencia nativa del control, no el
+ *     indicador. Sin ella, tocar el campo sigue abriendo el selector, y la fecha se alinea al inicio.
+ *   - El indicador no se quita (nada de display: none): queda transparente, del tamaño del ícono y encima de él,
+ *     así que el clic sobre el ícono abre el selector. Se posiciona desde el borde interior del campo, por eso se
+ *     resta el borde: 1 px normal y 2 px con error (aria-invalid). Así no se mueve respecto de la flecha.
+ *   - Padding derecho igual al del Select (pr-11).
+ * - Firefox: su calendario nativo, sin el ícono propio. Solo cambia el padding derecho, para que el botón del
+ *   calendario termine a 12 px del borde exterior, como la flecha: 12 px − borde (11 px; 10 px con error).
+ * [type='date'] sube la especificidad para ganarle al px-4 de fieldClasses, que también define el padding.
+ */
+@utility date-field {
+  @supports selector(::-webkit-calendar-picker-indicator) {
+    appearance: none;
+    &[type='date'] {
+      padding-inline-end: calc(var(--spacing) * 11);
+    }
+    &::-webkit-date-and-time-value {
+      text-align: start;
+    }
+    &::-webkit-calendar-picker-indicator {
+      position: absolute;
+      inset-inline-end: calc(var(--spacing) * 3 - 1px);
+      top: 50%;
+      translate: 0 -50%;
+      inline-size: var(--spacing-icon-field);
+      block-size: var(--spacing-icon-field);
+      margin: 0;
+      padding: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    &[aria-invalid='true']::-webkit-calendar-picker-indicator {
+      inset-inline-end: calc(var(--spacing) * 3 - 2px);
+    }
+  }
+  @supports not selector(::-webkit-calendar-picker-indicator) {
+    &[type='date'] {
+      padding-inline-end: calc(var(--spacing) * 3 - 1px);
+    }
+    &[type='date'][aria-invalid='true'] {
+      padding-inline-end: calc(var(--spacing) * 3 - 2px);
+    }
+  }
+}
+
+/* El ícono propio solo donde existe el indicador de WebKit/Blink: Firefox dibuja su calendario y no se duplica */
+@utility date-icon {
+  display: none;
+  @supports selector(::-webkit-calendar-picker-indicator) {
+    display: block;
+  }
+}
+
 @layer base {
   html {
     /* Las anclas quedan justo debajo del header fijo (altura medida) */

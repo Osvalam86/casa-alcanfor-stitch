@@ -89,7 +89,7 @@ El objetivo es **WCAG 2.2 AA**. Este README no afirma conformidad: dice qué se 
 
 - `pnpm lint`: ESLint con `jsx-a11y` en modo strict, con los átomos mapeados a su elemento nativo (`Button` → `button`, `TextLink` → `a`…).
 - `pnpm typecheck` y `pnpm build`: TypeScript strict, también en las pruebas y los scripts.
-- `pnpm test:e2e`: Playwright contra el build (`vite preview`) en dos proyectos, 390 y 1440 px. 202 pruebas: 184 pasan y 18 se omiten a propósito (las que solo aplican a uno de los dos anchos).
+- `pnpm test:e2e`: Playwright contra el build (`vite preview`) en dos proyectos, 390 y 1440 px. 216 pruebas: 198 pasan y 18 se omiten a propósito (las que solo aplican a uno de los dos anchos).
   - axe sin violaciones serious ni critical en la landing (también con errores en el formulario y con el menú abierto), en `/design-system` y en la 404.
   - Teclado real con `keyboard.press`: skip link, menú, pestañas, filtros, acordeón, calculador y formulario, con y sin errores.
   - Anclas: cada enlace deja su sección justo debajo del header (±1 px), desde arriba y con la página ya desplazada.

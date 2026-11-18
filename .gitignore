@@ -20,6 +20,9 @@ dist-ssr
 test-results
 playwright-report
 
+# Archivos temporales locales (lo que se aparta en vez de borrarse)
+.cache/
+
 # READMEs de referencia de otros proyectos (consulta local para el README)
 _ref-*.md
 
